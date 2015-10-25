@@ -1,18 +1,19 @@
 package wpi.cs509.ui.admin;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import wpi.cs509.dataModel.Graph;
+import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
 
 public class AdminScreen {
 
 	private JFrame frame;
 	private Graph graph;
-	private final JLabel lblXhhh = new JLabel("x:hhh");
-	private final JPanel panel = new JPanel();
 
 	/**
 	 * Create the window.
@@ -28,24 +29,23 @@ public class AdminScreen {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setResizable(false);
+		frame.getContentPane().setBackground(Color.decode("#F1F1F1"));
 		frame.setBounds(0, 0, 1024, 730);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JPanel panel_header = new JPanel();
-		panel_header.setBounds(0, 0, 800, 60);
-		frame.getContentPane().add(panel_header);
+		////////////
+		// Header //
+		////////////
+		HeaderPanel headerPanel = new HeaderPanel();
+		headerPanel.setBounds(0, 0, 1024, 730);
+		frame.getContentPane().add(headerPanel);
 		
-		JLabel label_1 = new JLabel("label 1");
-		panel_header.add(label_1);
-		
-		JLabel label_2 = new JLabel("label 2");
-		panel_header.add(label_2);
-		
-		
-		ImagePanel imagePanel = new ImagePanel();
-		imagePanel.setBounds(80, 180, 640, 480);
+		/////////
+		// Map //
+		/////////
+		ImagePanel imagePanel = new ImagePanel("D:\\WPI\\CS509\\campus_map1.jpg", 640, 480);
+		imagePanel.setBounds(350, 200, 640, 480);
 		frame.getContentPane().add(imagePanel);
 	}
 }

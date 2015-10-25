@@ -16,11 +16,11 @@ public class ImagePanel extends JPanel{
 	 */
 	private static final long serialVersionUID = 5403232822529364532L;
 	private BufferedImage image;
-
-    public ImagePanel() {
+	
+    public ImagePanel(String fileName, int width, int height) {
        try {                
-          image = ImageIO.read(new File("D:\\WPI\\CS509\\campus_map1.jpg"));
-          image = this.resize(image, 640, 480);
+          image = ImageIO.read(new File(fileName));
+          image = this.resize(image, width, height);
        } catch (IOException ex) {
             // handle exception...
        }
