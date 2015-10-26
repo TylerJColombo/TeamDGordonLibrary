@@ -42,7 +42,7 @@ public class HeaderPanel extends JComponent{
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panel_2.add(lblNewLabel);
 		
-		Line separator = new Line(Color.decode("#929292"), 0, 180, 1024, 180);
+		Line separator = new Line(Color.decode("#929292"), 0, 160, 1024, 160);
 		this.add(separator, new Integer(1), 0);
 	}
 }
