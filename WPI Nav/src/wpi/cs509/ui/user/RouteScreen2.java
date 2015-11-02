@@ -1,13 +1,23 @@
 package wpi.cs509.ui.user;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.text.AbstractDocument.LeafElement;
 
+import javafx.scene.shape.Box;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
 
@@ -65,71 +75,90 @@ public class RouteScreen2 {
 		//controlPanel
 		JPanel sameFloorControl = new JPanel();
 		sameFloorSearchPanel.add(sameFloorControl);
-		sameFloorControl.setBounds(20, 180, 300, 480);
+		sameFloorControl.setBounds(20, 180, 300, 350);
+		sameFloorControl.setLayout(new GridLayout(9, 0));
 		
 		
 		//buildingPanel
-		JPanel buildingSelectionPanel = new JPanel();
-		sameFloorControl.add(buildingSelectionPanel);
+//		JPanel buildingSelectionPanel = new JPanel();
+//		sameFloorControl.add(buildingSelectionPanel);
+		
 		
 		//buildingLabel
-		JLabel building = new JLabel("building");
-		buildingSelectionPanel.add(building);
+		JLabel building = new JLabel("Building");
+		sameFloorControl.add(building);
+		building.setFont(new Font("Serif", Font.PLAIN, 16));
 		
 		//buildingList
 		JComboBox<String> buildingSelection = new JComboBox<>();
-		buildingSelectionPanel.add(buildingSelection);
+		sameFloorControl.add(buildingSelection);
 		buildingSelection.addItem("building1");
 		buildingSelection.addItem("biulding2");
 		buildingSelection.addItem("building3");
 		
 		
 		//floorPanel
-		JPanel floorSelectionPanel = new JPanel();
-		sameFloorControl.add(floorSelectionPanel);
+//		JPanel floorSelectionPanel = new JPanel();
+//		sameFloorControl.add(floorSelectionPanel);
 		
 		//floorLabel
-		JLabel floor = new JLabel("floor");
-		floorSelectionPanel.add(floor);
+		JLabel floor = new JLabel("Floor");
+		sameFloorControl.add(floor);
+		floor.setFont(new Font("Serif", Font.PLAIN, 16));
 		
 		//floorList
 		JComboBox<String> floorSelection = new JComboBox<>();
-		floorSelectionPanel.add(floorSelection);
+		sameFloorControl.add(floorSelection);
 		floorSelection.addItem("floor1");
 		floorSelection.addItem("floor2");
 		floorSelection.addItem("floor3");
 		
 		
 		//sourcePanel
-		JPanel sourceSelectionPanel = new JPanel();
-		sameFloorControl.add(sourceSelectionPanel);
+//		JPanel sourceSelectionPanel = new JPanel();
+//		sameFloorControl.add(sourceSelectionPanel);
 		
 		//sourceLabel
-		JLabel source = new JLabel("source");
-		sourceSelectionPanel.add(source);
+		JLabel source = new JLabel("Source");
+		sameFloorControl.add(source);
+		source.setFont(new Font("Serif", Font.PLAIN, 16));
 		
 		//sourceList
 		JComboBox<String> sourceSelection = new JComboBox<>();
-		sourceSelectionPanel.add(sourceSelection);
+		sameFloorControl.add(sourceSelection);
 		sourceSelection.addItem("source1");
 		sourceSelection.addItem("source2");
 		sourceSelection.addItem("source3");
 		
 		
 		//destinationPanel
-		JPanel destinationSelectionPanel = new JPanel();
-		sameFloorControl.add(destinationSelectionPanel);
+//		JPanel destinationSelectionPanel = new JPanel();
+//		sameFloorControl.add(destinationSelectionPanel);
 		
 		//destinationLabel
-		JLabel destination = new JLabel("destination");
-		destinationSelectionPanel.add(destination);
+		JLabel destination = new JLabel("Destination");
+		sameFloorControl.add(destination);
+		destination.setFont(new Font("Serif", Font.PLAIN, 16));
 		
 		//destinationList
 		JComboBox<String> destinationSelection = new JComboBox<>();
-		destinationSelectionPanel.add(destinationSelection);
+		sameFloorControl.add(destinationSelection);
 		destinationSelection.addItem("destination1");
 		destinationSelection.addItem("destination2");
 		destinationSelection.addItem("destination3");
+		
+		//buttonPanel
+		JPanel buttonPanel = new JPanel();
+		sameFloorControl.add(buttonPanel);
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		
+		//Find route button
+		JButton findRoute = new JButton("Find Route");
+		buttonPanel.add(findRoute);	
+//		findRoute.setBackground(Color.white);
+//		findRoute.setForeground(Color.black);
+//		findRoute.setOpaque(true);
+//		findRoute.setBorderPainted(false);
 		
 		
 		//map
