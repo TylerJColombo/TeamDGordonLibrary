@@ -33,6 +33,11 @@ public class DataManager {
 		try {
 			while((valueString=br.readLine())!=null)
 			{
+				if(valueString.equals("MapName"))
+				{
+					System.out.println(br.readLine());
+					continue;
+				}
 				
 				if(valueString.equals("Points"))
 				{
@@ -59,16 +64,16 @@ public class DataManager {
 				//if(valueString)
 				//System.out.println(valueString);
 				String[] resultsPoint=valueString.split("\t{1,}");
-			if(resultsPoint.length==8)   // the complete information of points.
+			if(resultsPoint.length==7)   // the complete information of points.
 			{
 				System.out.println("ID:"+resultsPoint[0]);
 				System.out.println("X:"+resultsPoint[1]);
 				System.out.println("Y:"+resultsPoint[2]);
 				System.out.println("BuildingName:"+resultsPoint[3]);
 				System.out.println("FloorNumber:"+resultsPoint[4]);
-				System.out.println("Attributes:"+resultsPoint[5]);
-				System.out.println("EntranceID:"+resultsPoint[6]);
-				System.out.println("RoomName:"+resultsPoint[7]);
+				System.out.println("EntranceID:"+resultsPoint[5]);
+				System.out.println("PointAttribute:"+resultsPoint[6]);
+//				System.out.println("RoomName:"+resultsPoint[7]);
 			}
 			else System.out.println("data error");
 				/*for(int i=0;i<resultsPoint.length;i++)
