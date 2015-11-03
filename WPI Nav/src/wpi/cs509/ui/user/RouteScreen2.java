@@ -1,12 +1,16 @@
 package wpi.cs509.ui.user;
 
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,10 +24,12 @@ import javax.swing.text.AbstractDocument.LeafElement;
 import javafx.scene.shape.Box;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
+import wpi.cs509.ui.components.Line;
 
 public class RouteScreen2 {
 
 	private JFrame frame;
+	private Graphics g;
 
 	/**
 	 * Launch the application.
@@ -90,11 +96,17 @@ public class RouteScreen2 {
 		building.setFont(new Font("Serif", Font.PLAIN, 16));
 		
 		//buildingList
-		JComboBox<String> buildingSelection = new JComboBox<>();
+		String[] buildingList = new String[]{"building1","building2","building3"};
+		JComboBox<String> buildingSelection = new JComboBox<>(buildingList);
 		sameFloorControl.add(buildingSelection);
-		buildingSelection.addItem("building1");
-		buildingSelection.addItem("biulding2");
-		buildingSelection.addItem("building3");
+		buildingSelection.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getStateChange()==ItemEvent.SELECTED)
+					System.out.println("You have chosen"+" "+buildingSelection.getSelectedItem());
+			}
+		});
 		
 		
 		//floorPanel
@@ -107,12 +119,17 @@ public class RouteScreen2 {
 		floor.setFont(new Font("Serif", Font.PLAIN, 16));
 		
 		//floorList
-		JComboBox<String> floorSelection = new JComboBox<>();
+		String[] floorList = new String[]{"floor1","floor2","floor3"};
+		JComboBox<String> floorSelection = new JComboBox<>(floorList);
 		sameFloorControl.add(floorSelection);
-		floorSelection.addItem("floor1");
-		floorSelection.addItem("floor2");
-		floorSelection.addItem("floor3");
-		
+		floorSelection.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getStateChange()==ItemEvent.SELECTED)
+					System.out.println("You have chosen"+" "+floorSelection.getSelectedItem());
+			}
+		});
 		
 		//sourcePanel
 //		JPanel sourceSelectionPanel = new JPanel();
@@ -124,12 +141,17 @@ public class RouteScreen2 {
 		source.setFont(new Font("Serif", Font.PLAIN, 16));
 		
 		//sourceList
-		JComboBox<String> sourceSelection = new JComboBox<>();
+		String[] sourceList = new String[]{"source1","source2","source3"};
+		JComboBox<String> sourceSelection = new JComboBox<>(sourceList);
 		sameFloorControl.add(sourceSelection);
-		sourceSelection.addItem("source1");
-		sourceSelection.addItem("source2");
-		sourceSelection.addItem("source3");
-		
+		sourceSelection.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getStateChange()==ItemEvent.SELECTED)
+					System.out.println("You have chosen"+" "+sourceSelection.getSelectedItem());
+			}
+		});
 		
 		//destinationPanel
 //		JPanel destinationSelectionPanel = new JPanel();
@@ -141,11 +163,17 @@ public class RouteScreen2 {
 		destination.setFont(new Font("Serif", Font.PLAIN, 16));
 		
 		//destinationList
-		JComboBox<String> destinationSelection = new JComboBox<>();
+		String[] destinationList = new String[]{"destination1","destination2","destination2"};
+		JComboBox<String> destinationSelection = new JComboBox<>(destinationList);
 		sameFloorControl.add(destinationSelection);
-		destinationSelection.addItem("destination1");
-		destinationSelection.addItem("destination2");
-		destinationSelection.addItem("destination3");
+		destinationSelection.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getStateChange()==ItemEvent.SELECTED)
+					System.out.println("You have chosen"+" "+destinationSelection.getSelectedItem());
+			}
+		});
 		
 		//buttonPanel
 		JPanel buttonPanel = new JPanel();
@@ -162,10 +190,9 @@ public class RouteScreen2 {
 		
 		
 		//map
-		ImagePanel sameFloorMap = new ImagePanel("", 640, 480);
+		ImagePanel sameFloorMap = new ImagePanel("maps\\project center.png", 640, 480);
 		sameFloorMap.setBounds(350, 180, 640, 480);
 		sameFloorSearchPanel.add(sameFloorMap);
-		sameFloorMap.setBackground(Color.BLACK);
 		
 		
 		
