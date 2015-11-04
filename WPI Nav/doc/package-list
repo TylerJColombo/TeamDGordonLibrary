@@ -1,1 +1,6 @@
 wpi.cs509.dataManager
+wpi.cs509.dataModel
+wpi.cs509.routeFinder
+wpi.cs509.ui.admin
+wpi.cs509.ui.components
+wpi.cs509.ui.user

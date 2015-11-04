@@ -12,9 +12,11 @@ import java.io.IOException;
 
 public class DataManager {
 	public static boolean addPoint(Point p,String fileName){
+		return false;
 		
 	}
 	public static boolean addEdge(Edge e,String fileName){
+		return false;
 		
 	}
 	public static Graph getGraph(Graph g,String fileName){
@@ -114,13 +116,14 @@ public class DataManager {
 			e.printStackTrace();
 			System.out.println("failed to readline()...");
 		}
+		return g;
 		
 		
 	}
-	public static getListOfMaps(){
+	public static void getListOfMaps(){
 		
 	}
-	public static boolean addMap(){
+	public static void addMap(){
 		
 	}
 	public static void main(String[] args){
