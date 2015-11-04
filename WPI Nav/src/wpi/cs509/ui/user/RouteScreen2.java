@@ -1,27 +1,15 @@
 package wpi.cs509.ui.user;
 
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.text.AbstractDocument.LeafElement;
-
-import javafx.scene.shape.Box;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
 import wpi.cs509.ui.components.Line;
@@ -29,7 +17,8 @@ import wpi.cs509.ui.components.Line;
 public class RouteScreen2 {
 
 	private JFrame frame;
-	private Graphics g;
+	private JComboBox<String> buildingSelection,floorSelection,sourceSelection,destinationSelection;
+	
 
 	/**
 	 * Launch the application.
@@ -58,10 +47,26 @@ public class RouteScreen2 {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		
+		String[] buildingList = new String[]{"building1","building2","building3"};
+		String[][] floorList = new String[][]{{"b1floor1","b1floor2","b1floor3"},{"b2floor1","b2floor2","b2floor3"},{"b3floor1","b3floor2","b3floor3"}};
+		String[][][] sourceList = new String[][][]{{{"b1f1source1","b1f1source2","b1f1source3"},{"b1f2source1","b1f2source2","b1f2source3"},{"b1f3source1","b1f3source2","b1f3source3"}},
+			{{"b2f1source1","b2f1source2","b2f1source3"},{"b2f2source1","b2f2source2","b2f2source3"},{"b2f3source1","b2f3source2","b2f3source3"}},
+			{{"b3f1source1","b3f1source2","b3f1source3"},{"b3f2source1","b3f2source2","b3f2source3"},{"b3f3source1","b3f3source2","b3f3source3"}}};
+		String[][][] destinationList = new String[][][]{{{"b1f1source1","b1f1source2","b1f1source3"},{"b1f2source1","b1f2source2","b1f2source3"},{"b1f3source1","b1f3source2","b1f3source3"}},
+			{{"b2f1source1","b2f1source2","b2f1source3"},{"b2f2source1","b2f2source2","b2f2source3"},{"b2f3source1","b2f3source2","b2f3source3"}},
+			{{"b3f1source1","b3f1source2","b3f1source3"},{"b3f2source1","b3f2source2","b3f2source3"},{"b3f3source1","b3f3source2","b3f3source3"}}};
+		buildingSelection = new JComboBox<String>(buildingList);
+		floorSelection = new JComboBox<String>(floorList[0]);
+		sourceSelection = new JComboBox<String>(sourceList[0][0]);
+		destinationSelection = new JComboBox<String>(destinationList[0][0]);
+			
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#F1F1F1"));
 		frame.setBounds(0, 0, 1024, 730);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
 		
 		////////////
 		// Header //
@@ -76,131 +81,128 @@ public class RouteScreen2 {
 		JPanel sameFloorSearchPanel = new JPanel();
 		sameFloorSearchPanel.setLayout(null);
 		frame.getContentPane().add(sameFloorSearchPanel);
-		sameFloorSearchPanel.setBounds(20, 180, 1024, 480);
+		sameFloorSearchPanel.setBounds(0, 180, 1024, 480);
 		
 		//controlPanel
 		JPanel sameFloorControl = new JPanel();
 		sameFloorSearchPanel.add(sameFloorControl);
-		sameFloorControl.setBounds(20, 180, 300, 350);
-		sameFloorControl.setLayout(new GridLayout(9, 0));
-		
-		
-		//buildingPanel
-//		JPanel buildingSelectionPanel = new JPanel();
-//		sameFloorControl.add(buildingSelectionPanel);
-		
+		sameFloorControl.setBounds(0, 180, 350, 480);
+		sameFloorControl.setLayout(null);
 		
 		//buildingLabel
 		JLabel building = new JLabel("Building");
 		sameFloorControl.add(building);
-		building.setFont(new Font("Serif", Font.PLAIN, 16));
+		building.setBounds(25, 0, 300, 20);
 		
 		//buildingList
-		String[] buildingList = new String[]{"building1","building2","building3"};
-		JComboBox<String> buildingSelection = new JComboBox<>(buildingList);
 		sameFloorControl.add(buildingSelection);
+		buildingSelection.setSelectedIndex(0);
+		buildingSelection.setBounds(20, 30, 300, 20);
 		buildingSelection.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
+				floorSelection.removeAllItems();
+				sourceSelection.removeAllItems();
+				destinationSelection.removeAllItems();
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==ItemEvent.SELECTED)
-					System.out.println("You have chosen"+" "+buildingSelection.getSelectedItem());
+				{
+					int index = buildingSelection.getSelectedIndex();
+					for(int i = 0;i<floorList[0].length;i++){
+						for(int j=0;j<sourceList[0][0].length;j++){
+							sourceSelection.addItem(sourceList[index][i][j]);
+							destinationSelection.addItem(destinationList[index][i][j]);
+						}
+						floorSelection.addItem(floorList[index][i]);
+					}
+					
+				}
+					System.out.println("You have chosen building"+" "+buildingSelection.getSelectedItem());
 			}
 		});
-		
-		
-		//floorPanel
-//		JPanel floorSelectionPanel = new JPanel();
-//		sameFloorControl.add(floorSelectionPanel);
 		
 		//floorLabel
 		JLabel floor = new JLabel("Floor");
 		sameFloorControl.add(floor);
-		floor.setFont(new Font("Serif", Font.PLAIN, 16));
+		floor.setBounds(25, 60, 300, 20);
 		
 		//floorList
-		String[] floorList = new String[]{"floor1","floor2","floor3"};
-		JComboBox<String> floorSelection = new JComboBox<>(floorList);
 		sameFloorControl.add(floorSelection);
+		floorSelection.setBounds(20, 90, 300, 20);
 		floorSelection.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
+				sourceSelection.removeAllItems();
+				destinationSelection.removeAllItems();
 				if(e.getStateChange()==ItemEvent.SELECTED)
-					System.out.println("You have chosen"+" "+floorSelection.getSelectedItem());
+				{
+					int index0 = buildingSelection.getSelectedIndex();
+					int index1 = floorSelection.getSelectedIndex();
+					for(int i = 0;i<sourceList[0][0].length;i++){
+						sourceSelection.addItem(sourceList[index0][index1][i]);
+						destinationSelection.addItem(destinationList[index0][index1][i]);
+					}
+					System.out.println("You have chosen floor"+" "+floorSelection.getSelectedItem());
+			}
 			}
 		});
-		
-		//sourcePanel
-//		JPanel sourceSelectionPanel = new JPanel();
-//		sameFloorControl.add(sourceSelectionPanel);
 		
 		//sourceLabel
 		JLabel source = new JLabel("Source");
 		sameFloorControl.add(source);
-		source.setFont(new Font("Serif", Font.PLAIN, 16));
+		source.setBounds(25, 120, 300, 20);
 		
 		//sourceList
-		String[] sourceList = new String[]{"source1","source2","source3"};
-		JComboBox<String> sourceSelection = new JComboBox<>(sourceList);
 		sameFloorControl.add(sourceSelection);
+		sourceSelection.setBounds(20, 150, 300, 20);
 		sourceSelection.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==ItemEvent.SELECTED)
-					System.out.println("You have chosen"+" "+sourceSelection.getSelectedItem());
+					System.out.println("You have chosen source"+" "+sourceSelection.getSelectedItem());
 			}
 		});
-		
-		//destinationPanel
-//		JPanel destinationSelectionPanel = new JPanel();
-//		sameFloorControl.add(destinationSelectionPanel);
-		
+			
 		//destinationLabel
 		JLabel destination = new JLabel("Destination");
 		sameFloorControl.add(destination);
-		destination.setFont(new Font("Serif", Font.PLAIN, 16));
+		destination.setBounds(25, 180, 300, 20);
 		
 		//destinationList
-		String[] destinationList = new String[]{"destination1","destination2","destination2"};
-		JComboBox<String> destinationSelection = new JComboBox<>(destinationList);
 		sameFloorControl.add(destinationSelection);
+		destinationSelection.setBounds(20, 210, 300, 20);
 		destinationSelection.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==ItemEvent.SELECTED)
-					System.out.println("You have chosen"+" "+destinationSelection.getSelectedItem());
+					System.out.println("You have chosen destination"+" "+destinationSelection.getSelectedItem());
 			}
 		});
 		
 		//buttonPanel
 		JPanel buttonPanel = new JPanel();
 		sameFloorControl.add(buttonPanel);
+		buttonPanel.setBounds(20, 240, 300, 40);
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
 		//Find route button
 		JButton findRoute = new JButton("Find Route");
 		buttonPanel.add(findRoute);	
-//		findRoute.setBackground(Color.white);
-//		findRoute.setForeground(Color.black);
-//		findRoute.setOpaque(true);
-//		findRoute.setBorderPainted(false);
 		
 		
 		//map
 		ImagePanel sameFloorMap = new ImagePanel("maps\\project center.png", 640, 480);
 		sameFloorMap.setBounds(350, 180, 640, 480);
 		sameFloorSearchPanel.add(sameFloorMap);
+		sameFloorMap.setLayout(null);
+//		Line separator = new Line(Color.decode("#929292"), 360, 200, 900, 200);
+//		sameFloorMap.add(separator, new Integer(1), 0);
+//		sameFloorMap.repaint();
 		
-		
-		
-		//640 480(map size)
-		//left side(drop down boxes: label+ box)
-		//same building same floor
-		//same image panel x,y,z (350,180,640,480)
-		//
 	}
+
 
 }
