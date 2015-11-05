@@ -5,8 +5,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-public class Line extends JPanel
-{
+public class Line extends JPanel {
 
     /**
 	 * 
@@ -34,11 +33,8 @@ public class Line extends JPanel
 		
 	}
 	
-	@Override public void paint(Graphics g)
-    {
-        //draw in black
-        g.setColor(this.color);
-        //draw a centered horizontal line
-        g.drawLine(x1, y1, x2, y2);
+	@Override public void paint(Graphics g) {
+		g.setColor(this.color);
+		g.drawLine(x1, y1, x2, y2);
     }
 }
