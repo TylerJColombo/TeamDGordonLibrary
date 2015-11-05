@@ -120,6 +120,72 @@ public class DataManager {
 		
 		
 	}
+	public static Graph getGraphByNameWithDB(String fileName)
+	{
+		Graph graph = new Graph();
+		Connection conn =null;
+		String sql="";
+		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
+		Point p = new Point();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("successfully load the driver");
+			
+			
+			conn = DriverManager.getConnection(url);
+			
+			sql = "select * from points";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ResultSet resultPoints = ps.executeQuery();
+			while(resultPoints.next())
+			{
+				
+//				resultPoints.getString(0);
+				p.setId(resultPoints.getInt(1));
+				p.setX(resultPoints.getInt(2));
+				p.setY(resultPoints.getInt(3));
+				p.setBuildingName(resultPoints.getString(4));
+				p.setFloorNum(resultPoints.getInt(5));
+				int isEntrance = resultPoints.getInt(6);
+				if(isEntrance!=0)
+				{
+					p.setMapEntrance(true);
+				}
+				else p.setMapEntrance(false);
+				String attribute = resultPoints.getString(7);
+				p.setName(resultPoints.getString(8));
+				System.out.println("the id is .."+resultPoints.getString(1));
+			}
+			
+			
+			
+		    resultPoints.close(); 
+		    ps.close();
+		    
+		    
+		    sql="select * from edges";
+		    ps=conn.prepareStatement(sql);
+		    ResultSet resultEdges = ps.executeQuery();
+		    
+		    while(resultEdges.next())
+		    {
+		    	
+		    }
+		    
+		    
+		    
+		    conn.close(); 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return graph;
+	}
 	public static void getListOfMaps(){
 		
 	}
@@ -127,6 +193,9 @@ public class DataManager {
 		
 	}
 	public static void main(String[] args){
-		
+		Graph graph= new Graph();
+//		getGraph(graph,"src/HF1.txt");
+		getGraphByNameWithDB("src/HF1/txt");
+	}
 	}
 }
