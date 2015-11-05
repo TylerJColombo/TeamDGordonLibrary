@@ -1,7 +1,7 @@
 package wpi.cs509.dataModel;
 
 public class Graph {
-  private ArrayList<Point> points;
+  	private ArrayList<Point> points;
 	private ArrayList<Edge> edges;
 	public ArrayList<Point> getPoints() {
 		return points;
