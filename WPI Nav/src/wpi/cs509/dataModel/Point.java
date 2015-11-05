@@ -9,6 +9,8 @@ public class Point {
 	private int x;
 	private int y;
 	private int mapId;
+	private String buildingName;
+	private int floorNum;
 	private boolean isDestination;
 	private boolean isMapEntrance;
 	private String name;
@@ -35,6 +37,24 @@ public class Point {
 	}
 	public void setMapId(int mapId) {
 		this.mapId = mapId;
+	}
+	public String getBuildingName() {
+		return buildingName;
+	}
+	public void setBuildingName(String buildingName) {
+		this.buildingName = buildingName;
+	}
+	public int getFloorNum() {
+		return floorNum;
+	}
+	public void setFloorNum(int floorNum) {
+		this.floorNum = floorNum;
+	}
+	public boolean isMapEntrance() {
+		return isMapEntrance;
+	}
+	public void setMapEntrance(boolean isMapEntrance) {
+		this.isMapEntrance = isMapEntrance;
 	}
 	public boolean isDestination() {
 		return isDestination;
