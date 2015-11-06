@@ -807,6 +807,67 @@ public class DataManager {
 		}
 		return path;
 	}
+	
+	public static Point getPointByBuildingName(String BuildingName)
+	{
+		Point building = new Point();
+		Connection conn = null;
+		
+		String sql="";
+		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+		
+			sql="select * from points where buildingName= ? and attribute<>'PassageWay' and name like ?";
+				
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			
+			ps1.setString(1, "Campus");
+			ps1.setString(2, BuildingName);
+				
+			ResultSet rs = ps1.executeQuery();
+				
+				while(rs.next())
+				{
+					Point p = new Point();
+					p.setId(rs.getInt(1));
+					p.setX(rs.getInt(2));
+					p.setY(rs.getInt(3));
+					p.setBuildingName(rs.getString(4));
+					p.setFloorNum(rs.getInt(5));
+					int isEntrance = rs.getInt(6);
+					if(isEntrance!=0)
+					{
+						p.setMapEntrance(true);
+					}
+					else p.setMapEntrance(false);
+					String attribute = rs.getString(7);
+					if(attribute!="PassageWay")
+					{
+						p.setDestination(true);
+					}
+					
+					p.setName(rs.getString(8));
+					System.out.println("the id is .."+rs.getString(1));
+					building = p;
+				}
+				rs.close();
+				ps1.close();
+				conn.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return building;
+	}
+	
 	public static void main(String[] args){
 		Graph graph= new Graph();
 //		getGraph(graph,"src/HF1.txt");
@@ -830,7 +891,9 @@ public class DataManager {
 		/*System.out.println(getAllMaps());
 		System.out.println(getAllPoints());
 		System.out.println(getAllEdges());*/
-		System.out.println(getPointsByEdges(testEdges).get(0).getX());
-		System.out.println(getPointsByEdges(testEdges).get(1).getX());
+		//System.out.println(getPointsByEdges(testEdges).get(0).getX());
+		//System.out.println(getPointsByEdges(testEdges).get(1).getX());
+		//System.out.println(getMapPathByName("FullerLab"));
+		System.out.println(getPointByBuildingName("FullerLab").getId());
 	}
 }
