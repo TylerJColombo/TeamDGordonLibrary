@@ -1,36 +1,30 @@
 package wpi.cs509.ui.admin;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
-import wpi.cs509.dataModel.Graph;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
 import wpi.cs509.ui.components.SolidPoint;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JCheckBox;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
 
 public class AdminScreen {
 
 	private JFrame frame;
-	private Graph graph;
-	private JTextField textField;
-
+	
 	/**
 	 * Create the window.
 	 */
-	public AdminScreen(Graph graph) {
-		this.graph = graph;
+	public AdminScreen() {
 		initialize();
 		this.frame.setVisible(true);
 	}
@@ -48,7 +42,7 @@ public class AdminScreen {
 		////////////
 		// Header //
 		////////////
-		HeaderPanel headerPanel = new HeaderPanel();
+		HeaderPanel headerPanel = new HeaderPanel("Adminstration", false, frame);
 		headerPanel.setBounds(0, 0, 1024, 730);
 		frame.getContentPane().add(headerPanel);
 		
@@ -105,7 +99,7 @@ public class AdminScreen {
 //		lblNewLabel_5.setForeground(Color.decode("#929292"));
 		panel.add(lblNewLabel_5);
 		
-		textField = new JTextField();
+		JTextField textField = new JTextField();
 		panel.add(textField);
 		textField.setColumns(10);
 		

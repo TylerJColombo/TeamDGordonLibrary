@@ -10,14 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import wpi.cs509.dataModel.Graph;
 import wpi.cs509.ui.admin.AdminScreen;
 import wpi.cs509.ui.components.HeaderPanel;
 
 public class MainScreen {
 
 	private JFrame frame;
-	private Graph graph;
 
 	/**
 	 * Launch the application.
@@ -26,8 +24,7 @@ public class MainScreen {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainScreen window = new MainScreen(new Graph());
-					window.frame.setVisible(true);
+					new MainScreen();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -36,11 +33,11 @@ public class MainScreen {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the window.
 	 */
-	public MainScreen(Graph graph) {
-		this.graph = graph;
+	public MainScreen() {
 		initialize();
+		this.frame.setVisible(true);
 	}
 
 	/**
@@ -56,30 +53,13 @@ public class MainScreen {
 		////////////
 		// Header //
 		////////////
-		HeaderPanel headerPanel = new HeaderPanel();
+		HeaderPanel headerPanel = new HeaderPanel("WPI Navigation System", true, frame);
 		headerPanel.setBounds(0, 0, 1024, 730);
 		frame.getContentPane().add(headerPanel);
 		
-		/////////////
-		// buttons //
-		/////////////
-		
-		// Admin Button
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(824, 50, 150, 42);
-		frame.getContentPane().add(panel_1);
-		
-		JButton btnAdmin = new JButton("Admin");
-		btnAdmin.setPreferredSize(new Dimension(150, 36));
-		btnAdmin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AdminScreen adminScreen = new AdminScreen(graph);
-				frame.dispose();
-			}
-		});
-		panel_1.add(btnAdmin);
-		
-		// Nav buttons
+		/////////////////
+		// Nav buttons //
+		/////////////////
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.decode("#F1F1F1"));
 		panel.setBounds(262, 300, 500, 500);
@@ -87,14 +67,38 @@ public class MainScreen {
 		
 		JButton btnNewButton = new JButton("Route between two locations on the campus map");
 		btnNewButton.setPreferredSize(new Dimension(500, 36));
+		btnNewButton.setForeground(Color.decode("#F1F1F1"));
+		btnNewButton.setBackground(Color.decode("#AB2A36"));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new RouteScreen1();
+				frame.dispose();
+			}
+		});
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Route between two locations on the same floor of a building");
 		btnNewButton_1.setPreferredSize(new Dimension(500, 36));
+		btnNewButton_1.setForeground(Color.decode("#F1F1F1"));
+		btnNewButton_1.setBackground(Color.decode("#AB2A36"));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new RouteScreen2();
+				frame.dispose();
+			}
+		});
 		panel.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Route between two locations between different floors of a building");
 		btnNewButton_2.setPreferredSize(new Dimension(500, 36));
+		btnNewButton_2.setForeground(Color.decode("#F1F1F1"));
+		btnNewButton_2.setBackground(Color.decode("#AB2A36"));
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new RouteScreen3();
+				frame.dispose();
+			}
+		});
 		panel.add(btnNewButton_2);
 		
 		///////////////////////////////////////////////////

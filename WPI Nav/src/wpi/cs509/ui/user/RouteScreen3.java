@@ -29,6 +29,7 @@ public class RouteScreen3 {
 	 */
 	public RouteScreen3() {
 		initialize();
+		this.frame.setVisible(true);
 	}
 
 	/**

@@ -5,14 +5,15 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
-import wpi.cs509.ui.components.Line;
 
 public class RouteScreen2 {
 
@@ -41,6 +42,7 @@ public class RouteScreen2 {
 	 */
 	public RouteScreen2() {
 		initialize();
+		this.frame.setVisible(true);
 	}
 
 	/**
@@ -71,7 +73,7 @@ public class RouteScreen2 {
 		////////////
 		// Header //
 		////////////
-		HeaderPanel headerPanel = new HeaderPanel();
+		HeaderPanel headerPanel = new HeaderPanel("Route between two locations on the same floor of a building", false, frame);
 		headerPanel.setBounds(0, 0, 1024, 730);
 		frame.getContentPane().add(headerPanel);
 		
