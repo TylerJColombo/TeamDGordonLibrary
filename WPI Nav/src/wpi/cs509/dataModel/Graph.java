@@ -1,5 +1,7 @@
 package wpi.cs509.dataModel;
 
+import java.util.ArrayList;
+
 public class Graph {
   	private ArrayList<Point> points;
 	private ArrayList<Edge> edges;

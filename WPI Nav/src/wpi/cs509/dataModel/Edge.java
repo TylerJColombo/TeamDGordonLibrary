@@ -6,7 +6,7 @@ package wpi.cs509.dataModel;
  */
 public class Edge {
   private int id;
-	private int weight;
+	private float weight;
 	private String description;
 	private int sPointId;
 	private int ePointId;
@@ -16,10 +16,10 @@ public class Edge {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getWeight() {
+	public float getWeight() {
 		return weight;
 	}
-	public void setWeight(int weight) {
+	public void setWeight(float weight) {
 		this.weight = weight;
 	}
 	public String getDescription() {
