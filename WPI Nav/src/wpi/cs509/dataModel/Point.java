@@ -12,6 +12,8 @@ public class Point {
 	private String buildingName;
 	private int floorNum;
 	private boolean isDestination;
+	public double minDistance = Double.POSITIVE_INFINITY; //modified by Tyler
+	public Point previous;// Modified by Tyler
 	private boolean isMapEntrance;
 	private String name;
 	public int getId() {
