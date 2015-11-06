@@ -769,6 +769,44 @@ public class DataManager {
 		
 		return pointsArray;
 	}
+	
+	public static String getMapPathByName(String BuildingName)
+	{
+		String path="";
+		Connection conn = null;
+		String sql="";
+		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+		
+			sql="select * from map where name=?";
+				
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			
+			ps1.setString(1, BuildingName);
+				
+			ResultSet rs = ps1.executeQuery();
+				
+				while(rs.next())
+				{
+					path = rs.getString(4);
+				}
+				rs.close();
+				ps1.close();
+				conn.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return path;
+	}
 	public static void main(String[] args){
 		Graph graph= new Graph();
 //		getGraph(graph,"src/HF1.txt");
