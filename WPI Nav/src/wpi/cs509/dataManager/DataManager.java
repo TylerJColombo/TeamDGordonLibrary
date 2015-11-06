@@ -705,6 +705,7 @@ public class DataManager {
 		return edgesArray;
 		
 	}
+
 	public static void main(String[] args){
 		Graph graph= new Graph();
 //		getGraph(graph,"src/HF1.txt");
