@@ -1,0 +1,58 @@
+package wpi.cs509.ui.user;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+import wpi.cs509.ui.components.HeaderPanel;
+import wpi.cs509.ui.components.ImagePanel;
+
+public class RouteScreen1 {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RouteScreen1 window = new RouteScreen1();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public RouteScreen1() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(0, 0, 1024, 730);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+        ////////////
+		// Header //
+		////////////
+		HeaderPanel headerPanel = new HeaderPanel();
+		headerPanel.setBounds(0, 0, 1024, 730);
+		frame.getContentPane().add(headerPanel);
+		
+		ImagePanel imagePanel2 = new ImagePanel("maps//wpi-logo.gif", 640, 480);
+		imagePanel2.setBounds(330, 180, 640, 480);
+		frame.getContentPane().add(imagePanel2);;
+	}
+    
+
+}
