@@ -25,5 +25,14 @@ public class Graph {
         }
 		return (Float) null;
 	}
+	public ArrayList<Edge> getNeighbors(Point s){
+		ArrayList<Edge> es=new ArrayList<Edge>();
+		for (int i = 0; i < edges.size(); i++) {
+	           if(edges.get(i).getsPointId()==s.getId()){
+	        	   es.add(edges.get(i));
+	           }
+	        }
+		return es;
+	}
 
 }
