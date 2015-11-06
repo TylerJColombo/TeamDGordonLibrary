@@ -34,5 +34,13 @@ public class Graph {
 	        }
 		return es;
 	}
+	public Point getPointById(int id){
+		for (int i = 0; i < points.size(); i++) {
+	           if(points.get(i).getId()==id){
+	        	   return points.get(i);
+	           }
+	        }
+		return null;
+	}
 
 }
