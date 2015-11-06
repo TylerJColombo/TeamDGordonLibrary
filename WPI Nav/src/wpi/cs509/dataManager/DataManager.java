@@ -705,13 +705,81 @@ public class DataManager {
 		return edgesArray;
 		
 	}
+	public static ArrayList<Point> getPointsByEdges(ArrayList<Integer> IDArray)
+	{
+		ArrayList<Point> pointsArray = new ArrayList<Point>();
+		
+		Connection conn = null;
+		String sql="";
+		
+		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+			for(int i=0;i<IDArray.size();i++)
+			{
+				sql="select * from points where id=?";
+				
+				PreparedStatement ps1 = conn.prepareStatement(sql);
+			
+				ps1.setInt(1, (Integer)IDArray.get(i));
+				
+				ResultSet rs = ps1.executeQuery();
+				
+				while(rs.next())
+				{
+					Point p = new Point();				
+					p.setId(rs.getInt(1));
+					p.setX(rs.getInt(2));
+					p.setY(rs.getInt(3));
+					p.setBuildingName(rs.getString(4));
+					p.setFloorNum(rs.getInt(5));
+					int isEntrance = rs.getInt(6);
+					if(isEntrance!=0)
+					{
+						p.setMapEntrance(true);
+					}
+					else p.setMapEntrance(false);
+					String attribute = rs.getString(7);
+					
+					if(attribute == "PassageWay")
+					{
+						p.setDestination(false);
+					}
+					p.setName(rs.getString(8));
+					System.out.println("the id is .."+rs.getString(1));
+					pointsArray.add(p);
+				}
+				rs.close();
+				ps1.close();
+				
+			}	
 
+			conn.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return pointsArray;
+	}
 	public static void main(String[] args){
 		Graph graph= new Graph();
 //		getGraph(graph,"src/HF1.txt");
 		getGraphByNameWithDB("Higgins");
 		float testScale = 15.5f;
 		float testWeight = 3.2f;
+		ArrayList<Integer> testEdges = new ArrayList<Integer>();
+		testEdges.add(1);
+		testEdges.add(11);
+		testEdges.add(13);
+		
 		//getFloorsMapsByBuildingName("Higgins");
 		//System.out.println(getFloorsMapsByBuildingName("Fuller").get(0));
 		//System.out.println(getFloorsMapsByBuildingName("Fuller").get(1));
@@ -721,8 +789,10 @@ public class DataManager {
 		//System.out.println(saveMap("HigginsLab","c://testForIMG",testScale));
 		//System.out.println(addPoint("FullerLab","Third Floor", 600, 480, false,true,"Room333"));
 		//System.out.println(addEdge(1,2,testWeight));
-		System.out.println(getAllMaps());
+		/*System.out.println(getAllMaps());
 		System.out.println(getAllPoints());
-		System.out.println(getAllEdges());
+		System.out.println(getAllEdges());*/
+		System.out.println(getPointsByEdges(testEdges).get(0).getX());
+		System.out.println(getPointsByEdges(testEdges).get(1).getX());
 	}
 }
