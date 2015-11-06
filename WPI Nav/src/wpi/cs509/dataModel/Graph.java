@@ -17,5 +17,13 @@ public class Graph {
 	public void setEdges(ArrayList<Edge> edges) {
 		this.edges = edges;
 	}
+	public float getWeight(Point s1, Point s2){
+		for (int i = 0; i < edges.size(); i++) {
+           if(edges.get(i).getsPointId()==s1.getId()&&edges.get(i).getePointId()==s2.getId()){
+        	   return edges.get(i).getWeight();
+           }
+        }
+		return (Float) null;
+	}
 
 }
