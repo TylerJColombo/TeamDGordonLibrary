@@ -1,10 +1,14 @@
 package wpi.cs509.ui.user;
 
 import java.awt.Color;
+import java.awt.Event;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,13 +16,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import wpi.cs509.dataManager.DataManager;
+import wpi.cs509.dataModel.Point;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
+import wpi.cs509.ui.components.Line;
+import wpi.cs509.ui.components.SolidPoint;
 
 public class RouteScreen2 {
 
 	private JFrame frame;
 	private JComboBox<String> buildingSelection,floorSelection,sourceSelection,destinationSelection;
+	private ArrayList<String> buildingList, floorList;
+	private ArrayList<Point> sourceList, destinationList;
+	private SolidPoint source1,destination1;
+	private ImagePanel sameFloorMap;
+	private int x1,x2,y1,y2;
 	
 
 	/**
@@ -49,20 +62,10 @@ public class RouteScreen2 {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
-		
-		String[] buildingList = new String[]{"building1","building2","building3"};
-		String[][] floorList = new String[][]{{"b1floor1","b1floor2","b1floor3"},{"b2floor1","b2floor2","b2floor3"},{"b3floor1","b3floor2","b3floor3"}};
-		String[][][] sourceList = new String[][][]{{{"b1f1source1","b1f1source2","b1f1source3"},{"b1f2source1","b1f2source2","b1f2source3"},{"b1f3source1","b1f3source2","b1f3source3"}},
-			{{"b2f1source1","b2f1source2","b2f1source3"},{"b2f2source1","b2f2source2","b2f2source3"},{"b2f3source1","b2f3source2","b2f3source3"}},
-			{{"b3f1source1","b3f1source2","b3f1source3"},{"b3f2source1","b3f2source2","b3f2source3"},{"b3f3source1","b3f3source2","b3f3source3"}}};
-		String[][][] destinationList = new String[][][]{{{"b1f1source1","b1f1source2","b1f1source3"},{"b1f2source1","b1f2source2","b1f2source3"},{"b1f3source1","b1f3source2","b1f3source3"}},
-			{{"b2f1source1","b2f1source2","b2f1source3"},{"b2f2source1","b2f2source2","b2f2source3"},{"b2f3source1","b2f3source2","b2f3source3"}},
-			{{"b3f1source1","b3f1source2","b3f1source3"},{"b3f2source1","b3f2source2","b3f2source3"},{"b3f3source1","b3f3source2","b3f3source3"}}};
-		buildingSelection = new JComboBox<String>(buildingList);
-		floorSelection = new JComboBox<String>(floorList[0]);
-		sourceSelection = new JComboBox<String>(sourceList[0][0]);
-		destinationSelection = new JComboBox<String>(destinationList[0][0]);
+		buildingSelection = new JComboBox<String>();
+		floorSelection = new JComboBox<String>();
+		sourceSelection = new JComboBox<String>();
+		destinationSelection = new JComboBox<String>();
 			
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#F1F1F1"));
@@ -98,8 +101,24 @@ public class RouteScreen2 {
 		
 		//buildingList
 		sameFloorControl.add(buildingSelection);
-		buildingSelection.setSelectedIndex(0);
+		//buildingSelection.setSelectedIndex(0);
 		buildingSelection.setBounds(20, 30, 300, 20);
+		buildingList = DataManager.getBuildings();
+		for(int i=0;i<buildingList.size();i++){	
+			buildingSelection.addItem(buildingList.get(i));
+		}
+		buildingSelection.setSelectedIndex(0);
+		floorList = DataManager.getFloorsMapsByBuildingName(buildingSelection.getSelectedItem().toString());
+		for(int i = 0;i<floorList.size();i++){
+			floorSelection.addItem(floorList.get(i));
+		}
+		floorSelection.setSelectedIndex(0);
+		sourceList = DataManager.getLocationsByMapID(buildingSelection.getSelectedItem().toString(), floorSelection.getSelectedItem().toString());
+		destinationList = DataManager.getLocationsByMapID(buildingSelection.getSelectedItem().toString(), floorSelection.getSelectedItem().toString());
+		for(int i=0;i<sourceList.size();i++){
+			sourceSelection.addItem(sourceList.get(i).getName());
+			destinationSelection.addItem(destinationList.get(i).getName());
+		}
 		buildingSelection.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -109,17 +128,14 @@ public class RouteScreen2 {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==ItemEvent.SELECTED)
 				{
-					int index = buildingSelection.getSelectedIndex();
-					for(int i = 0;i<floorList[0].length;i++){
-						for(int j=0;j<sourceList[0][0].length;j++){
-							sourceSelection.addItem(sourceList[index][i][j]);
-							destinationSelection.addItem(destinationList[index][i][j]);
-						}
-						floorSelection.addItem(floorList[index][i]);
+					String building = buildingSelection.getSelectedItem().toString();
+					floorList = DataManager.getFloorsMapsByBuildingName(building);
+					for(int i = 0;i<floorList.size();i++){
+						floorSelection.addItem(floorList.get(i));
 					}
-					
 				}
-					System.out.println("You have chosen building"+" "+buildingSelection.getSelectedItem());
+				sameFloorMap.repaint();	
+				System.out.println("You have chosen building"+" "+buildingSelection.getSelectedItem());
 			}
 		});
 		
@@ -139,12 +155,14 @@ public class RouteScreen2 {
 				destinationSelection.removeAllItems();
 				if(e.getStateChange()==ItemEvent.SELECTED)
 				{
-					int index0 = buildingSelection.getSelectedIndex();
-					int index1 = floorSelection.getSelectedIndex();
-					for(int i = 0;i<sourceList[0][0].length;i++){
-						sourceSelection.addItem(sourceList[index0][index1][i]);
-						destinationSelection.addItem(destinationList[index0][index1][i]);
+					String building = buildingSelection.getSelectedItem().toString();
+					String floor = floorSelection.getSelectedItem().toString();
+					ArrayList<Point> locations = DataManager.getLocationsByMapID(building, floor);
+					for(int i = 0;i<locations.size();i++){
+						sourceSelection.addItem(locations.get(i).getName().toString());
+						destinationSelection.addItem(locations.get(i).getName().toString());
 					}
+					sameFloorMap.repaint();
 					System.out.println("You have chosen floor"+" "+floorSelection.getSelectedItem());
 			}
 			}
@@ -162,8 +180,17 @@ public class RouteScreen2 {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
-				if(e.getStateChange()==ItemEvent.SELECTED)
-					System.out.println("You have chosen source"+" "+sourceSelection.getSelectedItem());
+				if(e.getStateChange()==ItemEvent.SELECTED){
+//					int i = sourceSelection.getSelectedIndex();
+//					int x1 = sourceList.get(i).getX();
+//					int y1 = sourceList.get(i).getY();
+					x1 = 400;
+					y1 = 400;
+					source1 =new SolidPoint(Color.red, x1, y1);
+					sameFloorMap.add(source1);
+					sameFloorMap.repaint();
+				    System.out.println("You have chosen source"+" "+sourceSelection.getSelectedItem());
+				}
 			}
 		});
 			
@@ -179,8 +206,17 @@ public class RouteScreen2 {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
-				if(e.getStateChange()==ItemEvent.SELECTED)
+				if(e.getStateChange()==ItemEvent.SELECTED){
+					x2 = 300;
+					y2 = 300;
+//					int i = destinationSelection.getSelectedIndex();
+//					int x2 = destinationList.get(i).getX();
+//					int y2 = destinationList.get(i).getY();
+					destination1 =new SolidPoint(Color.red, x2,y2);
+					sameFloorMap.add(destination1);
+					sameFloorMap.repaint();
 					System.out.println("You have chosen destination"+" "+destinationSelection.getSelectedItem());
+				}
 			}
 		});
 		
@@ -192,19 +228,27 @@ public class RouteScreen2 {
 		
 		//Find route button
 		JButton findRoute = new JButton("Find Route");
-		buttonPanel.add(findRoute);	
+		buttonPanel.add(findRoute);
+		findRoute.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Line separator = new Line(Color.decode("#929292"), x1, y1, x2, y2);
+				sameFloorMap.add(separator, new Integer(1), 0);
+				sameFloorMap.repaint();
+			}
+		});
 		
 		
 		//map
-		ImagePanel sameFloorMap = new ImagePanel("maps\\project center.png", 640, 480);
+//		String selectenBuilding = buildingSelection.getSelectedItem().toString();
+//		String selectedFloor = floorSelection.getSelectedItem().toString();
+//		String filename = DataManager.getMapPathByName(selectenBuilding);
+//		System.out.println(filename);
+		sameFloorMap = new ImagePanel("maps//project center.png", 640, 480);
 		sameFloorMap.setBounds(350, 180, 640, 480);
 		sameFloorSearchPanel.add(sameFloorMap);
 		sameFloorMap.setLayout(null);
-//		Line separator = new Line(Color.decode("#929292"), 360, 200, 900, 200);
-//		sameFloorMap.add(separator, new Integer(1), 0);
-//		sameFloorMap.repaint();
 		
 	}
-
-
 }
