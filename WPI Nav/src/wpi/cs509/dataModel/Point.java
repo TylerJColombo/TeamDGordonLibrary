@@ -4,7 +4,7 @@ package wpi.cs509.dataModel;
  * @author Zhiming
  *@version 1.0
  */
-public class Point {
+public class Point implements Comparable<Point> {
   private int id;
 	private int x;
 	private int y;
@@ -76,5 +76,8 @@ public class Point {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	 public int compareTo(Point other)
+	   {
+	       return Double.compare(minDistance, other.minDistance);
+	   }
 }
