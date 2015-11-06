@@ -244,7 +244,7 @@ public class DataManager {
 		
 	}
 	
-	public static Graph getGraphByNameWithDB(String buildingName)
+	public static Graph getGraphByNameWithDB(String buildingName , int floorNum)
 	{
 		Graph graph = new Graph();
 		ArrayList<Point> pointsArray= new ArrayList<Point>();
@@ -264,10 +264,11 @@ public class DataManager {
 			
 			conn = DriverManager.getConnection(url);
 			
-			sqlPoint = "select * from points where buildingName like ?";
+			sqlPoint = "select * from points where buildingName like ? and floorNum = ?";
 			PreparedStatement ps1 = conn.prepareStatement(sqlPoint);
 			
 			ps1.setString(1, buildingName+"%");
+			ps1.setInt(2, floorNum);
 			sqlEdge = "select * from edge where point1id = ?";
 			PreparedStatement ps2 = conn.prepareStatement(sqlEdge);
 			
