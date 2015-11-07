@@ -1,49 +1,4 @@
-<<<<<<< Updated upstream
-package wpi.cs509.ui.user;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-
-public class RouteScreen1 {
-
-	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RouteScreen1 window = new RouteScreen1();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public RouteScreen1() {
-		initialize();
-		this.frame.setVisible(true);
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-
-}
-=======
 package wpi.cs509.ui.user;
 
 import java.awt.Color;
@@ -51,9 +6,13 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
+import wpi.cs509.dataManager.DataManager;
+import wpi.cs509.dataModel.Point;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
 import wpi.cs509.ui.components.Line;
+import wpi.cs509.ui.components.SolidPoint;
+import wpi.cs509.ui.util.*;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -74,28 +33,22 @@ import java.awt.event.ItemEvent;
 public class RouteScreen1 {
 
 	private JFrame frame;
-	JComboBox comboBox_1 = new JComboBox();
-	String labels[] = { "A", "B", "C", "D", "E", "F" };
-	JComboBox comboBox = new JComboBox(labelsofbuildings.toArray());
+	JComboBox comboBox_1 = new JComboBox(DataManager.getBuildings().toArray());
+	JComboBox comboBox = new JComboBox(DataManager.getBuildings().toArray());
 	ImagePanel  imagePanelCmap;
 	String source;
 	String destination;
-	static ArrayList labelsofbuildings=new ArrayList();
-	
-	
+	Point Odestination;
+	Point Osource;
 
-	    
-    
+	
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		 
-		  labelsofbuildings.add("a");
-		  labelsofbuildings.add("b");
-		  labelsofbuildings.add("c");
-	  
+  
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -119,10 +72,7 @@ public class RouteScreen1 {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		  al.add("a");
-		  al.add("b");
-		  al.add("c"); 
-		
+
 		  
 		frame = new JFrame();
 		frame.setBounds(0, 0, 1024, 730);
@@ -132,7 +82,7 @@ public class RouteScreen1 {
         ////////////
 		// Header //
 		////////////
-		HeaderPanel headerPanel = new HeaderPanel(); 
+		HeaderPanel headerPanel = new HeaderPanel("Route between different buildings in campus",false, frame); 
 		headerPanel.setBounds(0, 0, 1024, 730);
 		frame.getContentPane().add(headerPanel);
 
@@ -156,8 +106,14 @@ public class RouteScreen1 {
 		frame.getContentPane().add(comboBox);
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange()==ItemEvent.SELECTED){
 			source =comboBox.getSelectedItem().toString();
-			System.out.println(source);
+			Osource = DataManager.getPointByBuildingName(source);
+    		SolidPoint sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY()); 
+//    		SolidPoint sourceofSoLid = new SolidPoint(Color.red, 555,111); 
+    		imagePanelCmap.add(sourceofSoLid);
+            imagePanelCmap.repaint();
+				}
 			}
 		});
 		
@@ -169,15 +125,21 @@ public class RouteScreen1 {
 		
 //DESTINATION COMBOBOX
 		comboBox_1.setBounds(50, 284, 150, 27);
-		comboBox_1.addItem("option1");
-		comboBox_1.addItem("option2");
-		comboBox_1.addItem("option3");
+//		comboBox_1.addItem("option1");
+//		comboBox_1.addItem("option2");
+//		comboBox_1.addItem("option3");
 	    frame.getContentPane().add(comboBox_1);
 		comboBox_1.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange()==ItemEvent.SELECTED){
 				destination =comboBox_1.getSelectedItem().toString();
 				System.out.println(destination);
-			}
+			    Odestination = DataManager.getPointByBuildingName(destination);
+				SolidPoint destinationofSolid = new SolidPoint(Color.red,Odestination.getX(), Odestination.getY());  
+//				SolidPoint destinationofSolid = new SolidPoint(Color.red,555, 222);  
+                imagePanelCmap.add(destinationofSolid);
+	            imagePanelCmap.repaint();}
+		}
 		});
 		
 //BUTTON		
@@ -186,15 +148,16 @@ public class RouteScreen1 {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("option2");
 // use string of source and destination to get the their pointsid than send it to the RoutFinder
-				
-//		Util.drawPath(imagePanelCmap,RouteFinder(sourceid,destinationid));		
+  		   ArrayList <Point> PointsofPath =RouteFinder(Osource,DataManager.getGraphByNameWithDB(buildingName),Odestination);
+		   ArrayList<Point> PointsofPath=DataManager.getAllPoints();	
+	        Util.drawPath(imagePanelCmap,PointsofPath);		
 			}
 		});
 		btnFindingRoute.setBounds(55, 357, 117, 29);
 
 		frame.getContentPane().add(btnFindingRoute);
 		
-//	    imagePanelCmap.repaint();  
+
 	
 	
 	}
@@ -205,4 +168,3 @@ public class RouteScreen1 {
 }
 	
 
->>>>>>> Stashed changes
