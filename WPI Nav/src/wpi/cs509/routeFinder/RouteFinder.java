@@ -22,13 +22,11 @@ public class RouteFinder {
             // Visit each edge exiting u
             for (Edge e : g.getNeighbors(u))
             {
-//            	System.out.println("edge is "+e.getId());
-                Point v = g.getPointById(e.getePointId());
+                Point v = g.getPointById(e.getePointId()!=u.getId()?e.getePointId():e.getsPointId());
                 float weight = e.getWeight();
                 double distanceThroughU = u.minDistance + weight;
 		if (distanceThroughU < v.minDistance) {
 		    pointQueue.remove(v);
-		    System.out.println("edge is "+e.getId());
 		    v.minDistance = distanceThroughU ;
 		    v.previous = u;
 		    pointQueue.add(v);
@@ -46,7 +44,6 @@ public class RouteFinder {
         for (Point vertex = destination; vertex != null; vertex = vertex.previous)
         { 
         	path.add(vertex);
-        	System.out.println("vertex is "+vertex);
         }
 
         Collections.reverse(path);
@@ -56,7 +53,7 @@ public class RouteFinder {
     public static void main(String[] args){
     	Graph g = new Graph();
     	ArrayList<Point> p = new ArrayList<Point>();
-    	//g=DataManager.getGraphByNameWithDB("testLab",2);
+    	g=DataManager.getGraphByNameWithDB("testLab",2);
     	Point source = new Point();
     	source.setId(11);
     	source.setX(111);
@@ -69,7 +66,7 @@ public class RouteFinder {
     	
     	
     	Point end = new Point();
-    	end.setId(16);
+    	end.setId(15);
     	end.setX(161);
     	end.setY(616);
     	end.setBuildingName("testLab");
@@ -86,7 +83,3 @@ public class RouteFinder {
     	}
     }
 }
-	
-
-
-
