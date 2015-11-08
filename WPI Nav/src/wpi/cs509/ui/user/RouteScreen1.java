@@ -13,7 +13,6 @@ import wpi.cs509.ui.components.ImagePanel;
 import wpi.cs509.ui.components.Line;
 import wpi.cs509.ui.components.SolidPoint;
 import wpi.cs509.ui.util.*;
-import wpi.cs509.routeFinder.*;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -149,8 +148,8 @@ public class RouteScreen1 {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("option2");
 // use string of source and destination to get the their pointsid than send it to the RoutFinder
- // 		   ArrayList <Point> PointsofPath =RouteFinder.computePaths(Osource,DataManager.getGraphByNameWithDB("Campus", 0),Odestination);
-		   ArrayList <Point> PointsofPath =DataManager.getAllPoints();	
+  		   ArrayList <Point> PointsofPath =RouteFinder(Osource,DataManager.getGraphByNameWithDB(buildingName),Odestination);
+		   ArrayList<Point> PointsofPath=DataManager.getAllPoints();	
 	        Util.drawPath(imagePanelCmap,PointsofPath);		
 			}
 		});

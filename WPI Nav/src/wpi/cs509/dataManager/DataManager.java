@@ -244,9 +244,10 @@ public class DataManager {
 		
 	}
 	
-	public static Graph getGraphByNameWithDB(String buildingName , int floorNum)
+	public static Graph getGraphByNameWithDB(String buildingName , String floorName)
 	{
 		Graph graph = new Graph();
+		int floorNum=0;
 		ArrayList<Point> pointsArray= new ArrayList<Point>();
 		ArrayList<Edge> edgesArray= new ArrayList<Edge>();
 		
@@ -267,7 +268,29 @@ public class DataManager {
 			sqlPoint = "select * from points where buildingName like ? and floorNum = ?";
 			PreparedStatement ps1 = conn.prepareStatement(sqlPoint);
 			
+			
 			ps1.setString(1, buildingName+"%");
+			
+			switch(floorName)
+			{
+			case "SubBasement":
+				floorNum = -1;break;
+			case "Basement":
+				floorNum = 0;break;
+			case "First Floor":
+				floorNum = 1;break;
+			case "Second Floor":
+				floorNum = 2;break;
+			case "Third Floor":
+				floorNum = 3;break;
+			case "Fourth Floor":
+				floorNum = 4;break;
+			case "Fifth Floor":
+				floorNum = 5;break;
+				default:
+					floorNum=88;break;
+			}
+			
 			ps1.setInt(2, floorNum);
 			sqlEdge = "select * from edge where point1id = ?";
 			PreparedStatement ps2 = conn.prepareStatement(sqlEdge);
@@ -342,7 +365,14 @@ public class DataManager {
 		return graph;
 	}
 	
-	public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
+	public static Graph getGraphOfCampus()
+	{
+		Graph graph = new Graph();
+		graph = getGraphByNameWithDB("Campus","Basement");
+		return graph;
+	}
+	
+public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 	{
 		ArrayList<String> floorName = new ArrayList<String>();
 		
@@ -872,7 +902,7 @@ public class DataManager {
 	public static void main(String[] args){
 		Graph graph= new Graph();
 //		getGraph(graph,"src/HF1.txt");
-		getGraphByNameWithDB("Higgins");
+		graph =getGraphByNameWithDB("Higgins","First Floor");
 		float testScale = 15.5f;
 		float testWeight = 3.2f;
 		ArrayList<Integer> testEdges = new ArrayList<Integer>();
@@ -896,5 +926,6 @@ public class DataManager {
 		//System.out.println(getPointsByEdges(testEdges).get(1).getX());
 		//System.out.println(getMapPathByName("FullerLab"));
 		System.out.println(getPointByBuildingName("FullerLab").getId());
+		System.out.println(graph.getPoints().size());
 	}
 }
