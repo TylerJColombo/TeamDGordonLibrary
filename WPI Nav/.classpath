@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-<<<<<<< HEAD
+	<classpathentry kind="src" path=""/>
 	<classpathentry kind="lib" path="/Users/hongzhangcheng/Documents/Program/TeamDGordonLibrary/WPI Nav/src/wpi/cs509/dataManager/mysql-connector-java-5.1.37-bin.jar"/>
-=======
-	<classpathentry kind="lib" path="src/wpi/cs509/dataManager/mysql-connector-java-5.1.37-bin.jar"/>
->>>>>>> origin/master
 	<classpathentry kind="output" path="bin"/>
 </classpath>
