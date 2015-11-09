@@ -136,6 +136,13 @@ public class RouteScreen2 {
 				{
 					String buildingselected = buildingSelection.getSelectedItem().toString();
 					ArrayList<String> floorselected = DataManager.getFloorsMapsByBuildingName(buildingselected);
+					String filename = DataManager.getMapPathByName(buildingselected);
+					System.out.println(filename);
+					sameFloorMap = new ImagePanel(filename, 640, 480);
+					sameFloorMap.setBounds(350, 180, 640, 480);
+					sameFloorSearchPanel.add(sameFloorMap);
+					sameFloorMap.setLayout(null);
+					sameFloorMap.repaint();
 					for(int i = 0;i<floorselected.size();i++){
 						floorSelection.addItem(floorselected.get(i));
 					}
@@ -272,35 +279,18 @@ public class RouteScreen2 {
 				Point source0 = locations.get(i);
 				Point destination0 = locations.get(j);
 				ArrayList<Point> p = RouteFinder.computePaths(source0, rf, destination0);
-				for(int k = 0; k< p.size()-1; k++){
-					int x0 = p.get(k).getX();
-					int y0 = p.get(k).getY();
-					int x = p.get(k+1).getX();
-					int y = p.get(k+1).getY();
-					Line separator = new Line(Color.decode("#929292"), x0, y0, x, y);
-					sameFloorMap.add(separator, new Integer(1), 0);
-					sameFloorMap.repaint();
-				}
+				wpi.cs509.ui.util.Util.drawPath(sameFloorMap, p);
+				System.out.println(source0+" "+destination0);
 			}
 		});
 		
-		String buildingselected = buildingSelection.getSelectedItem().toString();
-		String floorselected = floorSelection.getSelectedItem().toString();
-		ArrayList<Point> locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
-		Graph rf = DataManager.getGraphByNameWithDB(buildingselected, floorselected);
-		int i = sourceSelection.getSelectedIndex();
-		int j = destinationSelection.getSelectedIndex();
-		Point source0 = locations.get(i);
-		Point destination0 = locations.get(j);
-		ArrayList<Point> p = RouteFinder.computePaths(source0, rf, destination0);
-		wpi.cs509.ui.util.Util.drawPath(sameFloorMap, p);
 		
 		//map
-//		String selectedBuilding = buildingSelection.getSelectedItem().toString();
-//		String selectedFloor = floorSelection.getSelectedItem().toString();
-//		String filename = DataManager.getMapPathByName(selectedBuilding);
-//		System.out.println(filename);
-		sameFloorMap = new ImagePanel("maps//project center.png", 640, 480);
+		String selectedBuilding = buildingSelection.getSelectedItem().toString();
+		String selectedFloor = floorSelection.getSelectedItem().toString();
+		String filename = DataManager.getMapPathByName(selectedBuilding);
+		System.out.println(filename);
+		sameFloorMap = new ImagePanel(filename, 640, 480);
 		sameFloorMap.setBounds(350, 180, 640, 480);
 		sameFloorSearchPanel.add(sameFloorMap);
 		sameFloorMap.setLayout(null);
