@@ -1,6 +1,7 @@
 package wpi.cs509.dataModel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Graph {
   	private ArrayList<Point> points;
@@ -42,5 +43,35 @@ public class Graph {
 	        }
 		return null;
 	}
-
+	public Graph addGraph(ArrayList<Graph> graph2)
+	{
+		
+		
+		for(int i =0;i<graph2.size();i++)
+		{
+			this.addGraph(graph2.get(i));
+		}
+		
+		
+		return this;
+	}
+	public Graph addGraph(Graph graph2)
+	{
+		
+		
+		ArrayList<Point> pointsArray = this.getPoints();
+		
+		pointsArray.addAll(graph2.getPoints());
+		
+		this.setPoints(pointsArray);
+		
+		ArrayList<Edge> edgesArray = this.getEdges();
+		
+		edgesArray.addAll(graph2.getEdges());
+		
+		this.setEdges(edgesArray);
+		
+		return this;
+		
+	}
 }

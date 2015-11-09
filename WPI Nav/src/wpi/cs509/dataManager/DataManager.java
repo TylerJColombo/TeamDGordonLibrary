@@ -900,9 +900,15 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 	}
 	
 	public static void main(String[] args){
-		Graph graph= new Graph();
+		Graph graph1= new Graph();
+		Graph graph2= new Graph();
+
 //		getGraph(graph,"src/HF1.txt");
-		graph =getGraphByNameWithDB("Higgins","First Floor");
+		graph1 =getGraphByNameWithDB("FullerLab","First Floor");
+		graph2 =getGraphByNameWithDB("FullerLab","Second Floor");
+		System.out.println(graph1.getPoints().size());
+		System.out.println(graph2.getPoints().size());
+		graph1.addGraph(graph2); 
 		float testScale = 15.5f;
 		float testWeight = 3.2f;
 		ArrayList<Integer> testEdges = new ArrayList<Integer>();
@@ -925,7 +931,13 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		//System.out.println(getPointsByEdges(testEdges).get(0).getX());
 		//System.out.println(getPointsByEdges(testEdges).get(1).getX());
 		//System.out.println(getMapPathByName("FullerLab"));
-		System.out.println(getPointByBuildingName("FullerLab").getId());
-		System.out.println(graph.getPoints().size());
+		//System.out.println(getPointByBuildingName("FullerLab").getId());
+		//System.out.println(graph.getPoints().size());
+		System.out.println(graph1.getPoints().get(0).getId());
+		System.out.println(graph1.getPoints().get(1).getId());
+		System.out.println(graph1.getPoints().get(2).getId());
+
+		//System.out.println(graph2.getPoints().size());
+		
 	}
 }
