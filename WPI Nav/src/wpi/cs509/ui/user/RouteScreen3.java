@@ -71,6 +71,7 @@ public class RouteScreen3 {
 		fromfloorSelection = new JComboBox<String>();
 		sourceSelection = new JComboBox<String>();
 		destinationSelection = new JComboBox<String>();
+		ImagePanel  imagePanelmap;
 			
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#F1F1F1"));
@@ -81,7 +82,7 @@ public class RouteScreen3 {
 		////////////
 		// Header //
 		////////////
-		HeaderPanel headerPanel = new HeaderPanel("Route between two locations on the same floor of a building", false, frame);
+		HeaderPanel headerPanel = new HeaderPanel("Route between two locations on different floor of a building", false, frame);
 		headerPanel.setBounds(0, 0, 1024, 730);
 		frame.getContentPane().add(headerPanel);
 		
@@ -240,6 +241,7 @@ public class RouteScreen3 {
 					sameFloorMap.add(source1);
 					sameFloorMap.repaint();
 				    System.out.println("You have chosen source"+" "+sourceSelection.getSelectedItem());
+
 				}
 			}
 		};
@@ -341,31 +343,62 @@ public class RouteScreen3 {
 		//Find route button
 		JButton findRoute = new JButton("Find Route");
 		buttonPanel.add(findRoute);
-		/*findRoute.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				String buildingselected = buildingSelection.getSelectedItem().toString();
-				//String floorselected = floorSelection.getSelectedItem().toString();
-				!!!!!!!!!
-				//ArrayList<Point> locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
-				//Graph rf = DataManager.getGraphByNameWithDB(buildingselected, floorselected);
-				int i = sourceSelection.getSelectedIndex();
-				int j = destinationSelection.getSelectedIndex();
-				Point source0 = locations.get(i);
-				Point destination0 = locations.get(j);
-				ArrayList<Point> p = RouteFinder.computePaths(source0, rf, destination0);
-				for(int k = 0; k< p.size()-1; k++){
-					int x0 = p.get(k).getX();
-					int y0 = p.get(k).getY();
-					int x = p.get(k+1).getX();
-					int y = p.get(k+1).getY();
-					Line separator = new Line(Color.decode("#929292"), x0, y0, x, y);
-					sameFloorMap.add(separator, new Integer(1), 0);
-					sameFloorMap.repaint();
-				}
-			}
-		});*/
+		findRoute.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                String buildingselected = buildingSelection.getSelectedItem().toString();
+                String fromfloorselected = fromfloorSelection.getSelectedItem().toString();
+                String tofloorselected =tofloorSelection.getSelectedItem().toString();
+                ArrayList<Point> fromlocation = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
+                ArrayList<Point> tolocation = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
+                Graph tograph = DataManager.getGraphByNameWithDB(buildingselected, tofloorselected);
+                Graph fromgraph = DataManager.getGraphByNameWithDB(buildingselected, fromfloorselected);
+                Graph rf = new Graph();
+                rf= fromgraph.addGraph(tograph);
+
+                int i = sourceSelection.getSelectedIndex();
+                int j = destinationSelection.getSelectedIndex();
+                Point source0 = locations.get(i);
+                Point destination0 = locations.get(j);
+                ArrayList<Point> p = RouteFinder.computePaths(source0, rf, destination0);
+                
+                int from = 0;
+                int to = 0;
+                for(int c = 0; c<p.size()-1;c++){
+                	if(p.get(c).getFloorNum()==p.get(c+1).getFloorNum()){
+                		continue;
+                	}
+                	else{
+                		from = c;
+                		to = c+1;
+                	}
+                }
+                
+                for(int f = 0;f<from ; f++){
+                	Point frompoint = p.get(f);
+            		ArrayList<Point> frompointlist = new ArrayList<>();
+            		frompointlist.set(f, frompoint);
+            		wpi.cs509.ui.util.Util.drawPath(sameFloorMap, frompointlist);
+                }
+                
+                for(int t = to;t<p.size() ; t++){
+                	Point topoint = p.get(t);
+            		ArrayList<Point> topointlist = new ArrayList<>();
+            		topointlist.set(t, topoint);
+            		wpi.cs509.ui.util.Util.drawPath(sameFloorMap, topointlist);
+                }
+                
+                
+                for(int k = 1;k<p.size()-1;k++){
+                    SolidPoint conjection = new SolidPoint(Color.black, p.get(k).getX(), p.get(k).getY());
+                    sameFloorMap.add(conjection);
+                    sameFloorMap.repaint();
+                }
+                
+                System.out.println(source0+" "+destination0);
+            }
+        });
 
 		
 /*		String buildingselected = buildingSelection.getSelectedItem().toString();
