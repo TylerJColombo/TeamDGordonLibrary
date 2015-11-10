@@ -12,6 +12,11 @@ public class RouteFinder {
 
     public static ArrayList<Point> computePaths(Point source, Graph g, Point destination)
     {
+    	if(source.getId()==destination.getId()){
+    		ArrayList<Point> point=new ArrayList<Point>();
+    		point.add(source);
+    		return point;
+    	}
         source.minDistance = 0;
         PriorityQueue<Point> pointQueue = new PriorityQueue<Point>();
         pointQueue.add(source);

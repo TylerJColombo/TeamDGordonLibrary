@@ -4,6 +4,9 @@ import java.awt.Color;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
+//import apple.laf.JRSUIConstants.Size;
 import sun.net.www.content.text.plain;
 import wpi.cs509.dataModel.Edge;
 import wpi.cs509.dataModel.Point;
@@ -13,6 +16,7 @@ import wpi.cs509.ui.components.SolidPoint;
 
 public class Util {
 	public  static boolean drawPath( ImagePanel a, ArrayList <Point> P){
+	 if(P.size()!=1){
 		for(Point path:P){
 			SolidPoint pathofSolid = new SolidPoint(Color.green, path.getX(), path.getY()); 
 			a.add(pathofSolid);
@@ -28,6 +32,13 @@ public class Util {
 			a.repaint();
 			
 		}
+		}else {
+			SolidPoint ssolid = new SolidPoint(Color.red, P.get(0).getX(), P.get(0).getY());
+			a.add(ssolid);
+			a.repaint();
+			JOptionPane.showMessageDialog(null, "source point and destination point shouldnt be same");
+		}
+	
 		return true;
 	}
 
