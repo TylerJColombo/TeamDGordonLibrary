@@ -110,10 +110,6 @@ public class AdminScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DataManager.saveMap(txtMapName.getText(), txtMapPath.getText(), Float.parseFloat(txtMapScale.getText()));
-				txtMapName.setText("");
-				txtMapPath.setText("");
-				txtMapScale.setText("");
-				
 			}
 		});
 		
@@ -195,7 +191,6 @@ public class AdminScreen {
 				// load selected map
 				Map selectedMap = (Map)comboMaps.getSelectedItem();
 				ImagePanel imagePanel2 = new ImagePanel(selectedMap.getFileLocation(), 640, 480);
-				System.out.println(selectedMap.getFileLocation());
 				imagePanel2.setLayout(null);
 				imagePanel2.setBounds(330, 0, 640, 480);
 				
@@ -236,7 +231,7 @@ public class AdminScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DataManager.addPoint(((Map)comboMaps.getSelectedItem()).getName(), Integer.parseInt(lblXValue.getText()), Integer.parseInt(lblYValue.getText()), chckbxIsEnterance.isSelected(), chckbxIsLocation.isSelected(), txtLocationName.getText());
+				DataManager.addPoint(((Map)comboMaps.getSelectedItem()).getName(), ((Map)comboMaps.getSelectedItem()).getName(), Integer.parseInt(lblXValue.getText()), Integer.parseInt(lblYValue.getText()), chckbxIsEnterance.isSelected(), chckbxIsLocation.isSelected(), txtLocationName.getText());
 			}
 		});
 		
@@ -294,7 +289,7 @@ public class AdminScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DataManager.addEdge(((Point)comboFirstPoint.getSelectedItem()).getId(), ((Point)comboSecondPoint.getSelectedItem()).getId(), Float.parseFloat(txtEdgeWeight.getText()));
+				DataManager.addEdge(((Point)comboFirstPoint.getSelectedItem()).getId(), ((Point)comboSecondPoint.getSelectedItem()).getId(), Integer.parseInt(txtEdgeWeight.getText()));
 			}
 		});
 		
