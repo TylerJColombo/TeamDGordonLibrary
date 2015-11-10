@@ -16,19 +16,24 @@ import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Map;
 import wpi.cs509.dataModel.Point;
 public class DataManager {
-	public static boolean addPoint(String buildingName,String floorName, int x, int y, boolean isEntrance,boolean isLocation,String name ){
+	public static boolean addPoint(String mapName, int x, int y, boolean isEntrance,boolean isLocation,String name ){
 		
 		Connection conn = null;
 		String sql="";
 		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		int success=0;
 		int floorNum=88;
+		String buildingName = new String();
+		String floorName = new String();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
 			sql="insert into points (x,y,buildingName,floorNum,isEntrance,attribute,name)values(?,?,?,?,?,?,?)";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
+			String[] tmp = mapName.split(",");
+			buildingName = tmp[0];
+			floorName = tmp[1];
 			switch(floorName)
 			{
 			case "SubBasement":
@@ -68,6 +73,10 @@ public class DataManager {
 			
 			success  = ps1.executeUpdate();
 			
+			if(success!=0)
+			{
+			System.out.println("the points add successfully...");
+			}
 			ps1.close();
 			conn.close();
 			
@@ -109,6 +118,10 @@ public class DataManager {
 			
 			success  = ps1.executeUpdate();
 			
+			if(success!=0)
+			{
+			System.out.println("the edges add successfully...");
+			}
 			ps1.close();
 			conn.close();
 		} catch (ClassNotFoundException e) {
@@ -578,7 +591,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 			
 			
 			success  = ps1.executeUpdate();
-			
+			System.out.println("the status of save map is "+success);
 			ps1.close();
 			conn.close();
 			
@@ -592,7 +605,11 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		}
 		
 		if(success!=0)
-		return true;
+		{
+			System.out.println("add map successfullly...");
+			return true;
+		}
+		
 		else return false;
 	}
 	
@@ -933,9 +950,9 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		//System.out.println(getMapPathByName("FullerLab"));
 		//System.out.println(getPointByBuildingName("FullerLab").getId());
 		//System.out.println(graph.getPoints().size());
-		System.out.println(graph1.getPoints().get(0).getId());
+		/*System.out.println(graph1.getPoints().get(0).getId());
 		System.out.println(graph1.getPoints().get(1).getId());
-		System.out.println(graph1.getPoints().get(2).getId());
+		System.out.println(graph1.getPoints().get(2).getId());*/
 
 		//System.out.println(graph2.getPoints().size());
 		
