@@ -39,8 +39,8 @@ public class RouteScreen1 {
 	ImagePanel  imagePanelCmap;
 	String source;
 	String destination;
-	Point Odestination;
-	Point Osource;
+	Point Odestination=null;
+	Point Osource=null;
 	SolidPoint destinationofSolid;
 	SolidPoint sourceofSoLid;
     Boolean Pflag = false;
@@ -69,6 +69,7 @@ public class RouteScreen1 {
 	 */
 	public RouteScreen1() {
 		initialize();
+		this.frame.setVisible(true);
 	}
 
 	/**
@@ -92,6 +93,7 @@ public class RouteScreen1 {
 		
 //imagepanel for map		
 		imagePanelCmap = new ImagePanel("maps//campusmap.gif", 640, 480);
+//       DataManager.getMapPathByName("Campus,Basement");		
 		imagePanelCmap.setLayout(null);
 		imagePanelCmap.setBounds(330, 180, 640, 480);
 		frame.getContentPane().add(imagePanelCmap);
@@ -128,8 +130,8 @@ public class RouteScreen1 {
 			
 		
     		sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY());  
-    		destinationofSolid = new SolidPoint(Color.red,Odestination.getX(), Odestination.getY());  
-    		imagePanelCmap.add(destinationofSolid);
+ //   		destinationofSolid = new SolidPoint(Color.red,Odestination.getX(), Odestination.getY());  
+     		if(destinationofSolid!=null){imagePanelCmap.add(destinationofSolid);}
     		imagePanelCmap.add(sourceofSoLid);
             imagePanelCmap.repaint();}
 			
@@ -161,11 +163,11 @@ public class RouteScreen1 {
 							
 						}
 				destination =comboBox_1.getSelectedItem().toString();
-			        Odestination = DataManager.getPointByBuildingName(destination);
+			    Odestination = DataManager.getPointByBuildingName(destination);
 				destinationofSolid = new SolidPoint(Color.red,Odestination.getX(), Odestination.getY());  
-				sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY()); 
+//				sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY()); 
 	    	
-	    		        imagePanelCmap.add(sourceofSoLid);
+	    	    imagePanelCmap.add(sourceofSoLid);
 				imagePanelCmap.add(destinationofSolid);
 	            imagePanelCmap.repaint();}
 		}
@@ -194,5 +196,8 @@ public class RouteScreen1 {
 
 }
 	
+
+
+
 
 
