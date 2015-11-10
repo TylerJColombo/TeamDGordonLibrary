@@ -37,5 +37,9 @@ public class Map {
 	public void setScale(float scale) {
 		this.scale = scale;
 	}
+	@Override
+	public String toString() {
+		return name;
+	}
 
 }

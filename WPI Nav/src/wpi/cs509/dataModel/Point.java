@@ -76,8 +76,13 @@ public class Point implements Comparable<Point> {
 	public void setName(String name) {
 		this.name = name;
 	}
-	 public int compareTo(Point other)
-	   {
-	       return Double.compare(minDistance, other.minDistance);
-	   }
+	public int compareTo(Point other)
+	{
+	    return Double.compare(minDistance, other.minDistance);
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
+	}
 }
