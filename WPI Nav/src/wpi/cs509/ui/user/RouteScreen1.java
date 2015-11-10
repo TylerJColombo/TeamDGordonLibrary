@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Point;
+import wpi.cs509.routeFinder.RouteFinder;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
 import wpi.cs509.ui.components.Line;
@@ -40,7 +41,9 @@ public class RouteScreen1 {
 	String destination;
 	Point Odestination;
 	Point Osource;
-
+	SolidPoint destinationofSolid;
+	SolidPoint sourceofSoLid;
+    Boolean Pflag = false;
 	
 
 	/**
@@ -107,15 +110,32 @@ public class RouteScreen1 {
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange()==ItemEvent.SELECTED){
+					if(Pflag==true){
+						imagePanelCmap.removeAll();
+						imagePanelCmap.repaint();
+						Pflag=false;
+					    System.out.println("remove1111");}
+					   
+				    if (sourceofSoLid!=null) {
+						imagePanelCmap.remove(sourceofSoLid);
+						System.out.println("remove");
+						imagePanelCmap.repaint();
+							
+						}
+//				}
 			source =comboBox.getSelectedItem().toString();
 			Osource = DataManager.getPointByBuildingName(source);
-    		SolidPoint sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY()); 
-//    		SolidPoint sourceofSoLid = new SolidPoint(Color.red, 555,111); 
+			
+		
+    		sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY());  
+    		destinationofSolid = new SolidPoint(Color.red,Odestination.getX(), Odestination.getY());  
+    		imagePanelCmap.add(destinationofSolid);
     		imagePanelCmap.add(sourceofSoLid);
-            imagePanelCmap.repaint();
+            imagePanelCmap.repaint();}
+			
 				}
 			}
-		});
+		);
 		
 //label for destination
 		JLabel lblDestination = new JLabel("destination:");
@@ -125,19 +145,28 @@ public class RouteScreen1 {
 		
 //DESTINATION COMBOBOX
 		comboBox_1.setBounds(50, 284, 150, 27);
-//		comboBox_1.addItem("option1");
-//		comboBox_1.addItem("option2");
-//		comboBox_1.addItem("option3");
 	    frame.getContentPane().add(comboBox_1);
 		comboBox_1.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange()==ItemEvent.SELECTED){
+					if(Pflag==true){
+						imagePanelCmap.removeAll();
+						imagePanelCmap.repaint();
+						Pflag=false;
+						System.out.println("remove1111");}
+					if (destinationofSolid!=null) {
+						imagePanelCmap.remove(destinationofSolid);
+						System.out.println("remove");
+						imagePanelCmap.repaint();
+							
+						}
 				destination =comboBox_1.getSelectedItem().toString();
-				System.out.println(destination);
-			    Odestination = DataManager.getPointByBuildingName(destination);
-				SolidPoint destinationofSolid = new SolidPoint(Color.red,Odestination.getX(), Odestination.getY());  
-//				SolidPoint destinationofSolid = new SolidPoint(Color.red,555, 222);  
-                imagePanelCmap.add(destinationofSolid);
+			        Odestination = DataManager.getPointByBuildingName(destination);
+				destinationofSolid = new SolidPoint(Color.red,Odestination.getX(), Odestination.getY());  
+				sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY()); 
+	    	
+	    		        imagePanelCmap.add(sourceofSoLid);
+				imagePanelCmap.add(destinationofSolid);
 	            imagePanelCmap.repaint();}
 		}
 		});
@@ -146,11 +175,9 @@ public class RouteScreen1 {
 		JButton btnFindingRoute = new JButton("Finding Route");
 		btnFindingRoute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("option2");
-// use string of source and destination to get the their pointsid than send it to the RoutFinder
-  		   ArrayList <Point> PointsofPath =RouteFinder(Osource,DataManager.getGraphByNameWithDB(buildingName),Odestination);
-		   ArrayList<Point> PointsofPath=DataManager.getAllPoints();	
-	        Util.drawPath(imagePanelCmap,PointsofPath);		
+               // use string of source and destination to get the their pointsid than send it to the RoutFinder
+     		    ArrayList <Point> PointsofPath =RouteFinder.computePaths(Osource,DataManager.getGraphOfCampus(),Odestination);
+	            Pflag=Util.drawPath(imagePanelCmap,PointsofPath);		
 			}
 		});
 		btnFindingRoute.setBounds(55, 357, 117, 29);
@@ -167,4 +194,5 @@ public class RouteScreen1 {
 
 }
 	
+
 
