@@ -148,16 +148,53 @@ public class DataManager {
 			
 			while(rs.next())
 			{
+				point1.setId(rs.getInt(1));
 				point1.setX(rs.getInt(2));
 				point1.setY(rs.getInt(3));
+				point1.setFloorNum(rs.getInt(5));
+				if(rs.getInt(6)==1)
+				{point1.setMapEntrance(true);}
+				else point1.setMapEntrance(false);
 			}
 			ps2.setInt(1, point2ID);
 			rs = ps2.executeQuery();
 			while(rs.next())
 			{
+				point2.setId(rs.getInt(1));
 				point2.setX(rs.getInt(2));
 				point2.setY(rs.getInt(3));
+				point2.setFloorNum(rs.getInt(5));
+				if(rs.getInt(6)==1)
+				{point2.setMapEntrance(true);}
+				else point2.setMapEntrance(false);
 			}
+			
+			if(point1.getFloorNum()!=point2.getFloorNum())
+			{
+				if(point1.isMapEntrance()&&point2.isMapEntrance())
+				{
+					EdgeweightS = 1.0f;
+				
+				sql="insert into edge (point1id,point2id,weight)values(?,?,?)";
+				PreparedStatement ps1 = conn.prepareStatement(sql);
+							
+				ps1.setInt(1, point1ID);
+				ps1.setInt(2, point2ID);
+				ps1.setFloat(3,EdgeweightS);
+				System.out.println(EdgeweightS);
+				success  = ps1.executeUpdate();
+				
+				ps1.close();
+				conn.close();
+				}
+				else 
+				{
+					System.out.println("data input error");
+				}
+			}
+			
+			
+			else{
 			EdgeweightS = (point1.getX()-point2.getX())*(point1.getX()-point2.getX())+(point1.getY()-point2.getY())*(point1.getY()-point2.getY());
 			
 			
@@ -176,6 +213,7 @@ public class DataManager {
 			
 			ps1.close();
 			conn.close();
+			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Map;
@@ -134,9 +136,6 @@ public class AdminScreen {
 		
 		JComboBox<Map> comboMaps = new JComboBox<Map>();
 		comboMaps.setBounds(120, 20, 180, 20);
-		for(Map map: DataManager.getAllMaps()){
-			comboMaps.addItem(map);
-		}
 		panel.add(comboMaps);
 		
 		JLabel lblNewLabel_1 = new JLabel("2) Click the point on the map.");
@@ -194,41 +193,42 @@ public class AdminScreen {
 			public void itemStateChanged(ItemEvent e) {
 				// load selected map
 				Map selectedMap = (Map)comboMaps.getSelectedItem();
-				ImagePanel imagePanel2 = new ImagePanel(selectedMap.getFileLocation(), 640, 480);
-				System.out.println(selectedMap.getFileLocation());
-				imagePanel2.setLayout(null);
-				imagePanel2.setBounds(330, 0, 640, 480);
-				
-				imagePanel2.addMouseListener(new MouseListener() {
-		            @Override
-		            public void mouseClicked(MouseEvent e) {
-		                System.out.println(":MOUSE_CLICK_EVENT:" + e.getX() + "," + e.getY());
-		                lblXValue.setText(e.getX() + "");
-		                lblYValue.setText(e.getY() + "");
-		                SolidPoint pointUI = new SolidPoint(Color.RED, e.getX(), e.getY());
-		                imagePanel2.add(pointUI);
-		                imagePanel2.repaint();
-		            }
-
-					@Override
-					public void mouseEntered(MouseEvent arg0) {
-						// TODO Auto-generated method stub
-					}
-					@Override
-					public void mouseExited(MouseEvent arg0) {
-						// TODO Auto-generated method stub
-					}
-					@Override
-					public void mousePressed(MouseEvent arg0) {
-						// TODO Auto-generated method stub
-					}
-					@Override
-					public void mouseReleased(MouseEvent arg0) {
-						// TODO Auto-generated method stub
-					}
-		        });
-				addPointTab.add(imagePanel2);
-				addPointTab.repaint();
+				if(selectedMap != null){
+					ImagePanel imagePanel2 = new ImagePanel(selectedMap.getFileLocation(), 640, 480);
+					imagePanel2.setLayout(null);
+					imagePanel2.setBounds(330, 0, 640, 480);
+					
+					imagePanel2.addMouseListener(new MouseListener() {
+			            @Override
+			            public void mouseClicked(MouseEvent e) {
+			                System.out.println(":MOUSE_CLICK_EVENT:" + e.getX() + "," + e.getY());
+			                lblXValue.setText(e.getX() + "");
+			                lblYValue.setText(e.getY() + "");
+			                SolidPoint pointUI = new SolidPoint(Color.RED, e.getX(), e.getY());
+			                imagePanel2.add(pointUI);
+			                imagePanel2.repaint();
+			            }
+	
+						@Override
+						public void mouseEntered(MouseEvent arg0) {
+							// TODO Auto-generated method stub
+						}
+						@Override
+						public void mouseExited(MouseEvent arg0) {
+							// TODO Auto-generated method stub
+						}
+						@Override
+						public void mousePressed(MouseEvent arg0) {
+							// TODO Auto-generated method stub
+						}
+						@Override
+						public void mouseReleased(MouseEvent arg0) {
+							// TODO Auto-generated method stub
+						}
+			        });
+					addPointTab.add(imagePanel2);
+					addPointTab.repaint();
+				}
 			}
 		});
 		
@@ -301,6 +301,23 @@ public class AdminScreen {
 			}
 		});
 		
-		
+		// tab change action listener
+		tabbedPane.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				System.out.println("tab num: " + tabbedPane.getSelectedIndex());
+				
+				if(tabbedPane.getSelectedIndex() == 1){
+					// refresh Maps combo box
+					if(comboMaps.getItemCount() > 0){
+						comboMaps.removeAllItems();
+					}
+					for(Map map: DataManager.getAllMaps()){
+						comboMaps.addItem(map);
+					}
+				}
+			}
+		});
 	}
 }
