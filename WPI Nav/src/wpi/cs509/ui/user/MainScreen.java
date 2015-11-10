@@ -69,6 +69,8 @@ public class MainScreen {
 		btnNewButton.setPreferredSize(new Dimension(500, 36));
 		btnNewButton.setForeground(Color.decode("#F1F1F1"));
 		btnNewButton.setBackground(Color.decode("#AB2A36"));
+		btnNewButton.setOpaque(true);
+		btnNewButton.setBorderPainted(false);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new RouteScreen1();
@@ -81,6 +83,8 @@ public class MainScreen {
 		btnNewButton_1.setPreferredSize(new Dimension(500, 36));
 		btnNewButton_1.setForeground(Color.decode("#F1F1F1"));
 		btnNewButton_1.setBackground(Color.decode("#AB2A36"));
+		btnNewButton_1.setOpaque(true);
+		btnNewButton_1.setBorderPainted(false);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new RouteScreen2();
@@ -93,6 +97,8 @@ public class MainScreen {
 		btnNewButton_2.setPreferredSize(new Dimension(500, 36));
 		btnNewButton_2.setForeground(Color.decode("#F1F1F1"));
 		btnNewButton_2.setBackground(Color.decode("#AB2A36"));
+		btnNewButton_2.setOpaque(true);
+		btnNewButton_2.setBorderPainted(false);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new RouteScreen3();

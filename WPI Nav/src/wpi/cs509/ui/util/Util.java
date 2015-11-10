@@ -18,7 +18,7 @@ public class Util {
 	public  static boolean drawPath( ImagePanel a, ArrayList <Point> P){
 	 if(P.size()!=1){
 		for(Point path:P){
-			SolidPoint pathofSolid = new SolidPoint(Color.green, path.getX(), path.getY()); 
+			SolidPoint pathofSolid = new SolidPoint(Color.decode("#D55E00"), path.getX(), path.getY()); 
 			a.add(pathofSolid);
 			a.repaint();
 			
@@ -27,7 +27,7 @@ public class Util {
 			Point p1 =P.get(i);
 			Point p2 =P.get(i+1);
 //			Line path = new Line(Color.decode("#929292"), p1.getX(), p1.getY(), p2.getX(), p2.getY());
-			Line path = new Line(Color.blue, p1.getX(), p1.getY(), p2.getX(), p2.getY());
+			Line path = new Line(Color.decode("#D55E00"), p1.getX(), p1.getY(), p2.getX(), p2.getY());
 			a.add(path, new Integer(1), 0);
 			a.repaint();
 			

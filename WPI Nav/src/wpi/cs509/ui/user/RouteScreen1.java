@@ -197,7 +197,10 @@ public class RouteScreen1 {
 			}
 		});
 		btnFindingRoute.setBounds(55, 357, 117, 29);
-
+		btnFindingRoute.setForeground(Color.decode("#F1F1F1"));
+		btnFindingRoute.setBackground(Color.decode("#AB2A36"));
+		btnFindingRoute.setOpaque(true);
+		btnFindingRoute.setBorderPainted(false);
 		frame.getContentPane().add(btnFindingRoute);
 		
 

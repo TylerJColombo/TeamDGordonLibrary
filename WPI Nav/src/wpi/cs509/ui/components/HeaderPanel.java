@@ -30,7 +30,7 @@ public class HeaderPanel extends JComponent{
 		// Customize header
 		this.setBackground(Color.decode("#F1F1F1"));
 		
-		ImagePanel logo = new ImagePanel("maps\\wpi-logo.gif", 461, 67);
+		ImagePanel logo = new ImagePanel("maps//wpi-logo.gif", 461, 67);
 		logo.setBounds(30, 30, 461, 67);
 		this.add(logo);
 		
@@ -39,7 +39,7 @@ public class HeaderPanel extends JComponent{
 		panel_2.setBackground(Color.decode("#F1F1F1"));
 		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel_2.setBounds(105, 100, 461, 35);
+		panel_2.setBounds(105, 100, 600, 35);
 		this.add(panel_2);
 		
 		JLabel lblNewLabel = new JLabel(title);
@@ -59,6 +59,8 @@ public class HeaderPanel extends JComponent{
 			btnAdmin.setPreferredSize(new Dimension(100, 36));
 			btnAdmin.setForeground(Color.decode("#F1F1F1"));
 			btnAdmin.setBackground(Color.decode("#AB2A36"));
+			btnAdmin.setOpaque(true);
+			btnAdmin.setBorderPainted(false);
 			btnAdmin.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					new AdminScreen();
@@ -72,6 +74,8 @@ public class HeaderPanel extends JComponent{
 			btnAdmin.setPreferredSize(new Dimension(100, 36));
 			btnAdmin.setForeground(Color.decode("#F1F1F1"));
 			btnAdmin.setBackground(Color.decode("#AB2A36"));
+			btnAdmin.setOpaque(true);
+			btnAdmin.setBorderPainted(false);
 			btnAdmin.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					new MainScreen();

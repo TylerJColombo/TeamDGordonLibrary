@@ -102,6 +102,8 @@ public class AdminScreen {
 		btnSaveMap.setBounds(20, 230, 280, 25);
 		btnSaveMap.setForeground(Color.decode("#F1F1F1"));
 		btnSaveMap.setBackground(Color.decode("#AB2A36"));
+		btnSaveMap.setOpaque(true);
+		btnSaveMap.setBorderPainted(false);
 		panel_1.add(btnSaveMap);
 		
 		// Add Map Action Listeners
@@ -182,6 +184,8 @@ public class AdminScreen {
 		btnSavePoint.setBounds(20, 300, 280, 25);
 		btnSavePoint.setForeground(Color.decode("#F1F1F1"));
 		btnSavePoint.setBackground(Color.decode("#AB2A36"));
+		btnSavePoint.setOpaque(true);
+		btnSavePoint.setBorderPainted(false);
 		panel.add(btnSavePoint);
 		
 		// Add Point Action Listeners 
@@ -283,6 +287,8 @@ public class AdminScreen {
 		btnSaveEdge.setBounds(20, 230, 280, 25);
 		btnSaveEdge.setForeground(Color.decode("#F1F1F1"));
 		btnSaveEdge.setBackground(Color.decode("#AB2A36"));
+		btnSaveEdge.setOpaque(true);
+		btnSaveEdge.setBorderPainted(false);
 		panel_3.add(btnSaveEdge);
 		
 		// Add Map Action Listeners

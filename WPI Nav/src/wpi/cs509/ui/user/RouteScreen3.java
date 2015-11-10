@@ -305,6 +305,10 @@ public class RouteScreen3 {
 		//From button
 		JButton frombutton = new JButton("From");
 		buttonPanel.add(frombutton);
+		frombutton.setForeground(Color.decode("#F1F1F1"));
+		frombutton.setBackground(Color.decode("#AB2A36"));
+		frombutton.setOpaque(true);
+		frombutton.setBorderPainted(false);
 		frombutton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -324,6 +328,10 @@ public class RouteScreen3 {
 		//to button
 		JButton tobutton = new JButton("To");
 		buttonPanel.add(tobutton);
+		tobutton.setForeground(Color.decode("#F1F1F1"));
+		tobutton.setBackground(Color.decode("#AB2A36"));
+		tobutton.setOpaque(true);
+		tobutton.setBorderPainted(false);
         tobutton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -343,6 +351,10 @@ public class RouteScreen3 {
 		//Find route button
 		JButton findRoute = new JButton("Find Route");
 		buttonPanel.add(findRoute);
+		findRoute.setForeground(Color.decode("#F1F1F1"));
+		findRoute.setBackground(Color.decode("#AB2A36"));
+		findRoute.setOpaque(true);
+		findRoute.setBorderPainted(false);
 		findRoute.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

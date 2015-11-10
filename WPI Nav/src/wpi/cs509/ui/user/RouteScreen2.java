@@ -1,4 +1,5 @@
 package wpi.cs509.ui.user;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -7,21 +8,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import com.mysql.jdbc.Util;
+
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
-import wpi.cs509.ui.components.Line;
 import wpi.cs509.ui.components.SolidPoint;
+
 public class RouteScreen2 {
+
 	private JFrame frame;
 	private JComboBox<String> buildingSelection,floorSelection,sourceSelection,destinationSelection;
 	private ArrayList<String> buildingList, floorList, floorSelected;
@@ -33,6 +37,7 @@ public class RouteScreen2 {
 	private String buildingselected,floorselected, filename;
 	private int ss,ds;
 	
+
 	/**
 	 * Launch the application.
 	 */
@@ -48,6 +53,7 @@ public class RouteScreen2 {
 			}
 		});
 	}
+
 	/**
 	 * Create the application.
 	 */
@@ -55,6 +61,7 @@ public class RouteScreen2 {
 		initialize();
 		this.frame.setVisible(true);
 	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -166,14 +173,30 @@ public class RouteScreen2 {
 					String filename = DataManager.getMapPathByName(buildingselected+","+floorselected);
 					System.out.println(filename);
 					sameFloorMap = new ImagePanel(filename, 640, 480);
-					System.out.println(sameFloorMap);
 					sameFloorMap.setBounds(350, 180, 640, 480);
 					sameFloorSearchPanel.add(sameFloorMap);
 					sameFloorMap.setLayout(null);
 					sameFloorMap.repaint();
-					sameFloorMap.revalidate();
-					sameFloorMap.updateUI();
-					System.out.println(sameFloorMap);
+					if(destination1!=null){
+						destination1 = null;
+						sourceSelection.removeAllItems();
+						destinationSelection.removeAllItems();
+						sourceSelection.removeItemListener(sListener);
+						destinationSelection.removeItemListener(dListener);
+					}
+					if(source1!=null){
+						source1=null;
+						sourceSelection.removeAllItems();
+						destinationSelection.removeAllItems();
+						sourceSelection.removeItemListener(sListener);
+						destinationSelection.removeItemListener(dListener);
+					}
+					if(source1==null&&destination1==null){
+						sourceSelection.removeAllItems();
+						destinationSelection.removeAllItems();
+						sourceSelection.removeItemListener(sListener);
+						destinationSelection.removeItemListener(dListener);
+					}
 					sourceSelection.addItem("Please Choose Source");
 					destinationSelection.addItem("Please Choose Destination");
 					for(int i = 0;i<locations.size();i++){
@@ -200,24 +223,22 @@ public class RouteScreen2 {
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					buildingselected = buildingSelection.getSelectedItem().toString();
 					floorselected = floorSelection.getSelectedItem().toString();
-					locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
-					ss = sourceSelection.getSelectedIndex()-1;
-					x1 = locations.get(ss).getX();
-					y1 = locations.get(ss).getY();
-					source1 =new SolidPoint(Color.black, x1, y1);
-					sameFloorMap.removeAll();
-					sameFloorMap.add(source1);
-//					if(destinationSelection.getSelectedIndex()==-1){
-//						sameFloorMap.add(source1);
-//					}
-//					else{
-//						sameFloorMap.add(destination1);
-//						System.out.println(destinationSelection.getSelectedItem());
-//						sameFloorMap.add(source1);
-//					}
-					System.out.println(destinationSelection.getSelectedItem());
-					sameFloorMap.repaint();
-				    System.out.println("You have chosen source"+" "+sourceSelection.getSelectedItem());
+					locations = DataManager.getLocationsByMapID(buildingselected, floorselected);	
+						ss = sourceSelection.getSelectedIndex()-1;
+						x1 = locations.get(ss).getX();
+						y1 = locations.get(ss).getY();
+						source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
+						sameFloorMap.removeAll();
+						if(destination1==null){
+							sameFloorMap.add(source1);
+						}
+						else{
+							sameFloorMap.add(destination1);
+							sameFloorMap.add(source1);
+						}
+						System.out.println(destinationSelection.getSelectedItem());
+						sameFloorMap.repaint();
+						System.out.println("You have chosen source"+" "+sourceSelection.getSelectedItem());
 				}
 			}
 		};
@@ -246,15 +267,20 @@ public class RouteScreen2 {
 					buildingselected = buildingSelection.getSelectedItem().toString();
 					floorselected = floorSelection.getSelectedItem().toString();
 					locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
-					ds = destinationSelection.getSelectedIndex()-1;
-					x2 = locations.get(ds).getX();
-					y2 = locations.get(ds).getY();
-					destination1 =new SolidPoint(Color.black, x2,y2);
-					sameFloorMap.removeAll();
-					sameFloorMap.add(source1);
-					sameFloorMap.add(destination1);
-					sameFloorMap.repaint();
-					System.out.println("You have chosen destination"+" "+destinationSelection.getSelectedItem());
+						ds = destinationSelection.getSelectedIndex()-1;
+						x2 = locations.get(ds).getX();
+						y2 = locations.get(ds).getY();
+						destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
+						sameFloorMap.removeAll();
+						if(source1==null){
+							sameFloorMap.add(destination1);
+						}
+						else{
+							sameFloorMap.add(source1);
+							sameFloorMap.add(destination1);
+						}
+						sameFloorMap.repaint();
+						System.out.println("You have chosen destination"+" "+destinationSelection.getSelectedItem());
 				}
 			}
 		};
@@ -279,6 +305,10 @@ public class RouteScreen2 {
 		//Find route button
 		JButton findRoute = new JButton("Find Route");
 		buttonPanel.add(findRoute);
+		findRoute.setForeground(Color.decode("#F1F1F1"));
+		findRoute.setBackground(Color.decode("#AB2A36"));
+		findRoute.setOpaque(true);
+		findRoute.setBorderPainted(false);
 		findRoute.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -302,9 +332,9 @@ public class RouteScreen2 {
 //		buildingselected = buildingSelection.getSelectedItem().toString();
 //		floorselected = floorSelection.getSelectedItem().toString();
 //		filename = DataManager.getMapPathByName(buildingselected+","+floorselected);
-		sameFloorMap = new ImagePanel("maps//project center.png", 640, 480);
-		sameFloorMap.setBounds(350, 180, 640, 480);
-		sameFloorSearchPanel.add(sameFloorMap);
-		sameFloorMap.setLayout(null);
+//		sameFloorMap = new ImagePanel("maps//project center.png", 640, 480);
+//		sameFloorMap.setBounds(350, 180, 640, 480);
+//		sameFloorSearchPanel.add(sameFloorMap);
+//		sameFloorMap.setLayout(null);
 	}
 }
