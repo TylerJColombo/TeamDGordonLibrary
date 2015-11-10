@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 
 import com.sun.xml.internal.ws.org.objectweb.asm.Label;
 
+import javafx.scene.control.ComboBox;
 import sun.launcher.resources.launcher;
 
 import javax.swing.JComboBox;
@@ -92,10 +93,8 @@ public class RouteScreen1 {
 
 		
 //imagepanel for map		
-
 		imagePanelCmap = new ImagePanel("maps//campusmap.gif", 640, 480);
 //       DataManager.getMapPathByName("Campus,Basement");		
-
 		imagePanelCmap.setLayout(null);
 		imagePanelCmap.setBounds(330, 180, 640, 480);
 		frame.getContentPane().add(imagePanelCmap);
@@ -111,7 +110,11 @@ public class RouteScreen1 {
 		comboBox.setBounds(50, 234, 150, 27);
 		comboBox.setBounds(50, 234, 150, 27);
 		frame.getContentPane().add(comboBox);
-		comboBox.addItemListener(new ItemListener() {
+       
+	    comboBox.setSelectedIndex(-1);
+
+	    
+	    comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					if(Pflag==true){
@@ -150,7 +153,13 @@ public class RouteScreen1 {
 //DESTINATION COMBOBOX
 		comboBox_1.setBounds(50, 284, 150, 27);
 	    frame.getContentPane().add(comboBox_1);
-		comboBox_1.addItemListener(new ItemListener() {
+//	    comboBox_1.setSelectedIndex(0);
+        comboBox_1.setSelectedIndex(-1);	   
+	    
+	    
+		
+	    comboBox_1.addItemListener(new ItemListener() {
+	    
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					if(Pflag==true){
@@ -197,9 +206,3 @@ public class RouteScreen1 {
 	
 
 }
-	
-
-
-
-
-
