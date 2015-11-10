@@ -93,8 +93,9 @@ public class RouteScreen1 {
 		
 //imagepanel for map		
 
-		imagePanelCmap = new ImagePanel("maps//campusmap.gif", 640, 480);
-//       DataManager.getMapPathByName("Campus,Basement");		
+		//imagePanelCmap = new ImagePanel("maps//campusmap.gif", 640, 480);
+		imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus,Basement"), 640, 480);
+       		
 
 		imagePanelCmap.setLayout(null);
 		imagePanelCmap.setBounds(330, 180, 640, 480);

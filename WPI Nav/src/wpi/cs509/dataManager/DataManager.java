@@ -16,6 +16,23 @@ import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Map;
 import wpi.cs509.dataModel.Point;
 public class DataManager {
+	public static float sqroot(float m)
+	{
+	     float i=0;
+	   float x1,x2=0.0f;
+	   while( (i*i) <= m )
+	          i+=0.1;
+	   x1=i;
+	   for(int j=0;j<10;j++)
+	   {
+	        x2=m;
+	      x2/=x1;
+	      x2+=x1;
+	      x2/=2;
+	      x1=x2;
+	   }
+	   return x2;
+	}
 	public static boolean addPoint(String mapName, int x, int y, boolean isEntrance,boolean isLocation,String name ){
 		
 		Connection conn = null;
@@ -108,24 +125,50 @@ public class DataManager {
 	
 
 	}
-	public static boolean addEdge(int point1ID,int point2ID,float weight){
+	public static boolean addEdge(int point1ID,int point2ID){
 		
 		
 		Connection conn=null;
 		String sql="";
 		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		int success=0;
-		
+		String sql1="";
+		String sql2="";
+		Point point1= new Point();
+		Point point2 = new Point();
+		float EdgeweightS = 0.0f;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
+			
+			sql1 = "select * from points where id =?";
+			PreparedStatement ps2 = conn.prepareStatement(sql1);
+			ps2.setInt(1, point1ID);
+			ResultSet rs = ps2.executeQuery();
+			
+			while(rs.next())
+			{
+				point1.setX(rs.getInt(2));
+				point1.setY(rs.getInt(3));
+			}
+			ps2.setInt(1, point2ID);
+			rs = ps2.executeQuery();
+			while(rs.next())
+			{
+				point2.setX(rs.getInt(2));
+				point2.setY(rs.getInt(3));
+			}
+			EdgeweightS = (point1.getX()-point2.getX())*(point1.getX()-point2.getX())+(point1.getY()-point2.getY())*(point1.getY()-point2.getY());
+			
 			
 			sql="insert into edge (point1id,point2id,weight)values(?,?,?)";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 						
 			ps1.setInt(1, point1ID);
 			ps1.setInt(2, point2ID);
-			ps1.setFloat(3, weight);
+			ps1.setFloat(3,sqroot(EdgeweightS));
+			
+			System.out.println("the weight is "+sqroot(EdgeweightS));
 
 			
 			
@@ -933,6 +976,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		graph1.addGraph(graph2); 
 		float testScale = 15.5f;
 		float testWeight = 3.2f;
+		float testSq = 400f;
 		ArrayList<Integer> testEdges = new ArrayList<Integer>();
 		testEdges.add(1);
 		testEdges.add(11);
@@ -955,11 +999,12 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		//System.out.println(getMapPathByName("FullerLab"));
 		//System.out.println(getPointByBuildingName("FullerLab").getId());
 		//System.out.println(graph.getPoints().size());
-		System.out.println(graph1.getPoints().get(0).getId());
+/*		System.out.println(graph1.getPoints().get(0).getId());
 		System.out.println(graph1.getPoints().get(1).getId());
 		System.out.println(graph1.getPoints().get(2).getId());
-
+*/
 		//System.out.println(graph2.getPoints().size());
+		System.out.println(sqroot(testSq));
 		
 	}
 }
