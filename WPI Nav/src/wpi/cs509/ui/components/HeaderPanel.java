@@ -39,7 +39,7 @@ public class HeaderPanel extends JComponent{
 		panel_2.setBackground(Color.decode("#F1F1F1"));
 		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel_2.setBounds(105, 100, 461, 35);
+		panel_2.setBounds(105, 100, 1024, 35);
 		this.add(panel_2);
 		
 		JLabel lblNewLabel = new JLabel(title);
