@@ -53,7 +53,7 @@ public class RouteFinder {
     public static void main(String[] args){
     	Graph g = new Graph();
     	ArrayList<Point> p = new ArrayList<Point>();
-    	g=DataManager.getGraphByNameWithDB("testLab",2);
+    	//g=DataManager.getGraphByNameWithDB("testLab",2);
     	Point source = new Point();
     	source.setId(11);
     	source.setX(111);

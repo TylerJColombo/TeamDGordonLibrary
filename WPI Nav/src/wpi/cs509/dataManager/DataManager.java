@@ -16,19 +16,41 @@ import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Map;
 import wpi.cs509.dataModel.Point;
 public class DataManager {
-	public static boolean addPoint(String buildingName,String floorName, int x, int y, boolean isEntrance,boolean isLocation,String name ){
+	public static boolean addPoint(String mapName, int x, int y, boolean isEntrance,boolean isLocation,String name ){
 		
 		Connection conn = null;
 		String sql="";
 		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		int success=0;
 		int floorNum=88;
+		String floorName = "";
+		String buildingName="";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
 			sql="insert into points (x,y,buildingName,floorNum,isEntrance,attribute,name)values(?,?,?,?,?,?,?)";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
+			if(mapName =="Campus")
+			{
+				ps1.setInt(1, x);
+				ps1.setInt(2, y);
+				ps1.setString(3, mapName);
+				ps1.setInt(4, 0);
+				ps1.setBoolean(5, isEntrance);
+				if(isLocation)
+				{
+					ps1.setString(6, "Location");
+				}
+				else ps1.setString(6, "PassageWay");
+				ps1.setString(7, name);
+			}
+			else
+			{
+				String[] tmp = mapName.split(",");
+			
+			floorName = tmp[1];
+			buildingName = tmp[0];
 			switch(floorName)
 			{
 			case "SubBasement":
@@ -61,7 +83,7 @@ public class DataManager {
 			else ps1.setString(6, "PassageWay");
 			ps1.setString(7, name);
 			
-			
+			}
 			
 
 			

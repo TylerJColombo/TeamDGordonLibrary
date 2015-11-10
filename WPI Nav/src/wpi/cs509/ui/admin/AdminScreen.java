@@ -231,7 +231,7 @@ public class AdminScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DataManager.addPoint(((Map)comboMaps.getSelectedItem()).getName(), ((Map)comboMaps.getSelectedItem()).getName(), Integer.parseInt(lblXValue.getText()), Integer.parseInt(lblYValue.getText()), chckbxIsEnterance.isSelected(), chckbxIsLocation.isSelected(), txtLocationName.getText());
+				DataManager.addPoint(((Map)comboMaps.getSelectedItem()).getName(), Integer.parseInt(lblXValue.getText()), Integer.parseInt(lblYValue.getText()), chckbxIsEnterance.isSelected(), chckbxIsLocation.isSelected(), txtLocationName.getText());
 			}
 		});
 		
@@ -289,7 +289,7 @@ public class AdminScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DataManager.addEdge(((Point)comboFirstPoint.getSelectedItem()).getId(), ((Point)comboSecondPoint.getSelectedItem()).getId(), Integer.parseInt(txtEdgeWeight.getText()));
+				DataManager.addEdge(((Point)comboFirstPoint.getSelectedItem()).getId(), ((Point)comboSecondPoint.getSelectedItem()).getId(), Float.parseFloat(txtEdgeWeight.getText()));
 			}
 		});
 		
