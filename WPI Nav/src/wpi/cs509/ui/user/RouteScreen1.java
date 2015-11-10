@@ -90,7 +90,7 @@ public class RouteScreen1 {
 		HeaderPanel headerPanel = new HeaderPanel("Route between different buildings in campus",false, frame); 
 		headerPanel.setBounds(0, 0, 1024, 730);
 		frame.getContentPane().add(headerPanel);
-
+        
 		
 //imagepanel for map		
 
@@ -105,13 +105,13 @@ public class RouteScreen1 {
 		
 //label for source		
 		JLabel lblSource = new JLabel("source:");
-		lblSource.setBounds(55, 204, 150, 27);
+		lblSource.setBounds(25, 180, 300, 20);
 		frame.getContentPane().add(lblSource);
 
 		
 //combobox for source
-		comboBox.setBounds(50, 234, 150, 27);
-		comboBox.setBounds(50, 234, 150, 27);
+		comboBox.setBounds(20, 210, 300, 20);
+
 		frame.getContentPane().add(comboBox);
        
 	    comboBox.setSelectedIndex(-1);
@@ -149,12 +149,12 @@ public class RouteScreen1 {
 		
 //label for destination
 		JLabel lblDestination = new JLabel("destination:");
-		lblDestination.setBounds(55, 264, 81, 16);
+		lblDestination.setBounds(25, 240, 300, 20);
 		frame.getContentPane().add(lblDestination);
 		
 		
 //DESTINATION COMBOBOX
-		comboBox_1.setBounds(50, 284, 150, 27);
+		comboBox_1.setBounds(20, 270, 300, 20);
 	    frame.getContentPane().add(comboBox_1);
 //	    comboBox_1.setSelectedIndex(0);
         comboBox_1.setSelectedIndex(-1);	   
@@ -196,7 +196,7 @@ public class RouteScreen1 {
 	            Pflag=Util.drawPath(imagePanelCmap,PointsofPath);		
 			}
 		});
-		btnFindingRoute.setBounds(55, 357, 117, 29);
+		btnFindingRoute.setBounds(20, 420, 300, 40);
 		btnFindingRoute.setForeground(Color.decode("#F1F1F1"));
 		btnFindingRoute.setBackground(Color.decode("#AB2A36"));
 		btnFindingRoute.setOpaque(true);
