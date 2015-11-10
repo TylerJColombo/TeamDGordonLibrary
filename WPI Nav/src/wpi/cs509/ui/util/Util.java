@@ -12,14 +12,23 @@ import wpi.cs509.ui.components.Line;
 import wpi.cs509.ui.components.SolidPoint;
 
 public class Util {
-	public static void drawPath( ImagePanel a, ArrayList <Point> P){
+	public  static boolean drawPath( ImagePanel a, ArrayList <Point> P){
+		for(Point path:P){
+			SolidPoint pathofSolid = new SolidPoint(Color.green, path.getX(), path.getY()); 
+			a.add(pathofSolid);
+			a.repaint();
+			
+		}
 		for(int i=0;i<=P.size()-2;i++){
 			Point p1 =P.get(i);
 			Point p2 =P.get(i+1);
-			Line path = new Line(Color.decode("#929292"), p1.getX(), p1.getY(), p2.getX(), p2.getY());
+//			Line path = new Line(Color.decode("#929292"), p1.getX(), p1.getY(), p2.getX(), p2.getY());
+			Line path = new Line(Color.blue, p1.getX(), p1.getY(), p2.getX(), p2.getY());
 			a.add(path, new Integer(1), 0);
 			a.repaint();
+			
 		}
+		return true;
 	}
 
 }
