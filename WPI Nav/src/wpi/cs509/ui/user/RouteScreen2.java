@@ -76,6 +76,7 @@ public class RouteScreen2 {
 		frame.setBounds(0, 0, 1024, 730);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
+		frame.getContentPane().setLayout(null);
 		
 		////////////
 		// Header //
@@ -87,16 +88,17 @@ public class RouteScreen2 {
 		////////////
 		// Map    //
 		////////////
-		JPanel sameFloorSearchPanel = new JPanel();
-		sameFloorSearchPanel.setLayout(null);
-		frame.getContentPane().add(sameFloorSearchPanel);
-		sameFloorSearchPanel.setBounds(0, 180, 1024, 480);
+//		JPanel sameFloorSearchPanel = new JPanel();
+//		sameFloorSearchPanel.setLayout(null);
+//		frame.getContentPane().add(sameFloorSearchPanel);
+//		sameFloorSearchPanel.setBounds(0, 180, 1024, 480);
 		
 		//controlPanel
 		JPanel sameFloorControl = new JPanel();
-		sameFloorSearchPanel.add(sameFloorControl);
+		frame.add(sameFloorControl);
 		sameFloorControl.setBounds(0, 180, 350, 480);
 		sameFloorControl.setLayout(null);
+		sameFloorControl.setBackground(Color.decode("#F1F1F1"));
 		
 		//buildingLabel
 		JLabel building = new JLabel("Building");
@@ -174,7 +176,8 @@ public class RouteScreen2 {
 					System.out.println(filename);
 					sameFloorMap = new ImagePanel(filename, 640, 480);
 					sameFloorMap.setBounds(350, 180, 640, 480);
-					sameFloorSearchPanel.add(sameFloorMap);
+					sameFloorMap.setBackground(Color.decode("#F1F1F1"));
+					frame.add(sameFloorMap);
 					sameFloorMap.setLayout(null);
 					sameFloorMap.repaint();
 					if(destination1!=null){
@@ -299,8 +302,9 @@ public class RouteScreen2 {
 		//buttonPanel
 		JPanel buttonPanel = new JPanel();
 		sameFloorControl.add(buttonPanel);
-		buttonPanel.setBounds(20, 240, 300, 40);
+		buttonPanel.setBounds(20, 250, 300, 40);
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		buttonPanel.setBackground(Color.decode("#F1F1F1"));
 		
 		//Find route button
 		JButton findRoute = new JButton("Find Route");

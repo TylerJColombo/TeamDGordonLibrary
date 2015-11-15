@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import com.sun.xml.internal.ws.org.objectweb.asm.Label;
 
@@ -83,7 +84,8 @@ public class RouteScreen1 {
 		frame.setBounds(0, 0, 1024, 730);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+		frame.getContentPane().setBackground(Color.decode("#F1F1F1"));
+		frame.setResizable(false);
         ////////////
 		// Header //
 		////////////
@@ -96,6 +98,7 @@ public class RouteScreen1 {
 
 		//imagePanelCmap = new ImagePanel("maps//campusmap.gif", 640, 480);
 		imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus,Basement"), 640, 480);
+		imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
        		
 
 		imagePanelCmap.setLayout(null);
@@ -104,7 +107,7 @@ public class RouteScreen1 {
 
 		
 //label for source		
-		JLabel lblSource = new JLabel("source:");
+		JLabel lblSource = new JLabel("Source:");
 		lblSource.setBounds(25, 180, 300, 20);
 		frame.getContentPane().add(lblSource);
 
@@ -137,7 +140,7 @@ public class RouteScreen1 {
 			Osource = DataManager.getPointByBuildingName(source);
 			
 		
-    		sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY());  
+    		sourceofSoLid = new SolidPoint(Color.decode("#000000"), Osource.getX(), Osource.getY());  
  //   		destinationofSolid = new SolidPoint(Color.red,Odestination.getX(), Odestination.getY());  
      		if(destinationofSolid!=null){imagePanelCmap.add(destinationofSolid);}
     		imagePanelCmap.add(sourceofSoLid);
@@ -148,7 +151,7 @@ public class RouteScreen1 {
 		);
 		
 //label for destination
-		JLabel lblDestination = new JLabel("destination:");
+		JLabel lblDestination = new JLabel("Destination:");
 		lblDestination.setBounds(25, 240, 300, 20);
 		frame.getContentPane().add(lblDestination);
 		
@@ -178,7 +181,7 @@ public class RouteScreen1 {
 						}
 				destination =comboBox_1.getSelectedItem().toString();
 			    Odestination = DataManager.getPointByBuildingName(destination);
-				destinationofSolid = new SolidPoint(Color.red,Odestination.getX(), Odestination.getY());  
+				destinationofSolid = new SolidPoint(Color.decode("#009966"),Odestination.getX(), Odestination.getY());  
 //				sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY()); 
 	    	
 	    	    imagePanelCmap.add(sourceofSoLid);
@@ -188,7 +191,13 @@ public class RouteScreen1 {
 		});
 		
 //BUTTON		
-		JButton btnFindingRoute = new JButton("Finding Route");
+	    JPanel buttonPanel = new JPanel();
+		frame.add(buttonPanel);
+		buttonPanel.setBounds(20, 310, 300, 40);
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		buttonPanel.setBackground(Color.decode("#F1F1F1"));
+	    
+	    JButton btnFindingRoute = new JButton("Find Route");
 		btnFindingRoute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
                // use string of source and destination to get the their pointsid than send it to the RoutFinder
@@ -196,12 +205,11 @@ public class RouteScreen1 {
 	            Pflag=Util.drawPath(imagePanelCmap,PointsofPath);		
 			}
 		});
-		btnFindingRoute.setBounds(20, 420, 300, 40);
 		btnFindingRoute.setForeground(Color.decode("#F1F1F1"));
 		btnFindingRoute.setBackground(Color.decode("#AB2A36"));
 		btnFindingRoute.setOpaque(true);
 		btnFindingRoute.setBorderPainted(false);
-		frame.getContentPane().add(btnFindingRoute);
+		buttonPanel.add(btnFindingRoute);
 		
 
 	
