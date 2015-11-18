@@ -77,6 +77,7 @@ public class RouteScreen3 {
 		frame.getContentPane().setBackground(Color.decode("#F1F1F1"));
 		frame.setBounds(0, 0, 1024, 730);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
 		////////////
@@ -97,7 +98,7 @@ public class RouteScreen3 {
 		//controlPanel
 		JPanel sameFloorControl = new JPanel();
 		sameFloorSearchPanel.add(sameFloorControl);
-		sameFloorControl.setBounds(0, 180, 350, 480);
+		sameFloorControl.setBounds(0, 0, 350, 480);
 		sameFloorControl.setLayout(null);
 		
 		//buildingLabel

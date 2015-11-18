@@ -188,6 +188,11 @@ public class AdminScreen {
 		btnSavePoint.setBorderPainted(false);
 		panel.add(btnSavePoint);
 		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(330, 0, 640, 480);
+		panel_4.setLayout(null);
+		addPointTab.add(panel_4);
+		
 		// Add Point Action Listeners 
 		comboMaps.addItemListener(new ItemListener() {
 			@Override
@@ -197,7 +202,11 @@ public class AdminScreen {
 				if(selectedMap != null){
 					ImagePanel imagePanel2 = new ImagePanel(selectedMap.getFileLocation(), 640, 480);
 					imagePanel2.setLayout(null);
-					imagePanel2.setBounds(330, 0, 640, 480);
+					imagePanel2.setBounds(0, 0, 640, 480);
+					
+					panel_4.removeAll();
+					panel_4.add(imagePanel2);
+					panel_4.repaint();
 					
 					imagePanel2.addMouseListener(new MouseListener() {
 			            @Override
@@ -227,8 +236,6 @@ public class AdminScreen {
 							// TODO Auto-generated method stub
 						}
 			        });
-					addPointTab.add(imagePanel2);
-					addPointTab.repaint();
 				}
 			}
 		});
