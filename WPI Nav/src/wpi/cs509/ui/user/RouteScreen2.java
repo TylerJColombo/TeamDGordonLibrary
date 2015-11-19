@@ -156,6 +156,10 @@ public class RouteScreen2 {
 		sameFloorControl.add(floor);
 		floor.setBounds(25, 60, 300, 20);
 		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(20, 0, 640, 480);
+		panel_4.setLayout(null);
+		// add by Jiawei Sun
 		//floorList
 		sameFloorControl.add(floorSelection);
 		floorSelection.setBounds(20, 90, 300, 20);
@@ -172,14 +176,22 @@ public class RouteScreen2 {
 					buildingselected = buildingSelection.getSelectedItem().toString();
 					floorselected = floorSelection.getSelectedItem().toString();
 					locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
-					String filename = DataManager.getMapPathByName(buildingselected+","+floorselected);
+					String filename = DataManager.getMapPathByName(buildingselected,floorselected);  //this need to modify  ---Jiawei Sun
 					System.out.println(filename);
+					//filename = "maps\\GordonLibraryBasement.png";
+					//filename = "F:\\GordonLibraryFirstFloor.jpg";
 					sameFloorMap = new ImagePanel(filename, 640, 480);
 					sameFloorMap.setBounds(350, 180, 640, 480);
 					sameFloorMap.setBackground(Color.decode("#F1F1F1"));
-					frame.add(sameFloorMap);
+				
+					panel_4.removeAll();
+					panel_4.add(sameFloorMap);
+					panel_4.repaint();
+					
+					frame.add(panel_4);
 					sameFloorMap.setLayout(null);
-					sameFloorMap.repaint();
+					//frame.repaint();
+					//sameFloorMap.repaint();
 					if(destination1!=null){
 						destination1 = null;
 						sourceSelection.removeAllItems();

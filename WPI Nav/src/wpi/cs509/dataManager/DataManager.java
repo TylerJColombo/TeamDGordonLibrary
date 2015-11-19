@@ -392,7 +392,11 @@ public class DataManager {
 					edge.setePointId(resultEdges.getInt(3));
 					edge.setWeight(resultEdges.getFloat(4));
 					System.out.println(edge);
-					edgesArray.add(edge);
+					if(!(isEdgeIncludeEntrance(edge.getePointId())&&isEdgeIncludeEntrance(edge.getsPointId())))
+					{
+						edgesArray.add(edge);
+					}
+					
 				}
 				 resultEdges.close();
 				
@@ -427,7 +431,42 @@ public class DataManager {
 		//System.out.println("weight is "+graph.getEdges().get(0).getWeight()); //testing
 		return graph;
 	}
-	
+	public static boolean isEdgeIncludeEntrance(int point2id)
+	{
+		
+		Connection conn = null;
+		String sql="";
+		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
+		int result = 0;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("successfully load the driver");
+			
+			conn = DriverManager.getConnection(url);
+			
+			sql="select isEntrance from points where id=? ";
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			
+			ps1.setInt(1, point2id);
+			ResultSet rs = ps1.executeQuery();
+			while(rs.next())
+			{
+				result = rs.getInt(1);	
+			}
+			rs.close();
+			ps1.close();
+			conn.close();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result==1? true : false;
+	}
 	public static Graph getGraphOfCampus()
 	{
 		Graph graph = new Graph();
@@ -510,10 +549,10 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="select distinct name from map where buildingName = ? ";
+			sql="select distinct buildingName from map";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
-			ps1.setString(1,"Campus");
+		
 			ResultSet rs = ps1.executeQuery();
 			while(rs.next())
 			{
@@ -553,10 +592,10 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="select * from points p,map m where m.buildingName=? and m.floorNum=? and p.attribute<>'PassageWay' and m.mapid = p.mapid ";
+			sql="select * from points p,map m where m.buildingName like ? and m.floorNum=? and p.attribute<>'PassageWay' and m.mapid = p.mapid ";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
-			ps1.setString(1,buildingName);
+			ps1.setString(1,buildingName+"%");
 			switch(floorName)
 			{
 			case "SubBasement":
@@ -992,9 +1031,10 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 //		getGraph(graph,"src/HF1.txt");
 		
 		//graph1 =getGraphByNameWithDB("FullerLab","First Floor");
-		graph1 = getGraphByNameWithDB("GordonLibrary","SubBasement");
+		graph1 = getGraphByNameWithDB("GordonLibrary","Basement");
+		System.out.println(graph1.getEdges().size());
 		//graph2 =getGraphByNameWithDB("FullerLab","Second Floor");
-		System.out.println(graph1.getPoints().size());
+		//System.out.println(graph1.getPoints().size());
 //		System.out.println(graph2.getPoints().size());
 		//graph1.addGraph(graph2); 
 		float testScale = 15.5f;
@@ -1010,7 +1050,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		
 		//System.out.println(getBuildings().get(0));
 		//System.out.println(getBuildings().get(1));
-		//System.out.println(getLocationsByMapID("GordonLibrary","SubBasement").get(0).getX());
+		//System.out.println(getLocationsByMapID("GordonLibrary","SubBasement").size());
 		//System.out.println(saveMap("HigginsLab","c://testForIMG",testScale));
 		//System.out.println(addPoint("FullerLab","Third Floor", 600, 480, false,true,"Room333"));
 		//System.out.println(addEdge(1,2,testWeight));
@@ -1027,7 +1067,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		System.out.println(graph1.getPoints().get(2).getId());
 */
 		//System.out.println(graph2.getPoints().size());
-		System.out.println(sqroot(testSq));
+		//System.out.println(sqroot(testSq));
 		
 	}
 }
