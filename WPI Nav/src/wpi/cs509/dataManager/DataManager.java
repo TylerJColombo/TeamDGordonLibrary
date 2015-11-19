@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.sun.org.apache.regexp.internal.recompile;
+
 import wpi.cs509.dataModel.Edge;
 import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Map;
@@ -33,77 +35,30 @@ public class DataManager {
 	   }
 	   return x2;
 	}
-	public static boolean addPoint(String mapName, int x, int y, boolean isEntrance,boolean isLocation,String name ){
+	public static boolean addPoint(int mapid, int x, int y, boolean isEntrance,boolean isLocation,String name ){
 		
 		Connection conn = null;
 		String sql="";
 		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		int success=0;
-		int floorNum=88;
-		String floorName = "";
-		String buildingName="";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="insert into points (x,y,buildingName,floorNum,isEntrance,attribute,name)values(?,?,?,?,?,?,?)";
+			sql="insert into points (x,y,mapid,isEntrance,attribute,name)values(?,?,?,?,?,?)";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
-			if(mapName =="Campus")
-			{
+			
 				ps1.setInt(1, x);
 				ps1.setInt(2, y);
-				ps1.setString(3, mapName);
-				ps1.setInt(4, 0);
-				ps1.setBoolean(5, isEntrance);
+				ps1.setInt(3, mapid);
+				ps1.setBoolean(4, isEntrance);
 				if(isLocation)
 				{
-					ps1.setString(6, "Location");
+					ps1.setString(5, "Location");
 				}
-				else ps1.setString(6, "PassageWay");
-				ps1.setString(7, name);
-			}
-			else
-			{
-				String[] tmp = mapName.split(",");
-			
-			floorName = tmp[1];
-			buildingName = tmp[0];
-			switch(floorName)
-			{
-			case "SubBasement":
-				floorNum = -1;break;
-			case "Basement":
-				floorNum = 0;break;
-			case "First Floor":
-				floorNum = 1;break;
-			case "Second Floor":
-				floorNum = 2;break;
-			case "Third Floor":
-				floorNum = 3;break;
-			case "Fourth Floor":
-				floorNum = 4;break;
-			case "Fifth Floor":
-				floorNum = 5;break;
-				default:
-					floorNum=88;break;
-			}
-			
-			ps1.setInt(1, x);
-			ps1.setInt(2, y);
-			ps1.setString(3, buildingName);
-			ps1.setInt(4, floorNum);
-			ps1.setBoolean(5, isEntrance);
-			if(isLocation)
-			{
-				ps1.setString(6, "Location");
-			}
-			else ps1.setString(6, "PassageWay");
-			ps1.setString(7, name);
-			
-			}
-			
-
-			
+				else ps1.setString(5, "PassageWay");
+				ps1.setString(6, name);
+					
 			
 			success  = ps1.executeUpdate();
 			
@@ -151,8 +106,8 @@ public class DataManager {
 				point1.setId(rs.getInt(1));
 				point1.setX(rs.getInt(2));
 				point1.setY(rs.getInt(3));
-				point1.setFloorNum(rs.getInt(5));
-				if(rs.getInt(6)==1)
+				point1.setMapId(rs.getInt(4));
+				if(rs.getInt(5)==1)
 				{point1.setMapEntrance(true);}
 				else point1.setMapEntrance(false);
 			}
@@ -163,13 +118,13 @@ public class DataManager {
 				point2.setId(rs.getInt(1));
 				point2.setX(rs.getInt(2));
 				point2.setY(rs.getInt(3));
-				point2.setFloorNum(rs.getInt(5));
-				if(rs.getInt(6)==1)
+				point2.setMapId(rs.getInt(4));
+				if(rs.getInt(5)==1)
 				{point2.setMapEntrance(true);}
 				else point2.setMapEntrance(false);
 			}
 			
-			if(point1.getFloorNum()!=point2.getFloorNum())
+			if(point1.getMapId()!=point2.getMapId())
 			{
 				if(point1.isMapEntrance()&&point2.isMapEntrance())
 				{
@@ -356,6 +311,7 @@ public class DataManager {
 		
 		//for points and edges buffer.
 		Connection conn =null;
+		String sqlMap = "";
 		String sqlPoint="";
 		String sqlEdge="";
 		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
@@ -368,7 +324,12 @@ public class DataManager {
 			
 			conn = DriverManager.getConnection(url);
 			
-			sqlPoint = "select * from points where buildingName like ? and floorNum = ?";
+//			sqlMap = "select mapid from map where buildingName like ? and floorNum = ?";
+			sqlPoint = "select id,x,y,p.mapid,isEntrance,attribute,p.name from points p, map m where p.mapid = m.mapid and m.buildingName like ? and m.floorNum = ?";
+					
+//			sqlPoint = "select * from points p, map m where p.mapid == m.mapid";
+			
+//			sqlPoint = "select * from points where buildingName like ? and floorNum = ?";
 			PreparedStatement ps1 = conn.prepareStatement(sqlPoint);
 			
 			
@@ -408,16 +369,15 @@ public class DataManager {
 				p.setId(resultPoints.getInt(1));
 				p.setX(resultPoints.getInt(2));
 				p.setY(resultPoints.getInt(3));
-				p.setBuildingName(resultPoints.getString(4));
-				p.setFloorNum(resultPoints.getInt(5));
-				int isEntrance = resultPoints.getInt(6);
+				p.setMapId(resultPoints.getInt(4));
+				int isEntrance = resultPoints.getInt(5);
 				if(isEntrance!=0)
 				{
 					p.setMapEntrance(true);
 				}
 				else p.setMapEntrance(false);
-				String attribute = resultPoints.getString(7);
-				p.setName(resultPoints.getString(8));
+				String attribute = resultPoints.getString(6);
+				p.setName(resultPoints.getString(7));
 				System.out.println("the id is .."+resultPoints.getString(1));
 				pointsArray.add(p);
 				
@@ -489,7 +449,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 			
 			conn = DriverManager.getConnection(url);
 			
-			sql="select distinct floorNum from points where buildingName like ? ";
+			sql="select distinct floorNum from map where buildingName like ? ";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
 			ps1.setString(1, buildingName+"%");
@@ -550,7 +510,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="select distinct name from points where buildingName = ? ";
+			sql="select distinct name from map where buildingName = ? ";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
 			ps1.setString(1,"Campus");
@@ -593,7 +553,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="select * from points where buildingName=? and floorNum=? and attribute<>'PassageWay' ";
+			sql="select * from points p,map m where m.buildingName=? and m.floorNum=? and p.attribute<>'PassageWay' and m.mapid = p.mapid ";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
 			ps1.setString(1,buildingName);
@@ -625,21 +585,20 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 				p.setId(rs.getInt(1));
 				p.setX(rs.getInt(2));
 				p.setY(rs.getInt(3));
-				p.setBuildingName(rs.getString(4));
-				p.setFloorNum(rs.getInt(5));
-				int isEntrance = rs.getInt(6);
+				p.setMapId(rs.getInt(4));
+				int isEntrance = rs.getInt(5);
 				if(isEntrance!=0)
 				{
 					p.setMapEntrance(true);
 				}
 				else p.setMapEntrance(false);
-				String attribute = rs.getString(7);
+				String attribute = rs.getString(6);
 				if(attribute!="PassageWay")
 				{
 					p.setDestination(true);
 				}
 				
-				p.setName(rs.getString(8));
+				p.setName(rs.getString(7));
 				System.out.println("the id is .."+rs.getString(1));
 				locations.add(p);
 				
@@ -660,7 +619,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		return locations;
 	}
 
-	public static boolean saveMap(String name, String path,float scale)
+	public static boolean saveMap(int mapid,String buildingName,int floorNum, String path,float scale)
 	{
 		Connection conn =null;
 		int success=0;
@@ -671,13 +630,14 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="insert into map (scale,name,path)values(?,?,?)";
+			sql="insert into map (mapid,scale,buildingName,floorNum,path)values(?,?,?,?,?)";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
-			
-			ps1.setFloat(1, scale);
-			ps1.setString(2, name);
-			ps1.setString(3, path);
+			ps1.setInt(1, mapid);
+			ps1.setFloat(2, scale);
+			ps1.setString(2, buildingName);
+			ps1.setInt(3, floorNum);
+			ps1.setString(4, path);
 			
 			
 			success  = ps1.executeUpdate();
@@ -720,8 +680,10 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 				Map map = new Map();
 				map.setId(resultMap.getInt(1));
 				map.setScale(resultMap.getFloat(2));
-				map.setName(resultMap.getString(3));
+				//map.setName(resultMap.getString(3));
 				map.setFileLocation(resultMap.getString(4));
+				map.setBuildingName(resultMap.getString(5));
+				map.setFloorNum(resultMap.getInt(6));
 				mapList.add(map);
 			}
 			resultMap.close();
@@ -765,16 +727,16 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 				p.setId(resultPoints.getInt(1));
 				p.setX(resultPoints.getInt(2));
 				p.setY(resultPoints.getInt(3));
-				p.setBuildingName(resultPoints.getString(4));
-				p.setFloorNum(resultPoints.getInt(5));
-				int isEntrance = resultPoints.getInt(6);
+				p.setMapId(resultPoints.getInt(4));
+				
+				int isEntrance = resultPoints.getInt(5);
 				if(isEntrance!=0)
 				{
 					p.setMapEntrance(true);
 				}
 				else p.setMapEntrance(false);
-				String attribute = resultPoints.getString(7);
-				p.setName(resultPoints.getString(8));
+				String attribute = resultPoints.getString(6);
+				p.setName(resultPoints.getString(7));
 				System.out.println("the id is .."+resultPoints.getString(1));
 				pointsArray.add(p);
 			}
@@ -839,6 +801,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		return edgesArray;
 		
 	}
+	/*--this function is not used currently--*/
 	public static ArrayList<Point> getPointsByEdges(ArrayList<Integer> IDArray)
 	{
 		ArrayList<Point> pointsArray = new ArrayList<Point>();
@@ -867,21 +830,21 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 					p.setId(rs.getInt(1));
 					p.setX(rs.getInt(2));
 					p.setY(rs.getInt(3));
-					p.setBuildingName(rs.getString(4));
-					p.setFloorNum(rs.getInt(5));
-					int isEntrance = rs.getInt(6);
+					p.setMapId(rs.getInt(4));
+
+					int isEntrance = rs.getInt(5);
 					if(isEntrance!=0)
 					{
 						p.setMapEntrance(true);
 					}
 					else p.setMapEntrance(false);
-					String attribute = rs.getString(7);
+					String attribute = rs.getString(6);
 					
 					if(attribute == "PassageWay")
 					{
 						p.setDestination(false);
 					}
-					p.setName(rs.getString(8));
+					p.setName(rs.getString(7));
 					System.out.println("the id is .."+rs.getString(1));
 					pointsArray.add(p);
 				}
@@ -904,9 +867,10 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		return pointsArray;
 	}
 	
-	public static String getMapPathByName(String BuildingName)
+	public static String getMapPathByName(String BuildingName,String FloorName)
 	{
 		String path="";
+		int floorNum =0;
 		Connection conn = null;
 		String sql="";
 		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
@@ -915,12 +879,32 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 		
-			sql="select * from map where name=?";
+			sql="select * from map where buildingName like ? and floorNum = ?";
 				
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
-			ps1.setString(1, BuildingName);
-				
+			ps1.setString(1, BuildingName+"%");
+			
+			switch(FloorName)
+			{
+			case "SubBasement":
+				floorNum = -1;break;
+			case "Basement":
+				floorNum = 0;break;
+			case "First Floor":
+				floorNum = 1;break;
+			case "Second Floor":
+				floorNum = 2;break;
+			case "Third Floor":
+				floorNum = 3;break;
+			case "Fourth Floor":
+				floorNum = 4;break;
+			case "Fifth Floor":
+				floorNum = 5;break;
+				default:
+					floorNum=88;break;
+			}
+			ps1.setInt(2, floorNum);
 			ResultSet rs = ps1.executeQuery();
 				
 				while(rs.next())
@@ -954,7 +938,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 		
-			sql="select * from points where buildingName= ? and attribute<>'PassageWay' and name like ?";
+			sql="select * from points p,map m where m.buildingName= ? and p.attribute<>'PassageWay' and p.name like ?";
 				
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
@@ -969,21 +953,20 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 					p.setId(rs.getInt(1));
 					p.setX(rs.getInt(2));
 					p.setY(rs.getInt(3));
-					p.setBuildingName(rs.getString(4));
-					p.setFloorNum(rs.getInt(5));
-					int isEntrance = rs.getInt(6);
+					p.setMapId(rs.getInt(4));
+					int isEntrance = rs.getInt(5);
 					if(isEntrance!=0)
 					{
 						p.setMapEntrance(true);
 					}
 					else p.setMapEntrance(false);
-					String attribute = rs.getString(7);
+					String attribute = rs.getString(6);
 					if(attribute!="PassageWay")
 					{
 						p.setDestination(true);
 					}
 					
-					p.setName(rs.getString(8));
+					p.setName(rs.getString(7));
 					System.out.println("the id is .."+rs.getString(1));
 					building = p;
 				}
@@ -1007,11 +990,13 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		Graph graph2= new Graph();
 
 //		getGraph(graph,"src/HF1.txt");
-		graph1 =getGraphByNameWithDB("FullerLab","First Floor");
-		graph2 =getGraphByNameWithDB("FullerLab","Second Floor");
+		
+		//graph1 =getGraphByNameWithDB("FullerLab","First Floor");
+		graph1 = getGraphByNameWithDB("GordonLibrary","SubBasement");
+		//graph2 =getGraphByNameWithDB("FullerLab","Second Floor");
 		System.out.println(graph1.getPoints().size());
-		System.out.println(graph2.getPoints().size());
-		graph1.addGraph(graph2); 
+//		System.out.println(graph2.getPoints().size());
+		//graph1.addGraph(graph2); 
 		float testScale = 15.5f;
 		float testWeight = 3.2f;
 		float testSq = 400f;
@@ -1021,11 +1006,11 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		testEdges.add(13);
 		
 		//getFloorsMapsByBuildingName("Higgins");
-		//System.out.println(getFloorsMapsByBuildingName("Fuller").get(0));
-		//System.out.println(getFloorsMapsByBuildingName("Fuller").get(1));
+		//System.out.println(getFloorsMapsByBuildingName("GordonLibrary").get(0));
+		
 		//System.out.println(getBuildings().get(0));
 		//System.out.println(getBuildings().get(1));
-		//System.out.println(getLocationsByMapID("HigginsLab","First Floor").get(0).getX());
+		//System.out.println(getLocationsByMapID("GordonLibrary","SubBasement").get(0).getX());
 		//System.out.println(saveMap("HigginsLab","c://testForIMG",testScale));
 		//System.out.println(addPoint("FullerLab","Third Floor", 600, 480, false,true,"Room333"));
 		//System.out.println(addEdge(1,2,testWeight));

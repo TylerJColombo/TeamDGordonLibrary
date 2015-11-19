@@ -7,6 +7,8 @@ package wpi.cs509.dataModel;
 public class Map {
   private int id;
 	private String name;
+	private String buildingName;
+	private int floorNum;
 	private String fileLocation;
 	private float scale;
 	public int getId() {
@@ -40,6 +42,18 @@ public class Map {
 	@Override
 	public String toString() {
 		return name;
+	}
+	public String getBuildingName() {
+		return buildingName;
+	}
+	public void setBuildingName(String buildingName) {
+		this.buildingName = buildingName;
+	}
+	public int getFloorNum() {
+		return floorNum;
+	}
+	public void setFloorNum(int floorNum) {
+		this.floorNum = floorNum;
 	}
 
 }
