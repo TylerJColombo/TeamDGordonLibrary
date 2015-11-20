@@ -41,7 +41,6 @@ public class DataManager {
 		
 		Connection conn = null;
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		int success=0;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -87,7 +86,6 @@ public class DataManager {
 		
 		Connection conn=null;
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		int success=0;
 		String sql1="";
 		String sql2="";
@@ -316,7 +314,6 @@ public class DataManager {
 		String sqlMap = "";
 		String sqlPoint="";
 		String sqlEdge="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		//Point p = new Point();
 		
 		try {
@@ -438,7 +435,6 @@ public class DataManager {
 		
 		Connection conn = null;
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		int result = 0;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -482,7 +478,6 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		
 		Connection conn =null;
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -545,7 +540,6 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		
 		Connection conn =null;
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -588,7 +582,6 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		int floorNum=0;
 		Connection conn =null;
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -665,7 +658,6 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		Connection conn =null;
 		int success=0;
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -706,7 +698,6 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		
 		Connection conn = null;
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -751,7 +742,6 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		
 		Connection conn = null;
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -804,7 +794,6 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		
 		Connection conn = null;
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -850,7 +839,6 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		Connection conn = null;
 		String sql="";
 		
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -914,8 +902,6 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		int floorNum =0;
 		Connection conn = null;
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
-		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
@@ -973,7 +959,6 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		Connection conn = null;
 		
 		String sql="";
-		String url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
