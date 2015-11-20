@@ -12,12 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.sun.org.apache.regexp.internal.recompile;
+import com.sun.xml.internal.ws.policy.EffectiveAlternativeSelector;
 
 import wpi.cs509.dataModel.Edge;
 import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Map;
 import wpi.cs509.dataModel.Point;
 public class DataManager {
+	private static String  url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 	public static float sqroot(float m)
 	{
 	     float i=0;
@@ -325,17 +327,17 @@ public class DataManager {
 			conn = DriverManager.getConnection(url);
 			
 //			sqlMap = "select mapid from map where buildingName like ? and floorNum = ?";
-			sqlPoint = "select id,x,y,p.mapid,isEntrance,attribute,p.name from points p, map m where p.mapid = m.mapid and m.buildingName like ? and m.floorNum = ?";
-					
+			//sqlPoint = "select id,x,y,p.mapid,isEntrance,attribute,p.name from points p, map m where p.mapid = m.mapid and m.buildingName like ? and m.floorNum = ?";
+			sqlPoint = "select * from points ";		
 //			sqlPoint = "select * from points p, map m where p.mapid == m.mapid";
 			
 //			sqlPoint = "select * from points where buildingName like ? and floorNum = ?";
 			PreparedStatement ps1 = conn.prepareStatement(sqlPoint);
 			
 			
-			ps1.setString(1, buildingName+"%");
+			//ps1.setString(1, buildingName+"%");
 			
-			switch(floorName)
+		/*	switch(floorName)
 			{
 			case "SubBasement":
 				floorNum = -1;break;
@@ -354,8 +356,8 @@ public class DataManager {
 				default:
 					floorNum=88;break;
 			}
-			
-			ps1.setInt(2, floorNum);
+			*/
+			//ps1.setInt(2, floorNum);
 			sqlEdge = "select * from edge where point1id = ?";
 			PreparedStatement ps2 = conn.prepareStatement(sqlEdge);
 			
@@ -392,11 +394,11 @@ public class DataManager {
 					edge.setePointId(resultEdges.getInt(3));
 					edge.setWeight(resultEdges.getFloat(4));
 					System.out.println(edge);
-					if(!(isEdgeIncludeEntrance(edge.getePointId())&&isEdgeIncludeEntrance(edge.getsPointId())))
+			/*		if(!(isEdgeIncludeEntrance(edge.getePointId())&&isEdgeIncludeEntrance(edge.getsPointId())))
 					{
 						edgesArray.add(edge);
-					}
-					
+					}*/
+					edgesArray.add(edge);
 				}
 				 resultEdges.close();
 				
@@ -658,7 +660,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		return locations;
 	}
 
-	public static boolean saveMap(int mapid,String buildingName,int floorNum, String path,float scale)
+	public static boolean saveMap(String buildingName,int floorNum, String path,float scale)
 	{
 		Connection conn =null;
 		int success=0;
@@ -669,11 +671,11 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="insert into map (mapid,scale,buildingName,floorNum,path)values(?,?,?,?,?)";
+			sql="insert into map (scale,buildingName,floorNum,path)values(?,?,?,?)";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
-			ps1.setInt(1, mapid);
-			ps1.setFloat(2, scale);
+		
+			ps1.setFloat(1, scale);
 			ps1.setString(2, buildingName);
 			ps1.setInt(3, floorNum);
 			ps1.setString(4, path);
@@ -1023,7 +1025,137 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		}
 		return building;
 	}
+	public static ArrayList<Point> getEntranceByMapID(int mapid)
+	{
+		ArrayList<Point> entrancesList = new ArrayList<Point>();
+		Connection conn = null;
+		
+		String sql="";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+		
+			sql="select * from points where mapid = ? and isEntrance = 1";
+				
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			ps1.setInt(1, mapid);
 	
+				
+			ResultSet rs = ps1.executeQuery();
+			while(rs.next())
+			{
+				Point p = new Point();
+				p.setId(rs.getInt(1));
+				p.setX(rs.getInt(2));
+				p.setY(rs.getInt(3));
+				p.setMapId(rs.getInt(4));
+				p.setMapEntrance(rs.getInt(5)==1?true:false);
+				String attribute = rs.getString(6);
+				p.setName(rs.getString(7));
+				
+				entrancesList.add(p);
+			}
+				
+				rs.close();
+				ps1.close();
+				conn.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return entrancesList;
+		
+	}
+	public static Point findClosestPoint(int x ,int y)
+	{
+		ArrayList<Point> resPoint = new ArrayList<Point>();
+		Connection conn = null;
+		
+		String sql="";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+		
+			sql="select * from points where x>?-10 and x<?+10 and y>?-10 and y<?+10 ";
+				
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			ps1.setInt(1, x);
+			ps1.setInt(2, x);
+			ps1.setInt(3, y);
+			ps1.setInt(4, y);
+	
+				
+			ResultSet rs = ps1.executeQuery();
+			while(rs.next())
+			{
+				Point p = new Point();
+				p.setId(rs.getInt(1));
+				p.setX(rs.getInt(2));
+				p.setY(rs.getInt(3));
+				p.setMapId(rs.getInt(4));
+				p.setMapEntrance(rs.getInt(5)==1?true:false);
+				String attribute = rs.getString(6);
+				p.setName(rs.getString(7));
+				
+				resPoint.add(p);
+			}
+				
+				rs.close();
+				ps1.close();
+				conn.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(resPoint.size()==0)
+		{
+			return null;
+		}
+		else return resPoint.get(0);
+		
+	}
+	public static boolean removeMap(int mapid)
+	{
+		Connection conn=null;
+		String sql="";
+		int res=0;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+		
+			sql="delete from map where mapid= ?";
+				
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			ps1.setInt(1, mapid);
+			//ResultSet rs = ps1.executeQuery();
+			res= ps1.executeUpdate();
+			
+				
+				
+				ps1.close();
+				conn.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return res==1?true : false;
+	}
 	public static void main(String[] args){
 		Graph graph1= new Graph();
 		Graph graph2= new Graph();
@@ -1032,7 +1164,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		
 		//graph1 =getGraphByNameWithDB("FullerLab","First Floor");
 		graph1 = getGraphByNameWithDB("GordonLibrary","Basement");
-		System.out.println(graph1.getEdges().size());
+		//System.out.println(graph1.getEdges().size());
 		//graph2 =getGraphByNameWithDB("FullerLab","Second Floor");
 		//System.out.println(graph1.getPoints().size());
 //		System.out.println(graph2.getPoints().size());
@@ -1054,8 +1186,8 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		//System.out.println(saveMap("HigginsLab","c://testForIMG",testScale));
 		//System.out.println(addPoint("FullerLab","Third Floor", 600, 480, false,true,"Room333"));
 		//System.out.println(addEdge(1,2,testWeight));
-		/*System.out.println(getAllMaps());
-		System.out.println(getAllPoints());
+		//System.out.println(getAllMaps().get(1).getBuildingName());
+		/*System.out.println(getAllPoints());
 		System.out.println(getAllEdges());*/
 		//System.out.println(getPointsByEdges(testEdges).get(0).getX());
 		//System.out.println(getPointsByEdges(testEdges).get(1).getX());
@@ -1068,6 +1200,6 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 */
 		//System.out.println(graph2.getPoints().size());
 		//System.out.println(sqroot(testSq));
-		
+		System.out.println(findClosestPoint(236, 74).getId());
 	}
 }
