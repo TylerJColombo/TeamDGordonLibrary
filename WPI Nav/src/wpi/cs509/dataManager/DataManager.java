@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 import com.sun.org.apache.regexp.internal.recompile;
 import com.sun.xml.internal.ws.policy.EffectiveAlternativeSelector;
 
@@ -37,11 +38,14 @@ public class DataManager {
 	   }
 	   return x2;
 	}
-	public static boolean addPoint(int mapid, int x, int y, boolean isEntrance,boolean isLocation,String name ){
+	/*return the point id, if add point failed, it should return 0 and suggest failed*/
+	public static int addPoint(int mapid, int x, int y, boolean isEntrance,boolean isLocation,String name ){
 		
 		Connection conn = null;
 		String sql="";
+		String sql2="";
 		int success=0;
+		int pointID  = 0;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
@@ -64,6 +68,24 @@ public class DataManager {
 			success  = ps1.executeUpdate();
 			
 			ps1.close();
+			if(success==1)
+			{
+				System.out.println("add Point successfully.");
+			}
+			else {
+				System.out.println("fail to add the point.");
+			}
+			sql2 = "select id from points where x= ? and y = ? and name = ?";
+			PreparedStatement ps2 = conn.prepareStatement(sql2);
+			ps2.setInt(1, x);
+			ps2.setInt(2, y);
+			ps2.setString(3, name);
+			ResultSet idSet =  ps2.executeQuery(sql2);
+			while(idSet.next())
+			{
+				pointID = idSet.getInt(1);
+			}
+			ps2.close();
 			conn.close();
 			
 		} catch (ClassNotFoundException e) {
@@ -73,11 +95,8 @@ public class DataManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(success!=0)
-		{
-			return true;
-		}
-		else return false;
+
+		return pointID;
 	
 
 	}
@@ -472,7 +491,7 @@ public class DataManager {
 		return graph;
 	}
 	
-public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
+	public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 	{
 		ArrayList<String> floorName = new ArrayList<String>();
 		
@@ -831,8 +850,8 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		return edgesArray;
 		
 	}
-	/*--this function is not used currently--*/
-	public static ArrayList<Point> getPointsByEdges(ArrayList<Integer> IDArray)
+	/*--this function is for finding two points that forms an edge--*/
+	public static ArrayList<Point> getPointsByEdge(int edgeID)
 	{
 		ArrayList<Point> pointsArray = new ArrayList<Point>();
 		
@@ -843,13 +862,12 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
-			for(int i=0;i<IDArray.size();i++)
-			{
-				sql="select * from points where id=?";
+			
+				sql="select * from points p,edges e where e.id=? and (e.point1id=p.id or e.point2id = p.id)";
 				
 				PreparedStatement ps1 = conn.prepareStatement(sql);
 			
-				ps1.setInt(1, (Integer)IDArray.get(i));
+				ps1.setInt(1, edgeID);
 				
 				ResultSet rs = ps1.executeQuery();
 				
@@ -880,7 +898,7 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 				rs.close();
 				ps1.close();
 				
-			}	
+
 
 			conn.close();
 			
@@ -1140,6 +1158,83 @@ public static ArrayList<String> getFloorsMapsByBuildingName(String buildingName)
 		}
 		
 		return res==1?true : false;
+	}
+	public static Point getPointByID(int pointID)
+	{
+		Point p = new Point();
+		Connection conn = null;
+		String sql="";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+		
+			sql="select * from points where id =? ";
+				
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			ps1.setInt(1, pointID);
+			ResultSet rs = ps1.executeQuery(sql);
+			while(rs.next())
+			{
+				p.setId(rs.getInt(1));
+				p.setX(rs.getInt(2));
+				p.setY(rs.getInt(3));
+				p.setMapId(rs.getInt(4));
+				p.setMapEntrance(rs.getInt(5)==1?true:false);
+				String attribute = rs.getString(6);
+				p.setName(rs.getString(7));
+			}
+				rs.close();
+				ps1.close();
+				conn.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return p;
+	}
+	public static ArrayList<Edge> getEdgesByMapID(int mapID)
+	{
+		ArrayList<Edge> edgeList = new ArrayList<Edge>();
+		Connection conn = null;
+		String sql="";
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+			
+			sql="select * from edge e, points p where e.point1id = p.id and p.mapid = ? ";
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+				
+			ResultSet resultEdges = ps1.executeQuery();
+			while(resultEdges.next())
+			{
+				Edge edge = new Edge();
+				edge.setId(resultEdges.getInt(1));
+				edge.setsPointId(resultEdges.getInt(2));
+				edge.setePointId(resultEdges.getInt(3));
+				edge.setWeight(resultEdges.getFloat(4));
+				System.out.println(edge);
+				edgeList.add(edge);
+			}
+			 resultEdges.close();
+			ps1.close();
+			conn.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return edgeList;
 	}
 	public static void main(String[] args){
 		Graph graph1= new Graph();
