@@ -3,35 +3,26 @@ package wpi.cs509.ui.user;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
-import wpi.cs509.ui.components.Line;
 import wpi.cs509.ui.components.SolidPoint;
-import wpi.cs509.ui.util.*;
-
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import com.sun.xml.internal.ws.org.objectweb.asm.Label;
-
-import javafx.scene.control.ComboBox;
-import sun.launcher.resources.launcher;
-
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.awt.event.ItemEvent;
+import wpi.cs509.ui.util.Util;
 
 public class RouteScreen1 {
 
@@ -97,7 +88,7 @@ public class RouteScreen1 {
 //imagepanel for map		
 
 		//imagePanelCmap = new ImagePanel("maps//campusmap.gif", 640, 480);
-		imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus,Basement"), 640, 480);
+		imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "0"), 640, 480);
 		imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
        		
 

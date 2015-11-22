@@ -41,7 +41,7 @@ public class Map {
 	}
 	@Override
 	public String toString() {
-		return name;
+		return buildingName + ", " + floorNum;
 	}
 	public String getBuildingName() {
 		return buildingName;

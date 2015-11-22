@@ -15,15 +15,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.mysql.jdbc.Util;
-
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
-import wpi.cs509.ui.components.Line;
 import wpi.cs509.ui.components.SolidPoint;
 
 public class RouteScreen3 {
@@ -317,7 +314,7 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				String selectedBuilding = buildingSelection.getSelectedItem().toString();
 				String selectedFloor = fromfloorSelection.getSelectedItem().toString();
-				String filename = DataManager.getMapPathByName(selectedBuilding);
+				String filename = DataManager.getMapPathByName(selectedBuilding, selectedFloor);
 				System.out.println(filename);
 				sameFloorMap = new ImagePanel(filename, 640, 480);
 				sameFloorMap.setBounds(350, 180, 640, 480);
@@ -340,7 +337,7 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				String selectedBuilding = buildingSelection.getSelectedItem().toString();
 				String selectedFloor = tofloorSelection.getSelectedItem().toString();
-				String filename = DataManager.getMapPathByName(selectedBuilding);
+				String filename = DataManager.getMapPathByName(selectedBuilding, selectedFloor);
 				System.out.println(filename);
 				sameFloorMap = new ImagePanel(filename, 640, 480);
 				sameFloorMap.setBounds(350, 180, 640, 480);

@@ -7,6 +7,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -20,15 +21,22 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import wpi.cs509.dataManager.DataManager;
+import wpi.cs509.dataModel.Edge;
 import wpi.cs509.dataModel.Map;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
+import wpi.cs509.ui.components.Line;
 import wpi.cs509.ui.components.SolidPoint;
 
 public class AdminScreen {
 
 	private JFrame frame;
+	private int currentPoint = 1;
+	private ImagePanel imagePanelMap;
+	private SolidPoint pointUI1;
+	private SolidPoint pointUI2;
+	private Line edgeLine;
 	
 	/**
 	 * Create the window.
@@ -77,7 +85,7 @@ public class AdminScreen {
 		panel_1.setLayout(null);
 		addMapTab.add(panel_1);
 		
-		JLabel lblNewLabel_6 = new JLabel("Map Name:");
+		JLabel lblNewLabel_6 = new JLabel("Building Name:");
 		lblNewLabel_6.setBounds(20, 20, 280, 20);
 		panel_1.add(lblNewLabel_6);
 				
@@ -85,24 +93,32 @@ public class AdminScreen {
 		txtMapName.setBounds(20, 50, 280, 20);
 		panel_1.add(txtMapName);
 				
+		JLabel lblNewLabel_12 = new JLabel("Floor Number:");
+		lblNewLabel_12.setBounds(20, 90, 280, 20);
+		panel_1.add(lblNewLabel_12);
+				
+		JTextField txtFloorNum = new JTextField();
+		txtFloorNum.setBounds(20, 120, 280, 20);
+		panel_1.add(txtFloorNum);
+				
 		JLabel lblNewLabel_7 = new JLabel("Map File Location:");
-		lblNewLabel_7.setBounds(20, 90, 280, 20);
+		lblNewLabel_7.setBounds(20, 160, 280, 20);
 		panel_1.add(lblNewLabel_7);
 				
 		JTextField txtMapPath = new JTextField();
-		txtMapPath.setBounds(20, 120, 280, 20);
+		txtMapPath.setBounds(20, 190, 280, 20);
 		panel_1.add(txtMapPath);
 				
 		JLabel lblNewLabel_8 = new JLabel("Map Scale:");
-		lblNewLabel_8.setBounds(20, 160, 280, 20);
+		lblNewLabel_8.setBounds(20, 230, 280, 20);
 		panel_1.add(lblNewLabel_8);
 				
 		JTextField txtMapScale = new JTextField();
-		txtMapScale.setBounds(20, 190, 280, 20);
+		txtMapScale.setBounds(20, 260, 280, 20);
 		panel_1.add(txtMapScale);
 				
 		JButton btnSaveMap = new JButton("Add Map");
-		btnSaveMap.setBounds(20, 230, 280, 25);
+		btnSaveMap.setBounds(20, 300, 280, 25);
 		btnSaveMap.setForeground(Color.decode("#F1F1F1"));
 		btnSaveMap.setBackground(Color.decode("#AB2A36"));
 		btnSaveMap.setOpaque(true);
@@ -114,7 +130,7 @@ public class AdminScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DataManager.saveMap(txtMapName.getText(), txtMapPath.getText(), Float.parseFloat(txtMapScale.getText()));
+				DataManager.saveMap(txtMapName.getText(), Integer.parseInt(txtFloorNum.getText()), txtMapPath.getText(), Float.parseFloat(txtMapScale.getText()));
 			}
 		});
 		
@@ -123,7 +139,7 @@ public class AdminScreen {
 		///////////////////
 		JPanel addPointTab = new JPanel();
 		addPointTab.setLayout(null);
-		tabbedPane.addTab("Add Point", null, addPointTab, null);
+		tabbedPane.addTab("Add Edge/Points", null, addPointTab, null);
 		
 		// Add Map left box
 		JPanel panel = new JPanel();
@@ -139,49 +155,85 @@ public class AdminScreen {
 		comboMaps.setBounds(120, 20, 180, 20);
 		panel.add(comboMaps);
 		
-		JLabel lblNewLabel_1 = new JLabel("2) Click the point on the map.");
+		// First Point
+		JLabel lblNewLabel_1 = new JLabel("2) Click the first point on the map and fill its data.");
 		lblNewLabel_1.setBounds(20, 60, 300, 20);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("3) Fill data and click Add Point button");
-		lblNewLabel_2.setBounds(20, 100, 300, 20);
-		panel.add(lblNewLabel_2);
+		JLabel lblX1 = new JLabel("X1: ");
+		lblX1.setBounds(20, 90, 30, 20);
+		panel.add(lblX1);
 		
-		JLabel lblX = new JLabel("X: ");
-		lblX.setBounds(20, 140, 30, 20);
-		panel.add(lblX);
+		JLabel lblX1Value = new JLabel("0");
+		lblX1Value.setBounds(40, 90, 70, 20);
+		panel.add(lblX1Value);
 		
-		JLabel lblXValue = new JLabel("0");
-		lblXValue.setBounds(40, 140, 70, 20);
-		panel.add(lblXValue);
+		JLabel lblY1 = new JLabel("Y1: ");
+		lblY1.setBounds(90, 90, 30, 20);
+		panel.add(lblY1);
 		
-		JLabel lblY = new JLabel("Y: ");
-		lblY.setBounds(90, 140, 30, 20);
-		panel.add(lblY);
-		
-		JLabel lblYValue = new JLabel("0");
-		lblYValue.setBounds(110, 140, 70, 20);
-		panel.add(lblYValue);
+		JLabel lblY1Value = new JLabel("0");
+		lblY1Value.setBounds(110, 90, 70, 20);
+		panel.add(lblY1Value);
 		
 		JLabel lblNewLabel_5 = new JLabel("Location Name: ");
-		lblNewLabel_5.setBounds(20, 180, 100, 20);
+		lblNewLabel_5.setBounds(20, 120, 100, 20);
 		panel.add(lblNewLabel_5);
 		
-		JTextField txtLocationName = new JTextField();
-		txtLocationName.setBounds(120, 180, 180, 20);
-		panel.add(txtLocationName);
-		txtLocationName.setColumns(10);
+		JTextField txtLocation1Name = new JTextField();
+		txtLocation1Name.setBounds(120, 120, 180, 20);
+		panel.add(txtLocation1Name);
+		txtLocation1Name.setColumns(10);
 		
-		JCheckBox chckbxIsEnterance = new JCheckBox("is enterance");
-		chckbxIsEnterance.setBounds(20, 220, 300, 20);
-		panel.add(chckbxIsEnterance);
+		JCheckBox chckbxIsEnterance1 = new JCheckBox("is enterance");
+		chckbxIsEnterance1.setBounds(20, 150, 120, 20);
+		panel.add(chckbxIsEnterance1);
 		
-		JCheckBox chckbxIsLocation = new JCheckBox("is location");
-		chckbxIsLocation.setBounds(20, 260, 300, 20);
-		panel.add(chckbxIsLocation);
+		JCheckBox chckbxIsLocation1 = new JCheckBox("is location");
+		chckbxIsLocation1.setBounds(140, 150, 120, 20);
+		panel.add(chckbxIsLocation1);
 		
-		JButton btnSavePoint = new JButton("Add Point");
-		btnSavePoint.setBounds(20, 300, 280, 25);
+		// Second point
+		JLabel lblNewLabel_13 = new JLabel("3) Click the Second point on the map and fill its data.");
+		lblNewLabel_13.setBounds(20, 190, 300, 20);
+		panel.add(lblNewLabel_13);
+		
+		JLabel lblX2 = new JLabel("X2: ");
+		lblX2.setBounds(20, 220, 30, 20);
+		panel.add(lblX2);
+		
+		JLabel lblX2Value = new JLabel("0");
+		lblX2Value.setBounds(40, 220, 70, 20);
+		panel.add(lblX2Value);
+		
+		JLabel lblY2 = new JLabel("Y2: ");
+		lblY2.setBounds(90, 220, 30, 20);
+		panel.add(lblY2);
+		
+		JLabel lblY2Value = new JLabel("0");
+		lblY2Value.setBounds(110, 220, 70, 20);
+		panel.add(lblY2Value);
+		
+		JLabel lblNewLabel_14 = new JLabel("Location Name: ");
+		lblNewLabel_14.setBounds(20, 250, 100, 20);
+		panel.add(lblNewLabel_14);
+		
+		JTextField txtLocation2Name = new JTextField();
+		txtLocation2Name.setBounds(120, 250, 180, 20);
+		panel.add(txtLocation2Name);
+		txtLocation2Name.setColumns(10);
+		
+		JCheckBox chckbxIsEnterance2 = new JCheckBox("is enterance");
+		chckbxIsEnterance2.setBounds(20, 280, 120, 20);
+		panel.add(chckbxIsEnterance2);
+
+		JCheckBox chckbxIsLocation2 = new JCheckBox("is location");
+		chckbxIsLocation2.setBounds(140, 280, 120, 20);
+		panel.add(chckbxIsLocation2);
+		
+		
+		JButton btnSavePoint = new JButton("Add Edge and its Points");
+		btnSavePoint.setBounds(20, 320, 280, 25);
 		btnSavePoint.setForeground(Color.decode("#F1F1F1"));
 		btnSavePoint.setBackground(Color.decode("#AB2A36"));
 		btnSavePoint.setOpaque(true);
@@ -200,40 +252,85 @@ public class AdminScreen {
 				// load selected map
 				Map selectedMap = (Map)comboMaps.getSelectedItem();
 				if(selectedMap != null){
-					ImagePanel imagePanel2 = new ImagePanel(selectedMap.getFileLocation(), 640, 480);
-					imagePanel2.setLayout(null);
-					imagePanel2.setBounds(0, 0, 640, 480);
+					imagePanelMap = new ImagePanel(selectedMap.getFileLocation(), 640, 480);
+					imagePanelMap.setLayout(null);
+					imagePanelMap.setBounds(0, 0, 640, 480);
+					
+					for(Edge edge: DataManager.getEdgesByMapID(selectedMap.getId())){
+						Point point1 = DataManager.getPointByID(edge.getsPointId());
+						Point point2 = DataManager.getPointByID(edge.getePointId());
+						
+						imagePanelMap.add(new SolidPoint(Color.GREEN, point1.getX(), point1.getY()));
+		            	imagePanelMap.add(new SolidPoint(Color.GREEN, point2.getX(), point2.getY()));
+		                imagePanelMap.add(new Line(Color.GREEN, point1.getX(), point1.getY(), point2.getX(), point2.getY()));
+		            }
+				    imagePanelMap.repaint();
 					
 					panel_4.removeAll();
-					panel_4.add(imagePanel2);
+					panel_4.add(imagePanelMap);
 					panel_4.repaint();
 					
-					imagePanel2.addMouseListener(new MouseListener() {
+					currentPoint = 1;
+					imagePanelMap.addMouseListener(new MouseListener() {
 			            @Override
 			            public void mouseClicked(MouseEvent e) {
 			                System.out.println(":MOUSE_CLICK_EVENT:" + e.getX() + "," + e.getY());
-			                lblXValue.setText(e.getX() + "");
-			                lblYValue.setText(e.getY() + "");
-			                SolidPoint pointUI = new SolidPoint(Color.RED, e.getX(), e.getY());
-			                imagePanel2.add(pointUI);
-			                imagePanel2.repaint();
+			                
+			                if(currentPoint == 1){
+			                	currentPoint = 2;
+			                	
+			                	Point point1 = DataManager.findClosestPoint(e.getX(), e.getY());
+			    				if(point1 == null){
+			    					lblX1Value.setText(e.getX() + "");
+					                lblY1Value.setText(e.getY() + "");
+			    				} else {
+			    					lblX1Value.setText(point1.getX() + "");
+					                lblY1Value.setText(point1.getY() + "");
+					                txtLocation1Name.setText(point1.getName());
+					                // TODO - fill is enterance/ is location
+			    				}
+			                	
+			    			    pointUI1 = new SolidPoint(Color.RED, Integer.parseInt(lblX1Value.getText()), Integer.parseInt(lblY1Value.getText()));
+					            imagePanelMap.add(pointUI1);
+					            imagePanelMap.repaint();
+			    			
+			                } else if (currentPoint == 2){
+			                	currentPoint = 0;
+			                	
+			                	Point point2 = DataManager.findClosestPoint(e.getX(), e.getY());
+			    				if(point2 == null){
+			    					lblX2Value.setText(e.getX() + "");
+					                lblY2Value.setText(e.getY() + "");
+			    				} else {
+			    					lblX2Value.setText(point2.getX() + "");
+					                lblY2Value.setText(point2.getY() + "");
+					                txtLocation2Name.setText(point2.getName());
+					                // TODO - fill is enterance/ is location
+			    				}
+			                	
+			    				pointUI2 = new SolidPoint(Color.RED, Integer.parseInt(lblX2Value.getText()), Integer.parseInt(lblY2Value.getText()));
+				                imagePanelMap.add(pointUI2);
+				                
+				                edgeLine = new Line(Color.RED, Integer.parseInt(lblX1Value.getText()), Integer.parseInt(lblY1Value.getText()), Integer.parseInt(lblX2Value.getText()), Integer.parseInt(lblY2Value.getText()));
+				                imagePanelMap.add(edgeLine);
+				                imagePanelMap.repaint();
+			                }
 			            }
-	
 						@Override
 						public void mouseEntered(MouseEvent arg0) {
-							// TODO Auto-generated method stub
+							// Not used
 						}
 						@Override
 						public void mouseExited(MouseEvent arg0) {
-							// TODO Auto-generated method stub
+							// Not used
 						}
 						@Override
 						public void mousePressed(MouseEvent arg0) {
-							// TODO Auto-generated method stub
+							// Not used
 						}
 						@Override
 						public void mouseReleased(MouseEvent arg0) {
-							// TODO Auto-generated method stub
+							// Not used
 						}
 			        });
 				}
@@ -244,8 +341,44 @@ public class AdminScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DataManager.addPoint(((Map)comboMaps.getSelectedItem()).getName(), Integer.parseInt(lblXValue.getText()), Integer.parseInt(lblYValue.getText()), chckbxIsEnterance.isSelected(), chckbxIsLocation.isSelected(), txtLocationName.getText());
-			}
+				Point point1 = DataManager.findClosestPoint(Integer.parseInt(lblX1Value.getText()), Integer.parseInt(lblY1Value.getText()));
+				Point point2 = DataManager.findClosestPoint(Integer.parseInt(lblX2Value.getText()), Integer.parseInt(lblY2Value.getText()));
+				if(point1 == null){
+					point1 = DataManager.getPointByID(DataManager.addPoint(((Map)comboMaps.getSelectedItem()).getId(), Integer.parseInt(lblX1Value.getText()), Integer.parseInt(lblY1Value.getText()), chckbxIsEnterance1.isSelected(), chckbxIsLocation1.isSelected(), txtLocation1Name.getText()));
+				}
+				if(point2 == null){
+					point2 = DataManager.getPointByID(DataManager.addPoint(((Map)comboMaps.getSelectedItem()).getId(), Integer.parseInt(lblX2Value.getText()), Integer.parseInt(lblY2Value.getText()), chckbxIsEnterance2.isSelected(), chckbxIsLocation2.isSelected(), txtLocation2Name.getText()));
+				}
+				DataManager.addEdge(point1.getId(), point2.getId());
+				
+				currentPoint = 1;
+				
+				imagePanelMap.remove(pointUI1);
+				pointUI1 = new SolidPoint(Color.GREEN, Integer.parseInt(lblX1Value.getText()), Integer.parseInt(lblY1Value.getText()));
+                imagePanelMap.add(pointUI1);
+            	
+                imagePanelMap.remove(pointUI2);
+				pointUI2 = new SolidPoint(Color.GREEN, Integer.parseInt(lblX2Value.getText()), Integer.parseInt(lblY2Value.getText()));
+                imagePanelMap.add(pointUI2);
+                
+                imagePanelMap.remove(edgeLine);
+				edgeLine = new Line(Color.GREEN, Integer.parseInt(lblX1Value.getText()), Integer.parseInt(lblY1Value.getText()), Integer.parseInt(lblX2Value.getText()), Integer.parseInt(lblY2Value.getText()));
+                imagePanelMap.add(edgeLine);
+            
+                imagePanelMap.repaint();
+                
+                lblX1Value.setText("0");
+                lblY1Value.setText("0");
+                txtLocation1Name.setText("");
+                chckbxIsEnterance1.setSelected(false);
+                chckbxIsLocation1.setSelected(false);
+                
+                lblX2Value.setText("0");
+                lblY2Value.setText("0");
+                txtLocation2Name.setText("");
+                chckbxIsEnterance2.setSelected(false);
+                chckbxIsLocation2.setSelected(false);
+            }
 		});
 		
 		//////////////////

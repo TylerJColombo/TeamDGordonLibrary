@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import wpi.cs509.ui.admin.AdminScreen;
 import wpi.cs509.ui.components.HeaderPanel;
 
 public class MainScreen {

@@ -75,12 +75,15 @@ public class DataManager {
 			else {
 				System.out.println("fail to add the point.");
 			}
-			sql2 = "select id from points where x= ? and y = ? and name = ?";
+			conn.close();
+			
+			conn = DriverManager.getConnection(url);
+			sql2 = "select id from points p where p.x = ? and p.y = ? and p.mapid = ?";
 			PreparedStatement ps2 = conn.prepareStatement(sql2);
 			ps2.setInt(1, x);
 			ps2.setInt(2, y);
-			ps2.setString(3, name);
-			ResultSet idSet =  ps2.executeQuery(sql2);
+			ps2.setInt(3, mapid);
+			ResultSet idSet =  ps2.executeQuery();
 			while(idSet.next())
 			{
 				pointID = idSet.getInt(1);
@@ -1168,11 +1171,11 @@ public class DataManager {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 		
-			sql="select * from points where id =? ";
+			sql="select * from points where id = ?";
 				
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			ps1.setInt(1, pointID);
-			ResultSet rs = ps1.executeQuery(sql);
+			ResultSet rs = ps1.executeQuery();
 			while(rs.next())
 			{
 				p.setId(rs.getInt(1));
@@ -1210,7 +1213,7 @@ public class DataManager {
 			
 			sql="select * from edge e, points p where e.point1id = p.id and p.mapid = ? ";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
-				
+			ps1.setInt(1, mapID);
 			ResultSet resultEdges = ps1.executeQuery();
 			while(resultEdges.next())
 			{
