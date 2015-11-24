@@ -609,7 +609,7 @@ public class DataManager {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="select * from points p,map m where m.buildingName like ? and m.floorNum=? and p.attribute<>'PassageWay' and m.mapid = p.mapid ";
+			sql="select * from points p,map m where m.buildingName like ? and m.floorNum=? and p.attribute<>'PassageWay' and m.mapid = p.mapid order by p.name ";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
 			ps1.setString(1,buildingName+"%");
@@ -769,7 +769,7 @@ public class DataManager {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="select * from points";
+			sql="select * from points order by name";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 				
 			ResultSet resultPoints = ps1.executeQuery();
@@ -986,7 +986,7 @@ public class DataManager {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 		
-			sql="select * from points p,map m where m.buildingName= ? and p.attribute<>'PassageWay' and p.name like ?";
+			sql="select * from points p,map m where m.buildingName= ? and p.attribute<>'PassageWay' and p.name like ? order by p.name";
 				
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
@@ -1042,7 +1042,7 @@ public class DataManager {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 		
-			sql="select * from points where mapid = ? and isEntrance = 1";
+			sql="select * from points where mapid = ? and isEntrance = 1 order by name";
 				
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			ps1.setInt(1, mapid);
