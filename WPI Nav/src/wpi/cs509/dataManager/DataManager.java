@@ -933,25 +933,26 @@ public class DataManager {
 			
 			ps1.setString(1, BuildingName+"%");
 			
-			switch(FloorName)
-			{
-			case "SubBasement":
-				floorNum = -1;break;
-			case "Basement":
-				floorNum = 0;break;
-			case "First Floor":
-				floorNum = 1;break;
-			case "Second Floor":
-				floorNum = 2;break;
-			case "Third Floor":
-				floorNum = 3;break;
-			case "Fourth Floor":
-				floorNum = 4;break;
-			case "Fifth Floor":
-				floorNum = 5;break;
-				default:
-					floorNum=88;break;
-			}
+//			switch(FloorName)
+//			{
+//			case "SubBasement":
+//				floorNum = -1;break;
+//			case "Basement":
+//				floorNum = 0;break;
+//			case "First Floor":
+//				floorNum = 1;break;
+//			case "Second Floor":
+//				floorNum = 2;break;
+//			case "Third Floor":
+//				floorNum = 3;break;
+//			case "Fourth Floor":
+//				floorNum = 4;break;
+//			case "Fifth Floor":
+//				floorNum = 5;break;
+//				default:
+//					floorNum=88;break;
+//			}
+			
 			ps1.setInt(2, floorNum);
 			ResultSet rs = ps1.executeQuery();
 				

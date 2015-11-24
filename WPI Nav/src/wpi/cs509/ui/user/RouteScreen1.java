@@ -87,7 +87,7 @@ public class RouteScreen1 {
 		
 //imagepanel for map		
 
-		//imagePanelCmap = new ImagePanel("maps//campusmap.gif", 640, 480);
+//		imagePanelCmap = new ImagePanel("maps//Campus.png", 640, 480);
 		imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "0"), 640, 480);
 		imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
        		

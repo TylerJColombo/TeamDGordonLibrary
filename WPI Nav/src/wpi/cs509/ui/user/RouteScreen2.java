@@ -157,7 +157,7 @@ public class RouteScreen2 {
 		floor.setBounds(25, 60, 300, 20);
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(20, 0, 640, 480);
+		panel_4.setBounds(350, 180, 640, 480);
 		panel_4.setLayout(null);
 		// add by Jiawei Sun
 		//floorList
@@ -181,7 +181,7 @@ public class RouteScreen2 {
 					//filename = "maps\\GordonLibraryBasement.png";
 					//filename = "F:\\GordonLibraryFirstFloor.jpg";
 					sameFloorMap = new ImagePanel(filename, 640, 480);
-					sameFloorMap.setBounds(350, 180, 640, 480);
+					sameFloorMap.setBounds(0, 0, 640, 480);
 					sameFloorMap.setBackground(Color.decode("#F1F1F1"));
 				
 					panel_4.removeAll();

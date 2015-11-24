@@ -77,7 +77,7 @@ public class AdminScreen {
 		/////////////////
 		JPanel addMapTab = new JPanel();
 		addMapTab.setLayout(null);
-		tabbedPane.addTab("Add Map", null, addMapTab, null);
+		tabbedPane.addTab("Add/Delete Map", null, addMapTab, null);
 		
 		// Add Map left box
 		JPanel panel_1 = new JPanel();
@@ -125,12 +125,73 @@ public class AdminScreen {
 		btnSaveMap.setBorderPainted(false);
 		panel_1.add(btnSaveMap);
 		
+		// Delete Map fields
+		JPanel panel_5 = new JPanel();
+		panel_5.setBounds(400, 10, 300, 500);
+		panel_5.setLayout(null);
+		addMapTab.add(panel_5);
+		
+		JLabel lblNewLabel_15 = new JLabel("Map:");
+		lblNewLabel_15.setBounds(20, 20, 280, 20);
+		panel_5.add(lblNewLabel_15);
+		
+		JComboBox<Map> comboMapsDelete = new JComboBox<Map>();
+		comboMapsDelete.setBounds(20, 50, 280, 20);
+		if(comboMapsDelete.getItemCount() > 0){
+			comboMapsDelete.removeAllItems();
+		}
+		for(Map map: DataManager.getAllMaps()){
+			comboMapsDelete.addItem(map);
+		}
+		panel_5.add(comboMapsDelete);
+		
+		JButton btnDeleteMap = new JButton("Delete Map");
+		btnDeleteMap.setBounds(20, 90, 280, 25);
+		btnDeleteMap.setForeground(Color.decode("#F1F1F1"));
+		btnDeleteMap.setBackground(Color.decode("#AB2A36"));
+		btnDeleteMap.setOpaque(true);
+		btnDeleteMap.setBorderPainted(false);
+		panel_5.add(btnDeleteMap);
+		
 		// Add Map Action Listeners
 		btnSaveMap.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DataManager.saveMap(txtMapName.getText(), Integer.parseInt(txtFloorNum.getText()), txtMapPath.getText(), Float.parseFloat(txtMapScale.getText()));
+				
+				// Clean add map form
+				txtMapName.setText("");
+				txtFloorNum.setText("");
+				txtMapPath.setText("");
+				txtMapScale.setText("");
+				
+				// Refresh delete maps combo box
+				if(comboMapsDelete.getItemCount() > 0){
+					comboMapsDelete.removeAllItems();
+				}
+				for(Map map: DataManager.getAllMaps()){
+					comboMapsDelete.addItem(map);
+				}
+				
+			}
+		});
+		
+		// Delete Map Action Listeners
+		btnDeleteMap.addActionListener(new ActionListener() {
+					
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Map selectedMap = (Map)comboMapsDelete.getSelectedItem();
+				DataManager.removeMap(selectedMap.getId());
+
+				// Refresh delete maps combo box
+				if(comboMapsDelete.getItemCount() > 0){
+					comboMapsDelete.removeAllItems();
+				}
+				for(Map map: DataManager.getAllMaps()){
+					comboMapsDelete.addItem(map);
+				}
 			}
 		});
 		
@@ -386,7 +447,7 @@ public class AdminScreen {
 		//////////////////
 		JPanel addEdgeTab = new JPanel();
 		addEdgeTab.setLayout(null);
-		tabbedPane.addTab("Add Edge", null, addEdgeTab, null);
+		tabbedPane.addTab("Add Connection Edges", null, addEdgeTab, null);
 		
 		// Add Edge left box
 		JPanel panel_3 = new JPanel();
@@ -394,45 +455,99 @@ public class AdminScreen {
 		panel_3.setLayout(null);
 		addEdgeTab.add(panel_3);
 		
-		JLabel lblNewLabel_9 = new JLabel("First Point:");
+		JLabel lblNewLabel_9 = new JLabel("First Map:");
 		lblNewLabel_9.setBounds(20, 20, 280, 20);
 		panel_3.add(lblNewLabel_9);
 		
-		JComboBox<Point> comboFirstPoint = new JComboBox<Point>();
-		comboFirstPoint.setBounds(20, 50, 280, 20);
-		for(Point point: DataManager.getAllPoints()){
-			comboFirstPoint.addItem(point);
+		JComboBox<Map> comboMaps1stCon = new JComboBox<Map>();
+		comboMaps1stCon.setBounds(20, 50, 280, 20);
+		if(comboMaps1stCon.getItemCount() > 0){
+			comboMaps1stCon.removeAllItems();
 		}
-		panel_3.add(comboFirstPoint);
+		for(Map map: DataManager.getAllMaps()){
+			comboMaps1stCon.addItem(map);
+		}
+		panel_3.add(comboMaps1stCon);
 		
-		JLabel lblNewLabel_10 = new JLabel("Second Point:");
+		JLabel lblNewLabel_10 = new JLabel("First Enterance:");
 		lblNewLabel_10.setBounds(20, 90, 280, 20);
 		panel_3.add(lblNewLabel_10);
 				
+		JComboBox<Point> comboFirstPoint = new JComboBox<Point>();
+		comboFirstPoint.setBounds(20, 120, 280, 20);
+		for(Point p: DataManager.getEntranceByMapID(DataManager.getAllMaps().get(0).getId())){
+			comboFirstPoint.addItem(p);
+		}
+		panel_3.add(comboFirstPoint);
+		
+		JLabel lblNewLabel_16 = new JLabel("Second Map:");
+		lblNewLabel_16.setBounds(20, 160, 280, 20);
+		panel_3.add(lblNewLabel_16);
+		
+		JComboBox<Map> comboMaps2ndCon = new JComboBox<Map>();
+		comboMaps2ndCon.setBounds(20, 190, 280, 20);
+		if(comboMaps2ndCon.getItemCount() > 0){
+			comboMaps2ndCon.removeAllItems();
+		}
+		for(Map map: DataManager.getAllMaps()){
+			comboMaps2ndCon.addItem(map);
+		}
+		panel_3.add(comboMaps2ndCon);
+		
+		JLabel lblNewLabel_17 = new JLabel("Second Enterance:");
+		lblNewLabel_17.setBounds(20, 230, 280, 20);
+		panel_3.add(lblNewLabel_17);
+		
 		JComboBox<Point> comboSecondPoint = new JComboBox<Point>();
-		comboSecondPoint.setBounds(20, 120, 280, 20);
-		for(Point point: DataManager.getAllPoints()){
-			comboSecondPoint.addItem(point);
+		comboSecondPoint.setBounds(20, 260, 280, 20);
+		for(Point p: DataManager.getEntranceByMapID(DataManager.getAllMaps().get(0).getId())){
+			comboSecondPoint.addItem(p);
 		}
 		panel_3.add(comboSecondPoint);
 		
-		JLabel lblNewLabel_11 = new JLabel("Weight:");
-		lblNewLabel_11.setBounds(20, 160, 280, 20);
-		panel_3.add(lblNewLabel_11);
-				
-		JTextField txtEdgeWeight = new JTextField();
-		txtEdgeWeight.setBounds(20, 190, 280, 20);
-		panel_3.add(txtEdgeWeight);
-				
-		JButton btnSaveEdge = new JButton("Add Edge");
-		btnSaveEdge.setBounds(20, 230, 280, 25);
+		JButton btnSaveEdge = new JButton("Add Connection Edge");
+		btnSaveEdge.setBounds(20, 300, 280, 25);
 		btnSaveEdge.setForeground(Color.decode("#F1F1F1"));
 		btnSaveEdge.setBackground(Color.decode("#AB2A36"));
 		btnSaveEdge.setOpaque(true);
 		btnSaveEdge.setBorderPainted(false);
 		panel_3.add(btnSaveEdge);
 		
-		// Add Map Action Listeners
+		// Add connection edges Action Listeners
+		comboMaps1stCon.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// Update point
+				Map selectedMap = (Map)comboMaps1stCon.getSelectedItem();
+				if(selectedMap != null){
+					if(comboFirstPoint.getItemCount() > 0){
+						comboFirstPoint.removeAllItems();
+					}
+					for(Point p: DataManager.getEntranceByMapID(selectedMap.getId())){
+						comboFirstPoint.addItem(p);
+					}
+				}
+			}
+		});
+		
+		comboMaps2ndCon.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// Update point
+				Map selectedMap = (Map)comboMaps2ndCon.getSelectedItem();
+				if(selectedMap != null){
+					if(comboSecondPoint.getItemCount() > 0){
+						comboSecondPoint.removeAllItems();
+					}
+					for(Point p: DataManager.getEntranceByMapID(selectedMap.getId())){
+						comboSecondPoint.addItem(p);
+					}
+				}
+			}
+		});
+		
 		btnSaveEdge.addActionListener(new ActionListener() {
 			
 			@Override
@@ -450,12 +565,26 @@ public class AdminScreen {
 				System.out.println("tab num: " + tabbedPane.getSelectedIndex());
 				
 				if(tabbedPane.getSelectedIndex() == 1){
-					// refresh Maps combo box
+					// refresh add point Maps combo box
 					if(comboMaps.getItemCount() > 0){
 						comboMaps.removeAllItems();
 					}
 					for(Map map: DataManager.getAllMaps()){
 						comboMaps.addItem(map);
+					}
+				} else if(tabbedPane.getSelectedIndex() == 2){
+					// Refresh connection maps combo box
+					if(comboMaps1stCon.getItemCount() > 0){
+						comboMaps1stCon.removeAllItems();
+					}
+					for(Map map: DataManager.getAllMaps()){
+						comboMaps1stCon.addItem(map);
+					}
+					if(comboMaps2ndCon.getItemCount() > 0){
+						comboMaps2ndCon.removeAllItems();
+					}
+					for(Map map: DataManager.getAllMaps()){
+						comboMaps2ndCon.addItem(map);
 					}
 				}
 			}
