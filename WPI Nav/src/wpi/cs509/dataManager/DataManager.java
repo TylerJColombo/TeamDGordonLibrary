@@ -567,10 +567,10 @@ public class DataManager {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="select distinct buildingName from map";
+			sql="select distinct buildingName from map where buildingName<> ?";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
-		
+			ps1.setString(1, "Campus");
 			ResultSet rs = ps1.executeQuery();
 			while(rs.next())
 			{
