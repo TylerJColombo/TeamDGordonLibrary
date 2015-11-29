@@ -186,11 +186,7 @@ public class RouteScreen3 {
 					for(int i = 0;i<locations.size();i++){
 						sourceSelection.addItem(locations.get(i).getName().toString());
 						}
-					panel_4.removeAll();
-					panel_4.add(difFloorMap);
-					panel_4.repaint();
-					
-					frame.add(panel_4);
+				
 					System.out.println("You have chosen floor"+" "+fromfloorSelection.getSelectedItem());
 					}
 					}
@@ -342,8 +338,13 @@ public class RouteScreen3 {
 				System.out.println(filename);
 				difFloorMap = new ImagePanel(filename, 640, 480);
 				difFloorMap.setBounds(0,0, 640, 480);
-				difFloorMap.setLayout(null);
 				difFloorMap.repaint();
+				
+				panel_4.removeAll();
+				panel_4.add(difFloorMap);
+				panel_4.repaint();
+				frame.add(panel_4);
+				difFloorMap.setLayout(null);
 			}
 		});
 		
@@ -365,8 +366,13 @@ public class RouteScreen3 {
 				System.out.println(filename);
 				difFloorMap = new ImagePanel(filename, 640, 480);
 				difFloorMap.setBounds(0,0, 640, 480);
+				
+				panel_4.removeAll();
+				panel_4.add(difFloorMap);
+				panel_4.repaint();
+				frame.add(panel_4);
 				difFloorMap.setLayout(null);
-				difFloorMap.repaint();
+		
 			}
 		});
 		
