@@ -28,7 +28,7 @@ public class RouteScreen3 {
 	private JFrame frame;
 	private JComboBox<String> buildingSelection,tofloorSelection,fromfloorSelection,sourceSelection,destinationSelection;
 	private ArrayList<String> buildingList, floorList;
-	private ArrayList<Point> sourceList, destinationList,locations;
+	private ArrayList<Point> sourceList, destinationList,fromlocations,tolocations;
 	private SolidPoint source1,destination1;
 	private ImagePanel toFloorMap,fromFloorMap;
 	private int x1,x2,y1,y2;
@@ -183,10 +183,10 @@ public class RouteScreen3 {
 					String buildingselected = buildingSelection.getSelectedItem().toString();
 					String fromfloorselected = fromfloorSelection.getSelectedItem().toString();
 
-					ArrayList<Point>fromlocations = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
+					fromlocations = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
 
 					for(int i = 0;i<fromlocations.size();i++){
-						sourceSelection.addItem(locations.get(i).getName().toString());
+						sourceSelection.addItem(fromlocations.get(i).getName().toString());
 						}
 
 					panel_4.removeAll();
@@ -226,7 +226,7 @@ public class RouteScreen3 {
 					ArrayList<Point>tolocations = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
 
 					for(int i = 0;i<tolocations.size();i++){
-						destinationSelection.addItem(locations.get(i).getName().toString());
+						destinationSelection.addItem(tolocations.get(i).getName().toString());
 						}
 					panel_4.removeAll();
 					panel_4.add(toFloorMap);
