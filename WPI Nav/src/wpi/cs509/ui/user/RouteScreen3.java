@@ -23,7 +23,7 @@ import wpi.cs509.ui.components.ImagePanel;
 import wpi.cs509.ui.components.Line;
 import wpi.cs509.ui.components.SolidPoint;
 import wpi.cs509.ui.util.*;
-public class RouteScreenS {
+public class RouteScreen3 {
 
 	private JFrame frame;
 	private JComboBox<String> buildingSelection,tofloorSelection,fromfloorSelection,sourceSelection,destinationSelection;
@@ -42,7 +42,7 @@ public class RouteScreenS {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RouteScreenS window = new RouteScreenS();
+					RouteScreen3 window = new RouteScreen3();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +54,7 @@ public class RouteScreenS {
 	/**
 	 * Create the application.
 	 */
-	public RouteScreenS() {
+	public RouteScreen3() {
 		initialize();
 		this.frame.setVisible(true);
 	}
@@ -170,8 +170,9 @@ public class RouteScreenS {
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				sourceSelection.removeAllItems();
-				
-						sourceSelection.removeItemListener(sListener);
+				sourceSelection.removeItemListener(sListener);
+				destinationSelection.removeAllItems();
+				destinationSelection.removeItemListener(dListener);
 
 				if(e.getStateChange()==ItemEvent.SELECTED)
 				{
@@ -180,8 +181,7 @@ public class RouteScreenS {
 					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
 					for(int i = 0;i<locations.size();i++){
 						sourceSelection.addItem(locations.get(i).getName().toString());
-						destinationSelection.addItem(locations.get(i).getName().toString());
-					}
+						}
 					System.out.println("You have chosen floor"+" "+fromfloorSelection.getSelectedItem());
 					}
 					}
@@ -199,9 +199,9 @@ public class RouteScreenS {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
-				
+				sourceSelection.removeAllItems();
+				sourceSelection.removeItemListener(sListener);
 				destinationSelection.removeAllItems();
-						
 				destinationSelection.removeItemListener(dListener);
 				if(e.getStateChange()==ItemEvent.SELECTED)
 				{
@@ -209,7 +209,6 @@ public class RouteScreenS {
 					String floorselected = tofloorSelection.getSelectedItem().toString();
 					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
 					for(int i = 0;i<locations.size();i++){
-						sourceSelection.addItem(locations.get(i).getName().toString());
 						destinationSelection.addItem(locations.get(i).getName().toString());
 					}
 					System.out.println("You have chosen floor"+" "+tofloorSelection.getSelectedItem());
@@ -249,7 +248,7 @@ public class RouteScreenS {
 					x1 = locations.get(i).getX();
 					y1 = locations.get(i).getY();
 					source1 =new SolidPoint(Color.red, x1, y1);
-					difFloorMap.removeAll();
+					difFloorMap.remove(source1);
 					difFloorMap.add(source1);
 					difFloorMap.repaint();
 				    System.out.println("You have chosen source"+" "+sourceSelection.getSelectedItem());
@@ -397,15 +396,15 @@ public class RouteScreenS {
                 for(int f = 0;f<from ; f++){
                 	Point frompoint = p.get(f);
             		ArrayList<Point> frompointlist = new ArrayList<>();
-            		frompointlist.set(f, frompoint);
-            		Util.drawPath(difFloorMap, frompointlist);
+            		frompointlist. add(f, frompoint);
+            		wpi.cs509.ui.util.Util.drawPath(difFloorMap, frompointlist);
             		wpi.cs509.ui.util.Util.drawPath(difFloorMap, frompointlist);
                 }
                 
                 for(int t = to;t<p.size() ; t++){
                 	Point topoint = p.get(t);
             		ArrayList<Point> topointlist = new ArrayList<>();
-            		topointlist.set(t, topoint);
+            		topointlist.add(t, topoint);
             		wpi.cs509.ui.util.Util.drawPath(difFloorMap, topointlist);
                 }
                 
