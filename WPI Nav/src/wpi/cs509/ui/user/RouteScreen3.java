@@ -185,6 +185,7 @@ public class RouteScreen3 {
 					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
 					for(int i = 0;i<locations.size();i++){
 						sourceSelection.addItem(locations.get(i).getName().toString());
+						destinationSelection.addItem(locations.get(i).getName().toString());
 						}
 					panel_4.removeAll();
 					panel_4.add(fromFloorMap);
@@ -220,6 +221,7 @@ public class RouteScreen3 {
 					String floorselected = tofloorSelection.getSelectedItem().toString();
 					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
 					for(int i = 0;i<locations.size();i++){
+						sourceSelection.addItem(locations.get(i).getName().toString());
 						destinationSelection.addItem(locations.get(i).getName().toString());
 					}
 					panel_4.removeAll();
@@ -488,6 +490,6 @@ public class RouteScreen3 {
 //		difFloorMap.setLayout(null);
 //		difFloorMap.setBounds(330, 180, 640, 480);
 //		difFloorSearchPanel.add(difFloorMap);
-//
+
 	}
 }
