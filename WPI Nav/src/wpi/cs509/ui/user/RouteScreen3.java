@@ -259,16 +259,19 @@ public class RouteScreen3 {
 					if(source1!=null){
 						difFloorMap.remove(source1);
 					}
-					if (source1==null){
-						continue;
-					}
 					int i = sourceSelection.getSelectedIndex();
 					x1 = locations.get(i).getX();
 					y1 = locations.get(i).getY();
 					source1 =new SolidPoint(Color.red, x1, y1);
 
 					difFloorMap.add(source1);
-					difFloorMap.repaint();
+					
+					panel_4.removeAll();
+					panel_4.add(difFloorMap);
+					panel_4.repaint();
+					
+					frame.add(panel_4);
+					//difFloorMap.repaint();
 				    System.out.println("You have chosen source"+" "+sourceSelection.getSelectedItem());
 
 				}
@@ -308,15 +311,17 @@ public class RouteScreen3 {
 					if(destination1!=null){
 						difFloorMap.remove(destination1);
 					}
-					if (destination1==null){
-						continue;
-					}
 					int i = destinationSelection.getSelectedIndex();
 					x2 = locations.get(i).getX();
 					y2 = locations.get(i).getY();
 					destination1 =new SolidPoint(Color.red, x2,y2);
 					difFloorMap.add(destination1);
-					difFloorMap.repaint();
+					panel_4.removeAll();
+					panel_4.add(difFloorMap);
+					panel_4.repaint();
+					
+					frame.add(panel_4);
+					//difFloorMap.repaint();
 					System.out.println("You have chosen destination"+" "+destinationSelection.getSelectedItem());
 				}
 			}
