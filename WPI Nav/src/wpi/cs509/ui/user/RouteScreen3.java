@@ -175,18 +175,20 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				sourceSelection.removeAllItems();
 				sourceSelection.removeItemListener(sListener);
-				destinationSelection.removeAllItems();
-				destinationSelection.removeItemListener(dListener);
+				//destinationSelection.removeAllItems();
+				//destinationSelection.removeItemListener(dListener);
 
 				if(e.getStateChange()==ItemEvent.SELECTED)
 				{
 					String buildingselected = buildingSelection.getSelectedItem().toString();
-					String floorselected = fromfloorSelection.getSelectedItem().toString();
-					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
-					for(int i = 0;i<locations.size();i++){
+					String fromfloorselected = fromfloorSelection.getSelectedItem().toString();
+
+					ArrayList<Point>fromlocations = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
+
+					for(int i = 0;i<fromlocations.size();i++){
 						sourceSelection.addItem(locations.get(i).getName().toString());
-						destinationSelection.addItem(locations.get(i).getName().toString());
 						}
+
 					panel_4.removeAll();
 					panel_4.add(fromFloorMap);
 					panel_4.repaint();
@@ -211,19 +213,21 @@ public class RouteScreen3 {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
-				sourceSelection.removeAllItems();
-				sourceSelection.removeItemListener(sListener);
+				//sourceSelection.removeAllItems();
+				//sourceSelection.removeItemListener(sListener);
 				destinationSelection.removeAllItems();
 				destinationSelection.removeItemListener(dListener);
 				if(e.getStateChange()==ItemEvent.SELECTED)
 				{
 					String buildingselected = buildingSelection.getSelectedItem().toString();
-					String floorselected = tofloorSelection.getSelectedItem().toString();
-					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
-					for(int i = 0;i<locations.size();i++){
-						sourceSelection.addItem(locations.get(i).getName().toString());
+
+					String tofloorselected = tofloorSelection.getSelectedItem().toString();
+
+					ArrayList<Point>tolocations = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
+
+					for(int i = 0;i<tolocations.size();i++){
 						destinationSelection.addItem(locations.get(i).getName().toString());
-					}
+						}
 					panel_4.removeAll();
 					panel_4.add(toFloorMap);
 					panel_4.repaint();
