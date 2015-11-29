@@ -162,6 +162,10 @@ public class RouteScreen3 {
 		difFloorControl.add(fromfloor);
 		fromfloor.setBounds(25, 60, 300, 20);
 		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(350, 180, 640, 480);
+		panel_4.setLayout(null);
+		
 		//FromfloorList
 		difFloorControl.add(fromfloorSelection);
 		fromfloorSelection.setBounds(20, 90, 300, 20);
@@ -182,15 +186,22 @@ public class RouteScreen3 {
 					for(int i = 0;i<locations.size();i++){
 						sourceSelection.addItem(locations.get(i).getName().toString());
 						}
+					panel_4.removeAll();
+					panel_4.add(difFloorMap);
+					panel_4.repaint();
+					
+					frame.add(panel_4);
 					System.out.println("You have chosen floor"+" "+fromfloorSelection.getSelectedItem());
 					}
 					}
 				});
 		
 		//TofloorLabel
-				JLabel tofloor = new JLabel("ToFloor");
-				difFloorControl.add(tofloor);
-				tofloor.setBounds(25, 120, 300, 20);
+		JLabel tofloor = new JLabel("ToFloor");
+		difFloorControl.add(tofloor);
+		tofloor.setBounds(25, 120, 300, 20);
+
+
 				
 		//TofloorList
 		difFloorControl.add(tofloorSelection);
@@ -211,6 +222,11 @@ public class RouteScreen3 {
 					for(int i = 0;i<locations.size();i++){
 						destinationSelection.addItem(locations.get(i).getName().toString());
 					}
+					panel_4.removeAll();
+					panel_4.add(difFloorMap);
+					panel_4.repaint();
+					
+					frame.add(panel_4);
 					System.out.println("You have chosen floor"+" "+tofloorSelection.getSelectedItem());
 					}
 					}
