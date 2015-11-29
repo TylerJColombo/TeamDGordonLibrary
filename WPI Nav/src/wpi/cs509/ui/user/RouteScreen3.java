@@ -30,7 +30,7 @@ public class RouteScreen3 {
 	private ArrayList<String> buildingList, floorList;
 	private ArrayList<Point> sourceList, destinationList,locations;
 	private SolidPoint source1,destination1;
-	private ImagePanel difFloorMap;
+	private ImagePanel toFloorMap,fromFloorMap;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
 	
@@ -186,7 +186,11 @@ public class RouteScreen3 {
 					for(int i = 0;i<locations.size();i++){
 						sourceSelection.addItem(locations.get(i).getName().toString());
 						}
-				
+					panel_4.removeAll();
+					panel_4.add(fromFloorMap);
+					panel_4.repaint();
+					
+					frame.add(panel_4);
 					System.out.println("You have chosen floor"+" "+fromfloorSelection.getSelectedItem());
 					}
 					}
@@ -219,7 +223,7 @@ public class RouteScreen3 {
 						destinationSelection.addItem(locations.get(i).getName().toString());
 					}
 					panel_4.removeAll();
-					panel_4.add(difFloorMap);
+					panel_4.add(toFloorMap);
 					panel_4.repaint();
 					
 					frame.add(panel_4);
@@ -257,21 +261,21 @@ public class RouteScreen3 {
 					String floorselected = fromfloorSelection.getSelectedItem().toString();
 					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
 					if(source1!=null){
-						difFloorMap.remove(source1);
+						fromFloorMap.remove(source1);
 					}
 					int i = sourceSelection.getSelectedIndex();
 					x1 = locations.get(i).getX();
 					y1 = locations.get(i).getY();
 					source1 =new SolidPoint(Color.red, x1, y1);
 
-					difFloorMap.add(source1);
+					fromFloorMap.add(source1);
+					fromFloorMap.repaint();
 					
 					panel_4.removeAll();
-					panel_4.add(difFloorMap);
+					panel_4.add(fromFloorMap);
 					panel_4.repaint();
-					
 					frame.add(panel_4);
-					//difFloorMap.repaint();
+					
 				    System.out.println("You have chosen source"+" "+sourceSelection.getSelectedItem());
 
 				}
@@ -309,19 +313,21 @@ public class RouteScreen3 {
 					String floorselected = tofloorSelection.getSelectedItem().toString();
 					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
 					if(destination1!=null){
-						difFloorMap.remove(destination1);
+						toFloorMap.remove(destination1);
 					}
 					int i = destinationSelection.getSelectedIndex();
 					x2 = locations.get(i).getX();
 					y2 = locations.get(i).getY();
 					destination1 =new SolidPoint(Color.red, x2,y2);
-					difFloorMap.add(destination1);
-					panel_4.removeAll();
-					panel_4.add(difFloorMap);
-					panel_4.repaint();
 					
+					toFloorMap.add(source1);
+					toFloorMap.repaint();
+					
+					panel_4.removeAll();
+					panel_4.add(toFloorMap);
+					panel_4.repaint();
 					frame.add(panel_4);
-					//difFloorMap.repaint();
+					
 					System.out.println("You have chosen destination"+" "+destinationSelection.getSelectedItem());
 				}
 			}
@@ -351,15 +357,15 @@ public class RouteScreen3 {
 				String selectedFloor = fromfloorSelection.getSelectedItem().toString();
 				String filename = DataManager.getMapPathByName(selectedBuilding, selectedFloor);
 				System.out.println(filename);
-				difFloorMap = new ImagePanel(filename, 640, 480);
-				difFloorMap.setBounds(0,0, 640, 480);
-				difFloorMap.repaint();
+				fromFloorMap = new ImagePanel(filename, 640, 480);
+				fromFloorMap.setBounds(0,0, 640, 480);
+				fromFloorMap.repaint();
 				
 				panel_4.removeAll();
-				panel_4.add(difFloorMap);
+				panel_4.add(fromFloorMap);
 				panel_4.repaint();
 				frame.add(panel_4);
-				difFloorMap.setLayout(null);
+				fromFloorMap.setLayout(null);
 			}
 		});
 		
@@ -379,14 +385,14 @@ public class RouteScreen3 {
 				String selectedFloor = tofloorSelection.getSelectedItem().toString();
 				String filename = DataManager.getMapPathByName(selectedBuilding, selectedFloor);
 				System.out.println(filename);
-				difFloorMap = new ImagePanel(filename, 640, 480);
-				difFloorMap.setBounds(0,0, 640, 480);
+				toFloorMap = new ImagePanel(filename, 640, 480);
+				toFloorMap.setBounds(0,0, 640, 480);
 				
 				panel_4.removeAll();
-				panel_4.add(difFloorMap);
+				panel_4.add(toFloorMap);
 				panel_4.repaint();
 				frame.add(panel_4);
-				difFloorMap.setLayout(null);
+				toFloorMap.setLayout(null);
 		
 			}
 		});
@@ -434,22 +440,27 @@ public class RouteScreen3 {
                 	Point frompoint = p.get(f);
             		ArrayList<Point> frompointlist = new ArrayList<>();
             		frompointlist. add(f, frompoint);
-            		wpi.cs509.ui.util.Util.drawPath(difFloorMap, frompointlist);
-            		wpi.cs509.ui.util.Util.drawPath(difFloorMap, frompointlist);
+            		wpi.cs509.ui.util.Util.drawPath(fromFloorMap, frompointlist);
                 }
                 
                 for(int t = to;t<p.size() ; t++){
                 	Point topoint = p.get(t);
             		ArrayList<Point> topointlist = new ArrayList<>();
             		topointlist.add(t, topoint);
-            		wpi.cs509.ui.util.Util.drawPath(difFloorMap, topointlist);
+            		wpi.cs509.ui.util.Util.drawPath(toFloorMap, topointlist);
                 }
                 
                 
                 for(int k = 1;k<p.size()-1;k++){
                     SolidPoint conjection = new SolidPoint(Color.black, p.get(k).getX(), p.get(k).getY());
-                    difFloorMap.add(conjection);
-                    difFloorMap.repaint();
+                    if (k<from+1){
+                    fromFloorMap.add(conjection);
+                    fromFloorMap.repaint();
+                    }
+                    if (k>from){
+                    toFloorMap.add(conjection);
+                    toFloorMap.repaint();
+                    }
                 }
                 
                 System.out.println(source0+" "+destination0);
