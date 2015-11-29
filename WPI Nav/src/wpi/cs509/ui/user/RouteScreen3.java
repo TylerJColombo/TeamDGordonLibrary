@@ -256,11 +256,17 @@ public class RouteScreen3 {
 					String buildingselected = buildingSelection.getSelectedItem().toString();
 					String floorselected = fromfloorSelection.getSelectedItem().toString();
 					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
+					if(source1!=null){
+						difFloorMap.remove(source1);
+					}
+					if (source1==null){
+						continue;
+					}
 					int i = sourceSelection.getSelectedIndex();
 					x1 = locations.get(i).getX();
 					y1 = locations.get(i).getY();
 					source1 =new SolidPoint(Color.red, x1, y1);
-					difFloorMap.remove(source1);
+
 					difFloorMap.add(source1);
 					difFloorMap.repaint();
 				    System.out.println("You have chosen source"+" "+sourceSelection.getSelectedItem());
@@ -299,12 +305,16 @@ public class RouteScreen3 {
 					String buildingselected = buildingSelection.getSelectedItem().toString();
 					String floorselected = tofloorSelection.getSelectedItem().toString();
 					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
+					if(destination1!=null){
+						difFloorMap.remove(destination1);
+					}
+					if (destination1==null){
+						continue;
+					}
 					int i = destinationSelection.getSelectedIndex();
 					x2 = locations.get(i).getX();
 					y2 = locations.get(i).getY();
 					destination1 =new SolidPoint(Color.red, x2,y2);
-					difFloorMap.removeAll();
-					difFloorMap.add(source1);
 					difFloorMap.add(destination1);
 					difFloorMap.repaint();
 					System.out.println("You have chosen destination"+" "+destinationSelection.getSelectedItem());
