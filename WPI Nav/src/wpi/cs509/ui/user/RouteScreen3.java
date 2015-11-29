@@ -484,10 +484,10 @@ public class RouteScreen3 {
 //		String selectedFloor = floorSelection.getSelectedItem().toString();
 //		String filename = DataManager.getMapPathByName(selectedBuilding);
 //		System.out.println(filename);
-		difFloorMap = new ImagePanel("maps//project center.png", 640, 480);
-		difFloorMap.setLayout(null);
-		difFloorMap.setBounds(330, 180, 640, 480);
-		difFloorSearchPanel.add(difFloorMap);
-
+//		difFloorMap = new ImagePanel("maps//project center.png", 640, 480);
+//		difFloorMap.setLayout(null);
+//		difFloorMap.setBounds(330, 180, 640, 480);
+//		difFloorSearchPanel.add(difFloorMap);
+//
 	}
 }
