@@ -460,8 +460,9 @@ public class RouteScreen3 {
                 }
                 
                 wpi.cs509.ui.util.Util.drawPath(fromFloorMap, frompointlist);
+                source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
                 wpi.cs509.ui.util.Util.drawPath(toFloorMap, topointlist);
-                
+                destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
                 System.out.println(source0+" "+destination0);
             }
         });
