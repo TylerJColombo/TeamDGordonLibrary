@@ -27,12 +27,13 @@ public class RouteScreen3 {
 
 	private JFrame frame;
 	private JComboBox<String> buildingSelection,tofloorSelection,fromfloorSelection,sourceSelection,destinationSelection;
-	private ArrayList<String> buildingList, floorList;
+	private ArrayList<String> buildingList, floorList, floorSelected;
 	private ArrayList<Point> sourceList, destinationList,fromlocations,tolocations;
 	private SolidPoint source1,destination1;
 	private ImagePanel toFloorMap,fromFloorMap;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
+	private String buildingselected, fromfloorselected, fromfilename, tofloorselected, tofilename;
 	
 
 	/**
@@ -108,29 +109,30 @@ public class RouteScreen3 {
 		difFloorControl.add(buildingSelection);
 		buildingSelection.setBounds(20, 30, 300, 20);
 		buildingList = DataManager.getBuildings();
-		for(int i=0;i<buildingList.size();i++){	
+		buildingSelection.addItem(null);
+		for(int i=0;i<buildingList.size();i++){
 			buildingSelection.addItem(buildingList.get(i));
 		}
 		
-		floorList = DataManager.getFloorsMapsByBuildingName(buildingSelection.getSelectedItem().toString());
-		for(int i = 0;i<floorList.size();i++){
-			tofloorSelection.addItem(floorList.get(i));
-		}
-		for(int i = 0;i<floorList.size();i++){
-			fromfloorSelection.addItem(floorList.get(i));
-		}
-		
-		sourceList = DataManager.getLocationsByMapID(buildingSelection.getSelectedItem().toString(), fromfloorSelection.getSelectedItem().toString());
-		for(int i=0;i<sourceList.size();i++){
-			sourceSelection.addItem(sourceList.get(i).getName());
-			
-		}
-		
-		destinationList = DataManager.getLocationsByMapID(buildingSelection.getSelectedItem().toString(), tofloorSelection.getSelectedItem().toString());
-		for(int i=0;i<destinationList.size();i++){
-			
-			destinationSelection.addItem(destinationList.get(i).getName());
-		}
+//		floorList = DataManager.getFloorsMapsByBuildingName(buildingSelection.getItemAt(1).toString());
+//		for(int i = 0;i<floorList.size();i++){
+//			tofloorSelection.addItem(floorList.get(i));
+//		}
+//		for(int i = 0;i<floorList.size();i++){
+//			fromfloorSelection.addItem(floorList.get(i));
+//		}
+//		
+//		sourceList = DataManager.getLocationsByMapID(buildingSelection.getItemAt(1).toString(), fromfloorSelection.getSelectedItem().toString());
+//		for(int i=0;i<sourceList.size();i++){
+//			sourceSelection.addItem(sourceList.get(i).getName());
+//			
+//		}
+//		
+//		destinationList = DataManager.getLocationsByMapID(buildingSelection.getItemAt(1).toString(), tofloorSelection.getSelectedItem().toString());
+//		for(int i=0;i<destinationList.size();i++){
+//			
+//			destinationSelection.addItem(destinationList.get(i).getName());
+//		}
 		
 		buildingSelection.addItemListener(new ItemListener() {
 			@Override
@@ -144,13 +146,13 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==ItemEvent.SELECTED)
 				{
-					String buildingselected = buildingSelection.getSelectedItem().toString();
-					ArrayList<String> floorselected = DataManager.getFloorsMapsByBuildingName(buildingselected);
-					for(int i = 0;i<floorselected.size();i++){
-						tofloorSelection.addItem(floorselected.get(i));
+					buildingselected = buildingSelection.getSelectedItem().toString();
+					floorSelected = DataManager.getFloorsMapsByBuildingName(buildingselected);
+					for(int i = 0;i<floorSelected.size();i++){
+						tofloorSelection.addItem(floorSelected.get(i));
 					}
-					for(int i = 0;i<floorselected.size();i++){
-						fromfloorSelection.addItem(floorselected.get(i));
+					for(int i = 0;i<floorSelected.size();i++){
+						fromfloorSelection.addItem(floorSelected.get(i));
 					}
 				}
 					System.out.println("You have chosen building"+" "+buildingSelection.getSelectedItem());
@@ -175,20 +177,22 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				sourceSelection.removeAllItems();
 				sourceSelection.removeItemListener(sListener);
-				//destinationSelection.removeAllItems();
-				//destinationSelection.removeItemListener(dListener);
 
 				if(e.getStateChange()==ItemEvent.SELECTED)
 				{
-					String buildingselected = buildingSelection.getSelectedItem().toString();
-					String fromfloorselected = fromfloorSelection.getSelectedItem().toString();
-
+					buildingselected = buildingSelection.getSelectedItem().toString();
+					fromfloorselected = fromfloorSelection.getSelectedItem().toString();
 					fromlocations = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
-
+					fromfilename = DataManager.getMapPathByName(buildingselected, fromfloorselected);
+					
 					for(int i = 0;i<fromlocations.size();i++){
 						sourceSelection.addItem(fromlocations.get(i).getName().toString());
 						}
-
+					
+					fromFloorMap = new ImagePanel(fromfilename, 640, 480);
+					fromFloorMap.setBounds(0,0, 640, 480);
+					fromFloorMap.repaint();
+					
 					panel_4.removeAll();
 					panel_4.add(fromFloorMap);
 					panel_4.repaint();
@@ -213,26 +217,28 @@ public class RouteScreen3 {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
-				//sourceSelection.removeAllItems();
-				//sourceSelection.removeItemListener(sListener);
 				destinationSelection.removeAllItems();
 				destinationSelection.removeItemListener(dListener);
 				if(e.getStateChange()==ItemEvent.SELECTED)
 				{
-					String buildingselected = buildingSelection.getSelectedItem().toString();
-
-					String tofloorselected = tofloorSelection.getSelectedItem().toString();
-
-					ArrayList<Point>tolocations = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
+					buildingselected = buildingSelection.getSelectedItem().toString();
+					tofloorselected = tofloorSelection.getSelectedItem().toString();
+					tolocations = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
+					tofilename = DataManager.getMapPathByName(buildingselected, tofloorselected);
+					
+					tolocations = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
 
 					for(int i = 0;i<tolocations.size();i++){
 						destinationSelection.addItem(tolocations.get(i).getName().toString());
 						}
+					
+					toFloorMap = new ImagePanel(tofilename, 640, 480);
+					toFloorMap.setBounds(0,0, 640, 480);
 					panel_4.removeAll();
 					panel_4.add(toFloorMap);
 					panel_4.repaint();
-					
 					frame.add(panel_4);
+					
 					System.out.println("You have chosen floor"+" "+tofloorSelection.getSelectedItem());
 					}
 					}
@@ -263,17 +269,23 @@ public class RouteScreen3 {
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==ItemEvent.SELECTED){
-					String buildingselected = buildingSelection.getSelectedItem().toString();
-					String floorselected = fromfloorSelection.getSelectedItem().toString();
-					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
+					fromlocations = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
+					
 					if(source1!=null){
 						fromFloorMap.remove(source1);
+						int i = sourceSelection.getSelectedIndex();
+						x1 = fromlocations.get(i).getX();
+						y1 = fromlocations.get(i).getY();
+						source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
 					}
-					int i = sourceSelection.getSelectedIndex();
-					x1 = locations.get(i).getX();
-					y1 = locations.get(i).getY();
-					source1 =new SolidPoint(Color.red, x1, y1);
-
+					
+					else if(source1 == null){
+						int i = sourceSelection.getSelectedIndex();
+						x1 = fromlocations.get(i).getX();
+						y1 = fromlocations.get(i).getY();
+						source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
+					}
+					
 					fromFloorMap.add(source1);
 					fromFloorMap.repaint();
 					
@@ -315,18 +327,24 @@ public class RouteScreen3 {
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==ItemEvent.SELECTED){
-					String buildingselected = buildingSelection.getSelectedItem().toString();
-					String floorselected = tofloorSelection.getSelectedItem().toString();
-					ArrayList<Point>locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
+					tolocations = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
+					
 					if(destination1!=null){
 						toFloorMap.remove(destination1);
+						int i = destinationSelection.getSelectedIndex();
+						x2 = tolocations.get(i).getX();
+						y2 = tolocations.get(i).getY();
+						destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
 					}
-					int i = destinationSelection.getSelectedIndex();
-					x2 = locations.get(i).getX();
-					y2 = locations.get(i).getY();
-					destination1 =new SolidPoint(Color.red, x2,y2);
 					
-					toFloorMap.add(source1);
+					else if(destination1 ==null){
+						int i = destinationSelection.getSelectedIndex();
+						x2 = tolocations.get(i).getX();
+						y2 = tolocations.get(i).getY();
+						destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
+					}
+	
+					toFloorMap.add(destination1);
 					toFloorMap.repaint();
 					
 					panel_4.removeAll();
@@ -359,16 +377,10 @@ public class RouteScreen3 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String selectedBuilding = buildingSelection.getSelectedItem().toString();
-				String selectedFloor = fromfloorSelection.getSelectedItem().toString();
-				String filename = DataManager.getMapPathByName(selectedBuilding, selectedFloor);
-				System.out.println(filename);
-				fromFloorMap = new ImagePanel(filename, 640, 480);
-				fromFloorMap.setBounds(0,0, 640, 480);
-				fromFloorMap.repaint();
-				
 				panel_4.removeAll();
 				panel_4.add(fromFloorMap);
+				fromFloorMap.add(source1);
+				fromFloorMap.repaint();
 				panel_4.repaint();
 				frame.add(panel_4);
 				fromFloorMap.setLayout(null);
@@ -387,19 +399,13 @@ public class RouteScreen3 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String selectedBuilding = buildingSelection.getSelectedItem().toString();
-				String selectedFloor = tofloorSelection.getSelectedItem().toString();
-				String filename = DataManager.getMapPathByName(selectedBuilding, selectedFloor);
-				System.out.println(filename);
-				toFloorMap = new ImagePanel(filename, 640, 480);
-				toFloorMap.setBounds(0,0, 640, 480);
-				
 				panel_4.removeAll();
 				panel_4.add(toFloorMap);
+				toFloorMap.add(destination1);
+				toFloorMap.repaint();
 				panel_4.repaint();
 				frame.add(panel_4);
 				toFloorMap.setLayout(null);
-		
 			}
 		});
 		
@@ -414,86 +420,51 @@ public class RouteScreen3 {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
-                String buildingselected = buildingSelection.getSelectedItem().toString();
-                String fromfloorselected = fromfloorSelection.getSelectedItem().toString();
-                String tofloorselected =tofloorSelection.getSelectedItem().toString();
+                buildingselected = buildingSelection.getSelectedItem().toString();
+                fromfloorselected = fromfloorSelection.getSelectedItem().toString();
+                tofloorselected =tofloorSelection.getSelectedItem().toString();
+                
                 ArrayList<Point> fromlocation = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
                 ArrayList<Point> tolocation = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
+                
                 Graph tograph = DataManager.getGraphByNameWithDB(buildingselected, tofloorselected);
-                Graph fromgraph = DataManager.getGraphByNameWithDB(buildingselected, fromfloorselected);
-                Graph rf = new Graph();
-                rf= fromgraph.addGraph(tograph);
-
-                int i = sourceSelection.getSelectedIndex()-1;
-                int j = destinationSelection.getSelectedIndex()-1;
+           
+                int i = sourceSelection.getSelectedIndex();
+                int j = destinationSelection.getSelectedIndex();
+                
                 Point source0 = fromlocation.get(i);
                 Point destination0 = tolocation.get(j);
-                ArrayList<Point> p = RouteFinder.computePaths(source0, rf, destination0);
+                
+                ArrayList<Point> p = RouteFinder.computePaths(source0, tograph, destination0);
                 
                 int from = 0;
                 int to = 0;
+                ArrayList<Point> frompointlist = new ArrayList<>();
+                ArrayList<Point> topointlist = new ArrayList<>();
+                
                 for(int c = 0; c<p.size()-1;c++){
-                	if(p.get(c).getFloorNum()==p.get(c+1).getFloorNum()){
-                		continue;
+                	if(p.get(c).getMapId()==p.get(c+1).getMapId()){
+                		frompointlist. add(p.get(c));
                 	}
                 	else{
                 		from = c;
+                		frompointlist. add(p.get(c));
                 		to = c+1;
+                		break;
                 	}
-                }
-                
-                for(int f = 0;f<from ; f++){
-                	Point frompoint = p.get(f);
-            		ArrayList<Point> frompointlist = new ArrayList<>();
-            		frompointlist. add(f, frompoint);
-            		wpi.cs509.ui.util.Util.drawPath(fromFloorMap, frompointlist);
                 }
                 
                 for(int t = to;t<p.size() ; t++){
                 	Point topoint = p.get(t);
-            		ArrayList<Point> topointlist = new ArrayList<>();
-            		topointlist.add(t, topoint);
-            		wpi.cs509.ui.util.Util.drawPath(toFloorMap, topointlist);
+            		topointlist.add(topoint);
                 }
                 
-                
-                for(int k = 1;k<p.size()-1;k++){
-                    SolidPoint conjection = new SolidPoint(Color.black, p.get(k).getX(), p.get(k).getY());
-                    if (k<from+1){
-                    fromFloorMap.add(conjection);
-                    fromFloorMap.repaint();
-                    }
-                    if (k>from){
-                    toFloorMap.add(conjection);
-                    toFloorMap.repaint();
-                    }
-                }
+                wpi.cs509.ui.util.Util.drawPath(fromFloorMap, frompointlist);
+                wpi.cs509.ui.util.Util.drawPath(toFloorMap, topointlist);
                 
                 System.out.println(source0+" "+destination0);
             }
         });
-
-		
-/*		String buildingselected = buildingSelection.getSelectedItem().toString();
-		//String floorselected = floorSelection.getSelectedItem().toString();
-		//ArrayList<Point> locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
-		//Graph rf = DataManager.getGraphByNameWithDB(buildingselected, floorselected);
-		int i = sourceSelection.getSelectedIndex();
-		int j = destinationSelection.getSelectedIndex();
-		Point source0 = locations.get(i);
-		Point destination0 = locations.get(j);
-		ArrayList<Point> p = RouteFinder.computePaths(source0, rf, destination0);
-		wpi.cs509.ui.util.Util.drawPath(difFloorMap, p);*/
-		
-		//map
-//		String selectedBuilding = buildingSelection.getSelectedItem().toString();
-//		String selectedFloor = floorSelection.getSelectedItem().toString();
-//		String filename = DataManager.getMapPathByName(selectedBuilding);
-//		System.out.println(filename);
-//		difFloorMap = new ImagePanel("maps//project center.png", 640, 480);
-//		difFloorMap.setLayout(null);
-//		difFloorMap.setBounds(330, 180, 640, 480);
-//		difFloorSearchPanel.add(difFloorMap);
 
 	}
 }
