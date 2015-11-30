@@ -455,8 +455,11 @@ public class RouteScreen3 {
                 }
                 
                 for(int t = to;t<p.size() ; t++){
+                	if(p.get(t).getMapId()==destination0.getMapId())
+                	{
                 	Point topoint = p.get(t);
             		topointlist.add(topoint);
+                	}
                 }
                 
                 wpi.cs509.ui.util.Util.drawPath(fromFloorMap, frompointlist);

@@ -27,7 +27,12 @@ public class RouteFinder {
             // Visit each edge exiting u
             for (Edge e : g.getNeighbors(u))
             {
+            	try
+            	{
+            		
+ 
                 Point v = g.getPointById(e.getePointId()!=u.getId()?e.getePointId():e.getsPointId());
+            	
                 float weight = e.getWeight();
                 double distanceThroughU = u.minDistance + weight;
 		if (distanceThroughU < v.minDistance) {
@@ -37,6 +42,10 @@ public class RouteFinder {
 		    pointQueue.add(v);
 		  //  System.out.println("u.id is"+u.getId());
 				}
+            	}catch(NullPointerException e1)
+            	{
+            		System.out.println(e.getId()+"**********"+u.getName());
+            	}
             }
         }
 	return getShortestPathTo(g.getPointById(destination.getId()));
