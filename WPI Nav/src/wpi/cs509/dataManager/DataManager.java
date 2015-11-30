@@ -597,7 +597,62 @@ public class DataManager {
 		
 	}
 
-	
+	public static ArrayList<Point> getBuildingOnCampus()
+	{
+		ArrayList<Point> buildingsName = new ArrayList<Point>();
+		
+		Connection conn =null;
+		String sql="";
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+			
+			sql="select * from points p, map m where p.mapid = m.mapid and m.buildingName = ? and p.attribute<> ?";
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			
+			ps1.setString(1, "Campus");
+			ps1.setString(1, "PassageWay");
+			ResultSet rs = ps1.executeQuery();
+			while(rs.next())
+			{
+				Point p = new Point();
+
+				p.setId(rs.getInt(1));
+				p.setX(rs.getInt(2));
+				p.setY(rs.getInt(3));
+				p.setMapId(rs.getInt(4));
+				int isEntrance = rs.getInt(5);
+				if(isEntrance!=0)
+				{
+					p.setMapEntrance(true);
+				}
+				else p.setMapEntrance(false);
+				String attribute = rs.getString(6);
+				
+				p.setDestination(attribute=="PassageWay"? false:true);
+				
+				
+				p.setName(rs.getString(7));
+				System.out.println("the id is .."+rs.getString(1));
+				buildingsName.add(p);
+
+				
+			}
+			rs.close();
+			ps1.close();
+			conn.close();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return buildingsName;
+	}
 	public static ArrayList<Point> getLocationsByMapID(String buildingName,String floorName)
 	{
 		ArrayList<Point> locations = new ArrayList<Point>();
