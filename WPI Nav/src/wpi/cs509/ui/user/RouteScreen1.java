@@ -28,14 +28,25 @@ import wpi.cs509.ui.util.Util;
 
 public class RouteScreen1 {
    
-	ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
-	ArrayList <String> bns;
-	for(Point bn:buildingoncampus){
-		bns.add(bn.getName());	
-	}
+//	private ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
+//	private ArrayList <String> bns;
+//	for(Point bn:buildingoncampus){
+//		bns.add(bn.getName());	
+//	}
 	private JFrame frame;
-	JComboBox comboBox_1 = new JComboBox(bns.toArray());
-	JComboBox comboBox = new JComboBox(bns.toArray());
+	
+//	private ArrayList <String> bns;
+//	
+	private ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
+//	for(Point bn:buildingoncampus){
+//		bns.add(bn.getName());	
+//	}
+//	JComboBox comboBox_1 = new JComboBox(bns.toArray());
+//	JComboBox comboBox = new JComboBox(bns.toArray());
+	
+	JComboBox comboBox_1 = new JComboBox(buildingoncampus.toArray());
+	JComboBox comboBox = new JComboBox(buildingoncampus.toArray());
+	
 	ImagePanel  imagePanelCmap;
 	Zoomingpanel   zoomcmap;
 	String source;
@@ -144,11 +155,12 @@ public class RouteScreen1 {
 							
 						}
 //				}
-			source =comboBox.getSelectedItem().toString();
-			for(Point b:buildingoncampus){
-				if(b.getName().equals(source))
-				Osource=b;	
-			}
+//			source =comboBox.getSelectedItem().toString();
+//			for(Point b:buildingoncampus){
+//				if(b.getName().equals(source))
+//				Osource=b;	
+//			}
+		    Osource=(Point) comboBox.getSelectedItem();
 			
 			
 		
@@ -200,11 +212,11 @@ public class RouteScreen1 {
 						imagePanelCmap.repaint();
 							
 						}
-				destination =comboBox_1.getSelectedItem().toString();
-				for(Point c:buildingoncampus){
-					if(c.getName().equals(destination))
-					Odestination=c;	
-				}
+				Odestination =(Point) comboBox_1.getSelectedItem();
+//				for(Point c:buildingoncampus){
+//					if(c.getName().equals(destination))
+//					Odestination=c;	
+//				}
 				destinationofSolid = new SolidPoint(Color.decode("#009966"),Odestination.getX(), Odestination.getY());  
 //				sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY()); 
 	    	
