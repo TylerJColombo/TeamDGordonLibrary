@@ -2,38 +2,37 @@ package wpi.cs509.ui.user;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import com.mysql.jdbc.Util;
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
-import wpi.cs509.ui.components.Line;
 import wpi.cs509.ui.components.SolidPoint;
-import wpi.cs509.ui.util.*;
 public class RouteScreen3 {
 
 	private JFrame frame;
 	private JComboBox<String> buildingSelection,tofloorSelection,fromfloorSelection,sourceSelection,destinationSelection;
-	private ArrayList<String> buildingList, floorList, floorSelected;
-	private ArrayList<Point> sourceList, destinationList,fromlocations,tolocations;
+	private ArrayList<String> buildingList, floorSelected;
+	private ArrayList<Point> fromlocations,tolocations;
 	private SolidPoint source1,destination1;
 	private ImagePanel toFloorMap,fromFloorMap;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
 	private String buildingselected, fromfloorselected, fromfilename, tofloorselected, tofilename;
+	private JButton frombutton, tobutton;
 	
 
 	/**
@@ -69,8 +68,6 @@ public class RouteScreen3 {
 		fromfloorSelection = new JComboBox<String>();
 		sourceSelection = new JComboBox<String>();
 		destinationSelection = new JComboBox<String>();
-		ImagePanel  imagePanelmap;
-			
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#F1F1F1"));
 		frame.setBounds(0, 0, 1024, 730);
@@ -206,13 +203,13 @@ public class RouteScreen3 {
 		//TofloorLabel
 		JLabel tofloor = new JLabel("ToFloor");
 		difFloorControl.add(tofloor);
-		tofloor.setBounds(25, 120, 300, 20);
+		tofloor.setBounds(25, 180, 300, 20);
 
 
 				
 		//TofloorList
 		difFloorControl.add(tofloorSelection);
-		tofloorSelection.setBounds(20, 150, 300, 20);
+		tofloorSelection.setBounds(20, 210, 300, 20);
 		tofloorSelection.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -247,11 +244,11 @@ public class RouteScreen3 {
 		//sourceLabel
 		JLabel source = new JLabel("Source");
 		difFloorControl.add(source);
-		source.setBounds(25, 180, 300, 20);
+		source.setBounds(25, 120, 300, 20);
 		
 		//sourceList
 		difFloorControl.add(sourceSelection);
-		sourceSelection.setBounds(20, 210, 300, 20);
+		sourceSelection.setBounds(20, 150, 300, 20);
 		
 		
 		sourceSelection.addItemListener(new ItemListener() {
@@ -272,7 +269,16 @@ public class RouteScreen3 {
 					fromlocations = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
 					
 					if(source1!=null){
-						fromFloorMap.remove(source1);
+						fromFloorMap.removeAll();
+						fromFloorMap = new ImagePanel(fromfilename, 640, 480);
+						fromFloorMap.setBounds(0,0, 640, 480);
+						fromFloorMap.add(source1);
+						fromFloorMap.repaint();
+						
+						panel_4.removeAll();
+						panel_4.add(fromFloorMap);
+						panel_4.repaint();
+						frame.add(panel_4);
 						int i = sourceSelection.getSelectedIndex();
 						x1 = fromlocations.get(i).getX();
 						y1 = fromlocations.get(i).getY();
@@ -330,7 +336,16 @@ public class RouteScreen3 {
 					tolocations = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
 					
 					if(destination1!=null){
-						toFloorMap.remove(destination1);
+						toFloorMap.removeAll();
+						toFloorMap = new ImagePanel(tofilename, 640, 480);
+						toFloorMap.setBounds(0,0, 640, 480);
+						toFloorMap.add(destination1);
+						toFloorMap.repaint();
+						
+						panel_4.removeAll();
+						panel_4.add(toFloorMap);
+						panel_4.repaint();
+						frame.add(panel_4);
 						int i = destinationSelection.getSelectedIndex();
 						x2 = tolocations.get(i).getX();
 						y2 = tolocations.get(i).getY();
@@ -366,12 +381,52 @@ public class RouteScreen3 {
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
 		//From button
-		JButton frombutton = new JButton("From");
+		frombutton = new JButton("From");
 		buttonPanel.add(frombutton);
 		frombutton.setForeground(Color.decode("#F1F1F1"));
 		frombutton.setBackground(Color.decode("#AB2A36"));
 		frombutton.setOpaque(true);
 		frombutton.setBorderPainted(false);
+		
+		frombutton.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+//				frombutton.setBackground(Color.decode("#AB2A36"));
+//				frombutton.setOpaque(true);
+//				frombutton.setBorderPainted(false);
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+//				frombutton.setBackground(Color.gray);
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				frombutton.setBackground(Color.gray);
+				tobutton.setForeground(Color.decode("#F1F1F1"));
+				tobutton.setBackground(Color.decode("#AB2A36"));
+				tobutton.setOpaque(true);
+				tobutton.setBorderPainted(false);
+			}
+		});
+		
 		frombutton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -388,12 +443,51 @@ public class RouteScreen3 {
 		});
 		
 		//to button
-		JButton tobutton = new JButton("To");
+		tobutton = new JButton("To");
 		buttonPanel.add(tobutton);
 		tobutton.setForeground(Color.decode("#F1F1F1"));
 		tobutton.setBackground(Color.decode("#AB2A36"));
 		tobutton.setOpaque(true);
 		tobutton.setBorderPainted(false);
+		
+		tobutton.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+//				tobutton.setBackground(Color.decode("#AB2A36"));
+//				tobutton.setOpaque(true);
+//				tobutton.setBorderPainted(false);
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+//				tobutton.setBackground(Color.gray);
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				tobutton.setBackground(Color.gray);
+				frombutton.setForeground(Color.decode("#F1F1F1"));
+				frombutton.setBackground(Color.decode("#AB2A36"));
+				frombutton.setOpaque(true);
+				frombutton.setBorderPainted(false);
+			}
+		});
+		
         tobutton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -437,7 +531,6 @@ public class RouteScreen3 {
                 
                 ArrayList<Point> p = RouteFinder.computePaths(source0, tograph, destination0);
                 
-                int from = 0;
                 int to = 0;
                 ArrayList<Point> frompointlist = new ArrayList<>();
                 ArrayList<Point> topointlist = new ArrayList<>();
@@ -447,7 +540,6 @@ public class RouteScreen3 {
                 		frompointlist. add(p.get(c));
                 	}
                 	else{
-                		from = c;
                 		frompointlist. add(p.get(c));
                 		to = c+1;
                 		break;
@@ -462,9 +554,9 @@ public class RouteScreen3 {
                 	}
                 }
                 
-                wpi.cs509.ui.util.Util.drawPath(fromFloorMap, frompointlist);
+                wpi.cs509.ui.util.UtilScreen3.drawPath(fromFloorMap, frompointlist);
                 source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
-                wpi.cs509.ui.util.Util.drawPath(toFloorMap, topointlist);
+                wpi.cs509.ui.util.UtilScreen3.drawPath(toFloorMap, topointlist);
                 destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
                 System.out.println(source0+" "+destination0);
             }
