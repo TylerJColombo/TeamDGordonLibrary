@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import wpi.cs509.dataManager.DataManager;
@@ -33,8 +32,8 @@ public class RouteScreen2 {
 	private SolidPoint source1,destination1;
 	private ImagePanel sameFloorMap;
 	private int x1,x2,y1,y2;
-	private ItemListener sListener,dListener,fListener,bListener;
-	private String buildingselected,floorselected, filename;
+	private ItemListener sListener,dListener;
+	private String buildingselected,floorselected;
 	private int ss,ds;
 	
 

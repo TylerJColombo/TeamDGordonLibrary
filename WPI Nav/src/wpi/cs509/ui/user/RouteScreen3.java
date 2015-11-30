@@ -267,11 +267,20 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					fromlocations = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
+					frombutton.setBackground(Color.gray);
+					tobutton.setForeground(Color.decode("#F1F1F1"));
+					tobutton.setBackground(Color.decode("#AB2A36"));
+					tobutton.setOpaque(true);
+					tobutton.setBorderPainted(false);
 					
 					if(source1!=null){
 						fromFloorMap.removeAll();
 						fromFloorMap = new ImagePanel(fromfilename, 640, 480);
 						fromFloorMap.setBounds(0,0, 640, 480);
+						int i = sourceSelection.getSelectedIndex();
+						x1 = fromlocations.get(i).getX();
+						y1 = fromlocations.get(i).getY();
+						source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
 						fromFloorMap.add(source1);
 						fromFloorMap.repaint();
 						
@@ -279,10 +288,6 @@ public class RouteScreen3 {
 						panel_4.add(fromFloorMap);
 						panel_4.repaint();
 						frame.add(panel_4);
-						int i = sourceSelection.getSelectedIndex();
-						x1 = fromlocations.get(i).getX();
-						y1 = fromlocations.get(i).getY();
-						source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
 					}
 					
 					else if(source1 == null){
@@ -290,18 +295,14 @@ public class RouteScreen3 {
 						x1 = fromlocations.get(i).getX();
 						y1 = fromlocations.get(i).getY();
 						source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
+						fromFloorMap.add(source1);
+						fromFloorMap.repaint();
+						
+						panel_4.removeAll();
+						panel_4.add(fromFloorMap);
+						panel_4.repaint();
+						frame.add(panel_4);
 					}
-					
-					fromFloorMap.add(source1);
-					fromFloorMap.repaint();
-					
-					panel_4.removeAll();
-					panel_4.add(fromFloorMap);
-					panel_4.repaint();
-					frame.add(panel_4);
-					
-				    System.out.println("You have chosen source"+" "+sourceSelection.getSelectedItem());
-
 				}
 			}
 		};
@@ -334,11 +335,20 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					tolocations = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
+					tobutton.setBackground(Color.gray);
+					frombutton.setForeground(Color.decode("#F1F1F1"));
+					frombutton.setBackground(Color.decode("#AB2A36"));
+					frombutton.setOpaque(true);
+					frombutton.setBorderPainted(false);
 					
 					if(destination1!=null){
 						toFloorMap.removeAll();
 						toFloorMap = new ImagePanel(tofilename, 640, 480);
 						toFloorMap.setBounds(0,0, 640, 480);
+						int i = destinationSelection.getSelectedIndex();
+						x2 = tolocations.get(i).getX();
+						y2 = tolocations.get(i).getY();
+						destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
 						toFloorMap.add(destination1);
 						toFloorMap.repaint();
 						
@@ -346,10 +356,6 @@ public class RouteScreen3 {
 						panel_4.add(toFloorMap);
 						panel_4.repaint();
 						frame.add(panel_4);
-						int i = destinationSelection.getSelectedIndex();
-						x2 = tolocations.get(i).getX();
-						y2 = tolocations.get(i).getY();
-						destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
 					}
 					
 					else if(destination1 ==null){
@@ -357,17 +363,14 @@ public class RouteScreen3 {
 						x2 = tolocations.get(i).getX();
 						y2 = tolocations.get(i).getY();
 						destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
+						toFloorMap.add(destination1);
+						toFloorMap.repaint();
+						
+						panel_4.removeAll();
+						panel_4.add(toFloorMap);
+						panel_4.repaint();
+						frame.add(panel_4);
 					}
-	
-					toFloorMap.add(destination1);
-					toFloorMap.repaint();
-					
-					panel_4.removeAll();
-					panel_4.add(toFloorMap);
-					panel_4.repaint();
-					frame.add(panel_4);
-					
-					System.out.println("You have chosen destination"+" "+destinationSelection.getSelectedItem());
 				}
 			}
 		};
@@ -554,11 +557,17 @@ public class RouteScreen3 {
                 	}
                 }
                 
-                wpi.cs509.ui.util.UtilScreen3.drawPath(fromFloorMap, frompointlist);
+                fromFloorMap.removeAll();
+                toFloorMap.removeAll();
                 source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
-                wpi.cs509.ui.util.UtilScreen3.drawPath(toFloorMap, topointlist);
+                fromFloorMap.add(source1);
+                fromFloorMap.repaint();
                 destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
-                System.out.println(source0+" "+destination0);
+                toFloorMap.add(destination1);
+                toFloorMap.repaint();
+                wpi.cs509.ui.util.UtilScreen3.drawPath(fromFloorMap, frompointlist);
+                wpi.cs509.ui.util.UtilScreen3.drawPath2(toFloorMap, topointlist);
+                
             }
         });
 
