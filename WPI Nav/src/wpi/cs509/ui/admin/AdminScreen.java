@@ -37,6 +37,7 @@ public class AdminScreen {
 	private SolidPoint pointUI1;
 	private SolidPoint pointUI2;
 	private Line edgeLine;
+	private Map selectedMap;
 	
 	/**
 	 * Create the window.
@@ -182,7 +183,7 @@ public class AdminScreen {
 					
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Map selectedMap = (Map)comboMapsDelete.getSelectedItem();
+			    selectedMap = (Map)comboMapsDelete.getSelectedItem();
 				DataManager.removeMap(selectedMap.getId());
 
 				// Refresh delete maps combo box
@@ -311,7 +312,7 @@ public class AdminScreen {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// load selected map
-				Map selectedMap = (Map)comboMaps.getSelectedItem();
+			    selectedMap = (Map)comboMaps.getSelectedItem();
 				if(selectedMap != null){
 					imagePanelMap = new ImagePanel(selectedMap.getFileLocation(), 640, 480);
 					imagePanelMap.setLayout(null);
@@ -340,7 +341,7 @@ public class AdminScreen {
 			                if(currentPoint == 1){
 			                	currentPoint = 2;
 			                	
-			                	Point point1 = DataManager.findClosestPoint(e.getX(), e.getY());
+			                	Point point1 = DataManager.findClosestPoint(selectedMap.getId(),e.getX(), e.getY());
 			    				if(point1 == null){
 			    					lblX1Value.setText(e.getX() + "");
 					                lblY1Value.setText(e.getY() + "");
@@ -358,7 +359,7 @@ public class AdminScreen {
 			                } else if (currentPoint == 2){
 			                	currentPoint = 0;
 			                	
-			                	Point point2 = DataManager.findClosestPoint(e.getX(), e.getY());
+			                	Point point2 = DataManager.findClosestPoint(selectedMap.getId(),e.getX(), e.getY());
 			    				if(point2 == null){
 			    					lblX2Value.setText(e.getX() + "");
 					                lblY2Value.setText(e.getY() + "");
@@ -402,8 +403,8 @@ public class AdminScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Point point1 = DataManager.findClosestPoint(Integer.parseInt(lblX1Value.getText()), Integer.parseInt(lblY1Value.getText()));
-				Point point2 = DataManager.findClosestPoint(Integer.parseInt(lblX2Value.getText()), Integer.parseInt(lblY2Value.getText()));
+				Point point1 = DataManager.findClosestPoint(selectedMap.getId(),Integer.parseInt(lblX1Value.getText()), Integer.parseInt(lblY1Value.getText()));
+				Point point2 = DataManager.findClosestPoint(selectedMap.getId(),Integer.parseInt(lblX2Value.getText()), Integer.parseInt(lblY2Value.getText()));
 				if(point1 == null){
 					point1 = DataManager.getPointByID(DataManager.addPoint(((Map)comboMaps.getSelectedItem()).getId(), Integer.parseInt(lblX1Value.getText()), Integer.parseInt(lblY1Value.getText()), chckbxIsEnterance1.isSelected(), chckbxIsLocation1.isSelected(), txtLocation1Name.getText()));
 				}

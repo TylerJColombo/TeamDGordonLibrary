@@ -1078,7 +1078,7 @@ public class DataManager {
 		return entrancesList;
 		
 	}
-	public static Point findClosestPoint(int x ,int y)
+	public static Point findClosestPoint(int mapid,int x ,int y)
 	{
 		ArrayList<Point> resPoint = new ArrayList<Point>();
 		Connection conn = null;
@@ -1088,13 +1088,14 @@ public class DataManager {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 		
-			sql="select * from points where x>?-10 and x<?+10 and y>?-10 and y<?+10 ";
+			sql="select * from points where x>?-10 and x<?+10 and y>?-10 and y<?+10 and mapid=? ";
 				
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			ps1.setInt(1, x);
 			ps1.setInt(2, x);
 			ps1.setInt(3, y);
 			ps1.setInt(4, y);
+			ps1.setInt(5, mapid);
 	
 				
 			ResultSet rs = ps1.executeQuery();
@@ -1212,9 +1213,10 @@ public class DataManager {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="select * from edge e, points p where e.point1id = p.id and p.mapid = ? ";
+			sql="select * from edge e, points p1,points p2 where e.point1id = p1.id and p1.mapid = ? and e.point2id= p2.id and p2.mapid=?";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			ps1.setInt(1, mapID);
+			ps1.setInt(2, mapID);
 			ResultSet resultEdges = ps1.executeQuery();
 			while(resultEdges.next())
 			{
@@ -1284,6 +1286,6 @@ public class DataManager {
 */
 		//System.out.println(graph2.getPoints().size());
 		//System.out.println(sqroot(testSq));
-		System.out.println(findClosestPoint(236, 74).getId());
+		System.out.println(findClosestPoint(1,236, 74).getId());
 	}
 }
