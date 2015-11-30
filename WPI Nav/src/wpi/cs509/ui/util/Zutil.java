@@ -19,6 +19,11 @@ import wpi.cs509.ui.components.Zoompanel;
 
 public class Zutil {
 	public  static boolean drawPath( Zoompanel a, ArrayList <Point> P){
+	        SolidPoint startofSolid = new SolidPoint(Color.decode("#000000"),Math.round(P.get(0).getX()), Math.round(P.get(0).getY())); 
+		a.add(startofSolid);
+		SolidPoint endofSolid = new SolidPoint(Color.decode("#009966"),Math.round(P.get(P.size()-1).getX()), Math.round(P.get(P.size()-1).getY())); 
+		a.add(endofSolid);
+		a.repaint();
 	 if(P.size()!=1){
 		for(Point path:P){
 			SolidPoint pathofSolid = new SolidPoint(Color.decode("#D55E00"),Math.round(path.getX()), Math.round(path.getY())); 
