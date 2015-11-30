@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Point;
@@ -26,10 +27,15 @@ import wpi.cs509.ui.components.Zoomingpanel;
 import wpi.cs509.ui.util.Util;
 
 public class RouteScreen1 {
-
+   
+	ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
+	ArrayList <String> bns;
+	for(Point bn:buildingoncampus){
+		bns.add(bn.getName());	
+	}
 	private JFrame frame;
-	JComboBox comboBox_1 = new JComboBox(DataManager.getBuildings().toArray());
-	JComboBox comboBox = new JComboBox(DataManager.getBuildings().toArray());
+	JComboBox comboBox_1 = new JComboBox(bns.toArray());
+	JComboBox comboBox = new JComboBox(bns.toArray());
 	ImagePanel  imagePanelCmap;
 	Zoomingpanel   zoomcmap;
 	String source;
@@ -139,7 +145,11 @@ public class RouteScreen1 {
 						}
 //				}
 			source =comboBox.getSelectedItem().toString();
-			Osource = DataManager.getPointByBuildingName(source);
+			for(Point b:buildingoncampus){
+				if(b.getName().equals(source))
+				Osource=b;	
+			}
+			
 			
 		
     		sourceofSoLid = new SolidPoint(Color.decode("#000000"), Osource.getX(), Osource.getY());  
@@ -191,7 +201,10 @@ public class RouteScreen1 {
 							
 						}
 				destination =comboBox_1.getSelectedItem().toString();
-			    Odestination = DataManager.getPointByBuildingName(destination);
+				for(Point c:buildingoncampus){
+					if(c.getName().equals(destination))
+					Odestination=c;	
+				}
 				destinationofSolid = new SolidPoint(Color.decode("#009966"),Odestination.getX(), Odestination.getY());  
 //				sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY()); 
 	    	
@@ -246,4 +259,3 @@ public class RouteScreen1 {
 	
 
 }
-
