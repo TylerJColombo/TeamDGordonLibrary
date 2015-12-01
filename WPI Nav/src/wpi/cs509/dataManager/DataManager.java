@@ -612,7 +612,7 @@ public class DataManager {
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
 			ps1.setString(1, "Campus");
-			ps1.setString(1, "PassageWay");
+			ps1.setString(2, "PassageWay");
 			ResultSet rs = ps1.executeQuery();
 			while(rs.next())
 			{
