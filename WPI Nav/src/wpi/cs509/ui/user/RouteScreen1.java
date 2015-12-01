@@ -9,6 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -16,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.text.StyledEditorKit.ForegroundAction;
+
+import com.sun.org.apache.xpath.internal.axes.ReverseAxesWalker;
 
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Point;
@@ -42,6 +45,7 @@ public class RouteScreen1 {
 	EndPin destinationofSolid;
 	StartPin sourceofSoLid;
     Boolean Pflag = false;
+    JButton reverse = new JButton(new ImageIcon("maps//reverse.png"));
 
 	/**
 	 * Launch the application.
@@ -166,7 +170,10 @@ public class RouteScreen1 {
  //   		destinationofSolid = new SolidPoint(Color.red,Odestination.getX(), Odestination.getY());  
      		if(destinationofSolid!=null){imagePanelCmap.add(destinationofSolid);}
     		imagePanelCmap.add(sourceofSoLid);
-            imagePanelCmap.repaint();}
+            imagePanelCmap.repaint();
+//            if(source!=null||destination!=null){
+//            reverse.setEnabled(true);//}
+			}
 			
 				}
 			}
@@ -221,7 +228,13 @@ public class RouteScreen1 {
 	    	
 	    	    imagePanelCmap.add(sourceofSoLid);
 				imagePanelCmap.add(destinationofSolid);
-	            imagePanelCmap.repaint();}
+	            imagePanelCmap.repaint();
+	            
+//	            if(source!=null||destination!=null){
+//	                reverse.setEnabled(true);
+	                //}
+   
+	            }
 		}
 		});
 		
@@ -260,6 +273,31 @@ public class RouteScreen1 {
 		btnFindingRoute.setOpaque(true);
 		btnFindingRoute.setBorderPainted(false);
 		buttonPanel.add(btnFindingRoute);
+		
+		
+		//Button for reverse
+		JButton reverse = new JButton(new ImageIcon("maps//reverse.png"));
+		reverse.setBounds(293, 237, 25, 25);
+		
+		frame.add(reverse);
+		
+		reverse.setForeground(Color.decode("#F1F1F1"));
+		reverse.setBackground(Color.decode("#AB2A36"));
+		reverse.setOpaque(true);
+		reverse.setBorderPainted(false);
+//		reverse.setEnabled(false);
+		
+		reverse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				destination = comboBox.getSelectedItem().toString();
+				source = comboBox_1.getSelectedItem().toString();
+				comboBox.setSelectedItem(source);
+				comboBox_1.setSelectedItem(destination);				
+			}
+		});
 		
 
 	
