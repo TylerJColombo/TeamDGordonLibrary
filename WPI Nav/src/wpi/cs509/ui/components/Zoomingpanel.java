@@ -40,6 +40,7 @@ public class Zoomingpanel extends JPanel{
           JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
           JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     MySlider slider = new MySlider(this);
+    slider.SCALE=1;
     slider.setPreferredSize(new Dimension(640, 35));
     
     zPanel.add(scroll, BorderLayout.CENTER);
@@ -90,3 +91,4 @@ class MySlider extends JSlider implements ChangeListener {
     
  }
 }
+
