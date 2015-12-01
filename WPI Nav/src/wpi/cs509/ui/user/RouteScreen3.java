@@ -19,16 +19,18 @@ import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
+import wpi.cs509.ui.components.EndPin;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
-import wpi.cs509.ui.components.SolidPoint;
+import wpi.cs509.ui.components.StartPin;
 public class RouteScreen3 {
 
 	private JFrame frame;
 	private JComboBox<String> buildingSelection,tofloorSelection,fromfloorSelection,sourceSelection,destinationSelection;
 	private ArrayList<String> buildingList, floorSelected;
 	private ArrayList<Point> fromlocations,tolocations;
-	private SolidPoint source1,destination1;
+	private StartPin source1;
+	private EndPin destination1;
 	private ImagePanel toFloorMap,fromFloorMap;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
@@ -282,7 +284,7 @@ public class RouteScreen3 {
 						int i = sourceSelection.getSelectedIndex();
 						x1 = fromlocations.get(i).getX();
 						y1 = fromlocations.get(i).getY();
-						source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
+						source1 =new StartPin(x1, y1);
 						fromFloorMap.add(source1);
 						fromFloorMap.repaint();
 						
@@ -296,7 +298,7 @@ public class RouteScreen3 {
 						int i = sourceSelection.getSelectedIndex();
 						x1 = fromlocations.get(i).getX();
 						y1 = fromlocations.get(i).getY();
-						source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
+						source1 =new StartPin(x1, y1);
 						fromFloorMap.add(source1);
 						fromFloorMap.repaint();
 						
@@ -350,7 +352,7 @@ public class RouteScreen3 {
 						int i = destinationSelection.getSelectedIndex();
 						x2 = tolocations.get(i).getX();
 						y2 = tolocations.get(i).getY();
-						destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
+						destination1 =new EndPin(x2, y2);
 						toFloorMap.add(destination1);
 						toFloorMap.repaint();
 						
@@ -364,7 +366,7 @@ public class RouteScreen3 {
 						int i = destinationSelection.getSelectedIndex();
 						x2 = tolocations.get(i).getX();
 						y2 = tolocations.get(i).getY();
-						destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
+						destination1 =new EndPin(x2, y2);
 						toFloorMap.add(destination1);
 						toFloorMap.repaint();
 						
@@ -570,21 +572,23 @@ public class RouteScreen3 {
                     fromFloorMap.removeAll();
                     toFloorMap.removeAll();
                     
+                    wpi.cs509.ui.util.UtilScreen3.drawPath(fromFloorMap, frompointlist);
+                    wpi.cs509.ui.util.UtilScreen3.drawPath(toFloorMap, topointlist);
+                    
                     int i0 = sourceSelection.getSelectedIndex();
                     x1 = fromlocations.get(i0).getX();
 					y1 = fromlocations.get(i0).getY();
-                    source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
+                    source1 =new StartPin(x1, y1);
                     fromFloorMap.add(source1);
                     fromFloorMap.repaint();
                     
                     int j0 = destinationSelection.getSelectedIndex();
                     x2 = tolocations.get(j0).getX();
 					y2 = tolocations.get(j0).getY();
-                    destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
+                    destination1 = new EndPin(x2, y2);
                     toFloorMap.add(destination1);
                     toFloorMap.repaint();
-                    wpi.cs509.ui.util.UtilScreen3.drawPath(fromFloorMap, frompointlist);
-                    wpi.cs509.ui.util.UtilScreen3.drawPath2(toFloorMap, topointlist);
+                    
                 }      
             }
         });
