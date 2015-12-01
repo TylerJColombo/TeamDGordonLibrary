@@ -68,7 +68,7 @@ public class AdminScreen {
 		//////////
 		// Tabs //
 		//////////
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(20, 180, 970, 500);
 //		tabbedPane.setForeground(Color.decode("#929292"));
 		frame.getContentPane().add(tabbedPane);
@@ -76,21 +76,21 @@ public class AdminScreen {
 		/////////////////
 		// Add Map Tab //
 		/////////////////
-		JPanel addMapTab = new JPanel();
+		final JPanel addMapTab = new JPanel();
 		addMapTab.setLayout(null);
 		tabbedPane.addTab("Add/Delete Map", null, addMapTab, null);
 		
 		// Add Map left box
-		JPanel panel_1 = new JPanel();
+		final JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 10, 300, 500);
 		panel_1.setLayout(null);
 		addMapTab.add(panel_1);
 		
-		JLabel lblNewLabel_6 = new JLabel("Building Name:");
+		final JLabel lblNewLabel_6 = new JLabel("Building Name:");
 		lblNewLabel_6.setBounds(20, 20, 280, 20);
 		panel_1.add(lblNewLabel_6);
 				
-		JTextField txtMapName = new JTextField();
+		final JTextField txtMapName = new JTextField();
 		txtMapName.setBounds(20, 50, 280, 20);
 		panel_1.add(txtMapName);
 				
@@ -98,7 +98,7 @@ public class AdminScreen {
 		lblNewLabel_12.setBounds(20, 90, 280, 20);
 		panel_1.add(lblNewLabel_12);
 				
-		JTextField txtFloorNum = new JTextField();
+		final JTextField txtFloorNum = new JTextField();
 		txtFloorNum.setBounds(20, 120, 280, 20);
 		panel_1.add(txtFloorNum);
 				
@@ -106,7 +106,7 @@ public class AdminScreen {
 		lblNewLabel_7.setBounds(20, 160, 280, 20);
 		panel_1.add(lblNewLabel_7);
 				
-		JTextField txtMapPath = new JTextField();
+		final JTextField txtMapPath = new JTextField();
 		txtMapPath.setBounds(20, 190, 280, 20);
 		panel_1.add(txtMapPath);
 				
@@ -114,7 +114,7 @@ public class AdminScreen {
 		lblNewLabel_8.setBounds(20, 230, 280, 20);
 		panel_1.add(lblNewLabel_8);
 				
-		JTextField txtMapScale = new JTextField();
+		final JTextField txtMapScale = new JTextField();
 		txtMapScale.setBounds(20, 260, 280, 20);
 		panel_1.add(txtMapScale);
 				
@@ -136,7 +136,7 @@ public class AdminScreen {
 		lblNewLabel_15.setBounds(20, 20, 280, 20);
 		panel_5.add(lblNewLabel_15);
 		
-		JComboBox<Map> comboMapsDelete = new JComboBox<Map>();
+		final JComboBox<Map> comboMapsDelete = new JComboBox<Map>();
 		comboMapsDelete.setBounds(20, 50, 280, 20);
 		if(comboMapsDelete.getItemCount() > 0){
 			comboMapsDelete.removeAllItems();
@@ -213,7 +213,7 @@ public class AdminScreen {
 		lblNewLabel.setBounds(20, 20, 100, 20);
 		panel.add(lblNewLabel);
 		
-		JComboBox<Map> comboMaps = new JComboBox<Map>();
+		final JComboBox<Map> comboMaps = new JComboBox<Map>();
 		comboMaps.setBounds(120, 20, 180, 20);
 		panel.add(comboMaps);
 		
@@ -226,7 +226,7 @@ public class AdminScreen {
 		lblX1.setBounds(20, 90, 30, 20);
 		panel.add(lblX1);
 		
-		JLabel lblX1Value = new JLabel("0");
+		final JLabel lblX1Value = new JLabel("0");
 		lblX1Value.setBounds(40, 90, 70, 20);
 		panel.add(lblX1Value);
 		
@@ -234,62 +234,62 @@ public class AdminScreen {
 		lblY1.setBounds(90, 90, 30, 20);
 		panel.add(lblY1);
 		
-		JLabel lblY1Value = new JLabel("0");
+		final JLabel lblY1Value = new JLabel("0");
 		lblY1Value.setBounds(110, 90, 70, 20);
 		panel.add(lblY1Value);
 		
-		JLabel lblNewLabel_5 = new JLabel("Location Name: ");
+		final JLabel lblNewLabel_5 = new JLabel("Location Name: ");
 		lblNewLabel_5.setBounds(20, 120, 100, 20);
 		panel.add(lblNewLabel_5);
 		
-		JTextField txtLocation1Name = new JTextField();
+		final JTextField txtLocation1Name = new JTextField();
 		txtLocation1Name.setBounds(120, 120, 180, 20);
 		panel.add(txtLocation1Name);
 		txtLocation1Name.setColumns(10);
 		
-		JCheckBox chckbxIsEnterance1 = new JCheckBox("is enterance");
+		final JCheckBox chckbxIsEnterance1 = new JCheckBox("is enterance");
 		chckbxIsEnterance1.setBounds(20, 150, 120, 20);
 		panel.add(chckbxIsEnterance1);
 		
-		JCheckBox chckbxIsLocation1 = new JCheckBox("is location");
+		final JCheckBox chckbxIsLocation1 = new JCheckBox("is location");
 		chckbxIsLocation1.setBounds(140, 150, 120, 20);
 		panel.add(chckbxIsLocation1);
 		
 		// Second point
-		JLabel lblNewLabel_13 = new JLabel("3) Click the Second point on the map and fill its data.");
+		final JLabel lblNewLabel_13 = new JLabel("3) Click the Second point on the map and fill its data.");
 		lblNewLabel_13.setBounds(20, 190, 300, 20);
 		panel.add(lblNewLabel_13);
 		
-		JLabel lblX2 = new JLabel("X2: ");
+		final JLabel lblX2 = new JLabel("X2: ");
 		lblX2.setBounds(20, 220, 30, 20);
 		panel.add(lblX2);
 		
-		JLabel lblX2Value = new JLabel("0");
+		final JLabel lblX2Value = new JLabel("0");
 		lblX2Value.setBounds(40, 220, 70, 20);
 		panel.add(lblX2Value);
 		
-		JLabel lblY2 = new JLabel("Y2: ");
+		final JLabel lblY2 = new JLabel("Y2: ");
 		lblY2.setBounds(90, 220, 30, 20);
 		panel.add(lblY2);
 		
-		JLabel lblY2Value = new JLabel("0");
+		final JLabel lblY2Value = new JLabel("0");
 		lblY2Value.setBounds(110, 220, 70, 20);
 		panel.add(lblY2Value);
 		
-		JLabel lblNewLabel_14 = new JLabel("Location Name: ");
+		final JLabel lblNewLabel_14 = new JLabel("Location Name: ");
 		lblNewLabel_14.setBounds(20, 250, 100, 20);
 		panel.add(lblNewLabel_14);
 		
-		JTextField txtLocation2Name = new JTextField();
+		final JTextField txtLocation2Name = new JTextField();
 		txtLocation2Name.setBounds(120, 250, 180, 20);
 		panel.add(txtLocation2Name);
 		txtLocation2Name.setColumns(10);
 		
-		JCheckBox chckbxIsEnterance2 = new JCheckBox("is enterance");
+		final JCheckBox chckbxIsEnterance2 = new JCheckBox("is enterance");
 		chckbxIsEnterance2.setBounds(20, 280, 120, 20);
 		panel.add(chckbxIsEnterance2);
 
-		JCheckBox chckbxIsLocation2 = new JCheckBox("is location");
+		final JCheckBox chckbxIsLocation2 = new JCheckBox("is location");
 		chckbxIsLocation2.setBounds(140, 280, 120, 20);
 		panel.add(chckbxIsLocation2);
 		
@@ -302,7 +302,7 @@ public class AdminScreen {
 		btnSavePoint.setBorderPainted(false);
 		panel.add(btnSavePoint);
 		
-		JPanel panel_4 = new JPanel();
+		final JPanel panel_4 = new JPanel();
 		panel_4.setBounds(330, 0, 640, 480);
 		panel_4.setLayout(null);
 		addPointTab.add(panel_4);
@@ -460,7 +460,7 @@ public class AdminScreen {
 		lblNewLabel_9.setBounds(20, 20, 280, 20);
 		panel_3.add(lblNewLabel_9);
 		
-		JComboBox<Map> comboMaps1stCon = new JComboBox<Map>();
+		final JComboBox<Map> comboMaps1stCon = new JComboBox<Map>();
 		comboMaps1stCon.setBounds(20, 50, 280, 20);
 		if(comboMaps1stCon.getItemCount() > 0){
 			comboMaps1stCon.removeAllItems();
@@ -474,7 +474,7 @@ public class AdminScreen {
 		lblNewLabel_10.setBounds(20, 90, 280, 20);
 		panel_3.add(lblNewLabel_10);
 				
-		JComboBox<Point> comboFirstPoint = new JComboBox<Point>();
+		final JComboBox<Point> comboFirstPoint = new JComboBox<Point>();
 		comboFirstPoint.setBounds(20, 120, 280, 20);
 		for(Point p: DataManager.getEntranceByMapID(DataManager.getAllMaps().get(0).getId())){
 			comboFirstPoint.addItem(p);
@@ -485,7 +485,7 @@ public class AdminScreen {
 		lblNewLabel_16.setBounds(20, 160, 280, 20);
 		panel_3.add(lblNewLabel_16);
 		
-		JComboBox<Map> comboMaps2ndCon = new JComboBox<Map>();
+		final JComboBox<Map> comboMaps2ndCon = new JComboBox<Map>();
 		comboMaps2ndCon.setBounds(20, 190, 280, 20);
 		if(comboMaps2ndCon.getItemCount() > 0){
 			comboMaps2ndCon.removeAllItems();
@@ -495,18 +495,18 @@ public class AdminScreen {
 		}
 		panel_3.add(comboMaps2ndCon);
 		
-		JLabel lblNewLabel_17 = new JLabel("Second Enterance:");
+		final JLabel lblNewLabel_17 = new JLabel("Second Enterance:");
 		lblNewLabel_17.setBounds(20, 230, 280, 20);
 		panel_3.add(lblNewLabel_17);
 		
-		JComboBox<Point> comboSecondPoint = new JComboBox<Point>();
+		final JComboBox<Point> comboSecondPoint = new JComboBox<Point>();
 		comboSecondPoint.setBounds(20, 260, 280, 20);
 		for(Point p: DataManager.getEntranceByMapID(DataManager.getAllMaps().get(0).getId())){
 			comboSecondPoint.addItem(p);
 		}
 		panel_3.add(comboSecondPoint);
 		
-		JButton btnSaveEdge = new JButton("Add Connection Edge");
+		final JButton btnSaveEdge = new JButton("Add Connection Edge");
 		btnSaveEdge.setBounds(20, 300, 280, 25);
 		btnSaveEdge.setForeground(Color.decode("#F1F1F1"));
 		btnSaveEdge.setBackground(Color.decode("#AB2A36"));

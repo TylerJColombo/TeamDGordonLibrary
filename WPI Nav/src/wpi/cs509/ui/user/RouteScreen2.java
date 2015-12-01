@@ -155,7 +155,7 @@ public class RouteScreen2 {
 		sameFloorControl.add(floor);
 		floor.setBounds(25, 60, 300, 20);
 		
-		JPanel panel_4 = new JPanel();
+		final JPanel panel_4 = new JPanel();
 		panel_4.setBounds(350, 180, 640, 480);
 		panel_4.setLayout(null);
 		// add by Jiawei Sun
