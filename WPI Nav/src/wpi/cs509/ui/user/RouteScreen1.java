@@ -72,7 +72,7 @@ public class RouteScreen1 {
 	 */
 	private void initialize() {
 		
-		ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
+		final ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
 		ArrayList <String> bns = new ArrayList<String>();
 		String test = buildingoncampus.get(0).getName();
 		for(Point bn:buildingoncampus){
@@ -80,8 +80,8 @@ public class RouteScreen1 {
 		}
 		
 		
-		JComboBox comboBox_1 = new JComboBox(bns.toArray());
-		JComboBox comboBox = new JComboBox(bns.toArray());
+		final JComboBox comboBox_1 = new JComboBox(bns.toArray());
+		final JComboBox comboBox = new JComboBox(bns.toArray());
 		
 		
 
