@@ -172,13 +172,12 @@ public class RouteScreen3 {
 		difFloorControl.add(fromfloor);
 		fromfloor.setBounds(25, 60, 300, 20);
 		
-<<<<<<< HEAD
+
 		final JPanel panel_4 = new JPanel();
-		panel_4.setBounds(350, 180, 640, 480);
-=======
-		JPanel panel_4 = new JPanel();
 		panel_4.setBounds(350, 180, 640, 550);
->>>>>>> master
+
+		
+
 		panel_4.setLayout(null);
 		
 		//FromfloorList
