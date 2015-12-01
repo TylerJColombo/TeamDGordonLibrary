@@ -73,7 +73,8 @@ public class RouteScreen1 {
 	private void initialize() {
 		
 		ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
-		ArrayList <String> bns = null;
+		ArrayList <String> bns = new ArrayList<String>();
+		String test = buildingoncampus.get(0).getName();
 		for(Point bn:buildingoncampus){
 			bns.add(bn.getName());	
 		}
@@ -208,6 +209,7 @@ public class RouteScreen1 {
 							
 						}
 //				Odestination =(Point) comboBox_1.getSelectedItem();
+				destination =comboBox_1.getSelectedItem().toString();
 				for(Point c:buildingoncampus){
 					if(c.getName().equals(destination))
 					Odestination=c;	

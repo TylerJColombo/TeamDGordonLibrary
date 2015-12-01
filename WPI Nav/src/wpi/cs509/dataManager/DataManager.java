@@ -1341,6 +1341,7 @@ public class DataManager {
 */
 		//System.out.println(graph2.getPoints().size());
 		//System.out.println(sqroot(testSq));
-		System.out.println(findClosestPoint(1,236, 74).getId());
+		System.out.println(getBuildingOnCampus().size());
+		//System.out.println(findClosestPoint(1,236, 74).getId());
 	}
 }
