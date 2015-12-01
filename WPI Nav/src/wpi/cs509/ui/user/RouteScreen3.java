@@ -13,21 +13,24 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
+import wpi.cs509.ui.components.EndPin;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
-import wpi.cs509.ui.components.SolidPoint;
+import wpi.cs509.ui.components.StartPin;
 public class RouteScreen3 {
 
 	private JFrame frame;
 	private JComboBox<String> buildingSelection,tofloorSelection,fromfloorSelection,sourceSelection,destinationSelection;
 	private ArrayList<String> buildingList, floorSelected;
 	private ArrayList<Point> fromlocations,tolocations;
-	private SolidPoint source1,destination1;
+	private StartPin source1;
+	private EndPin destination1;
 	private ImagePanel toFloorMap,fromFloorMap;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
@@ -216,6 +219,7 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				destinationSelection.removeAllItems();
 				destinationSelection.removeItemListener(dListener);
+				
 				if(e.getStateChange()==ItemEvent.SELECTED)
 				{
 					buildingselected = buildingSelection.getSelectedItem().toString();
@@ -267,11 +271,11 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					fromlocations = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
-					frombutton.setBackground(Color.gray);
-					tobutton.setForeground(Color.decode("#F1F1F1"));
-					tobutton.setBackground(Color.decode("#AB2A36"));
-					tobutton.setOpaque(true);
-					tobutton.setBorderPainted(false);
+//					frombutton.setBackground(Color.gray);
+//					tobutton.setForeground(Color.decode("#F1F1F1"));
+//					tobutton.setBackground(Color.decode("#AB2A36"));
+//					tobutton.setOpaque(true);
+//					tobutton.setBorderPainted(false);
 					
 					if(source1!=null){
 						fromFloorMap.removeAll();
@@ -280,7 +284,7 @@ public class RouteScreen3 {
 						int i = sourceSelection.getSelectedIndex();
 						x1 = fromlocations.get(i).getX();
 						y1 = fromlocations.get(i).getY();
-						source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
+						source1 =new StartPin(x1, y1);
 						fromFloorMap.add(source1);
 						fromFloorMap.repaint();
 						
@@ -294,7 +298,7 @@ public class RouteScreen3 {
 						int i = sourceSelection.getSelectedIndex();
 						x1 = fromlocations.get(i).getX();
 						y1 = fromlocations.get(i).getY();
-						source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
+						source1 =new StartPin(x1, y1);
 						fromFloorMap.add(source1);
 						fromFloorMap.repaint();
 						
@@ -335,11 +339,11 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					tolocations = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
-					tobutton.setBackground(Color.gray);
-					frombutton.setForeground(Color.decode("#F1F1F1"));
-					frombutton.setBackground(Color.decode("#AB2A36"));
-					frombutton.setOpaque(true);
-					frombutton.setBorderPainted(false);
+//					tobutton.setBackground(Color.gray);
+//					frombutton.setForeground(Color.decode("#F1F1F1"));
+//					frombutton.setBackground(Color.decode("#AB2A36"));
+//					frombutton.setOpaque(true);
+//					frombutton.setBorderPainted(false);
 					
 					if(destination1!=null){
 						toFloorMap.removeAll();
@@ -348,7 +352,7 @@ public class RouteScreen3 {
 						int i = destinationSelection.getSelectedIndex();
 						x2 = tolocations.get(i).getX();
 						y2 = tolocations.get(i).getY();
-						destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
+						destination1 =new EndPin(x2, y2);
 						toFloorMap.add(destination1);
 						toFloorMap.repaint();
 						
@@ -362,7 +366,7 @@ public class RouteScreen3 {
 						int i = destinationSelection.getSelectedIndex();
 						x2 = tolocations.get(i).getX();
 						y2 = tolocations.get(i).getY();
-						destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
+						destination1 =new EndPin(x2, y2);
 						toFloorMap.add(destination1);
 						toFloorMap.repaint();
 						
@@ -437,11 +441,13 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				panel_4.removeAll();
 				panel_4.add(fromFloorMap);
-				fromFloorMap.add(source1);
-				fromFloorMap.repaint();
 				panel_4.repaint();
 				frame.add(panel_4);
 				fromFloorMap.setLayout(null);
+				sourceSelection.setEnabled(true);
+				fromfloorSelection.setEnabled(true);
+				destinationSelection.setEnabled(false);
+				tofloorSelection.setEnabled(false);
 			}
 		});
 		
@@ -498,11 +504,13 @@ public class RouteScreen3 {
 				// TODO Auto-generated method stub
 				panel_4.removeAll();
 				panel_4.add(toFloorMap);
-				toFloorMap.add(destination1);
-				toFloorMap.repaint();
 				panel_4.repaint();
 				frame.add(panel_4);
 				toFloorMap.setLayout(null);
+				sourceSelection.setEnabled(false);
+				fromfloorSelection.setEnabled(false);
+				destinationSelection.setEnabled(true);
+				tofloorSelection.setEnabled(true);
 			}
 		});
 		
@@ -520,54 +528,68 @@ public class RouteScreen3 {
                 buildingselected = buildingSelection.getSelectedItem().toString();
                 fromfloorselected = fromfloorSelection.getSelectedItem().toString();
                 tofloorselected =tofloorSelection.getSelectedItem().toString();
-                
-                ArrayList<Point> fromlocation = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
-                ArrayList<Point> tolocation = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
-                
-                Graph tograph = DataManager.getGraphByNameWithDB(buildingselected, tofloorselected);
-           
-                int i = sourceSelection.getSelectedIndex();
-                int j = destinationSelection.getSelectedIndex();
-                
-                Point source0 = fromlocation.get(i);
-                Point destination0 = tolocation.get(j);
-                
-                ArrayList<Point> p = RouteFinder.computePaths(source0, tograph, destination0);
-                
-                int to = 0;
-                ArrayList<Point> frompointlist = new ArrayList<>();
-                ArrayList<Point> topointlist = new ArrayList<>();
-                
-                for(int c = 0; c<p.size()-1;c++){
-                	if(p.get(c).getMapId()==p.get(c+1).getMapId()){
-                		frompointlist. add(p.get(c));
-                	}
-                	else{
-                		frompointlist. add(p.get(c));
-                		to = c+1;
-                		break;
-                	}
+                if(fromfloorselected == tofloorselected){
+                	JOptionPane.showMessageDialog(null, "You are choosing the same floor.");
+                	
                 }
-                
-                for(int t = to;t<p.size() ; t++){
-                	if(p.get(t).getMapId()==destination0.getMapId())
-                	{
-                	Point topoint = p.get(t);
-            		topointlist.add(topoint);
-                	}
-                }
-                
-                fromFloorMap.removeAll();
-                toFloorMap.removeAll();
-                source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
-                fromFloorMap.add(source1);
-                fromFloorMap.repaint();
-                destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
-                toFloorMap.add(destination1);
-                toFloorMap.repaint();
-                wpi.cs509.ui.util.UtilScreen3.drawPath(fromFloorMap, frompointlist);
-                wpi.cs509.ui.util.UtilScreen3.drawPath2(toFloorMap, topointlist);
-                
+                else{
+                	ArrayList<Point> fromlocation = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
+                    ArrayList<Point> tolocation = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
+                    
+                    Graph tograph = DataManager.getGraphByNameWithDB(buildingselected, tofloorselected);
+               
+                    int i = sourceSelection.getSelectedIndex();
+                    int j = destinationSelection.getSelectedIndex();
+                    
+                    Point source0 = fromlocation.get(i);
+                    Point destination0 = tolocation.get(j);
+                    
+                    ArrayList<Point> p = RouteFinder.computePaths(source0, tograph, destination0);
+                    
+                    int to = 0;
+                    ArrayList<Point> frompointlist = new ArrayList<>();
+                    ArrayList<Point> topointlist = new ArrayList<>();
+                    
+                    for(int c = 0; c<p.size()-1;c++){
+                    	if(p.get(c).getMapId()==p.get(c+1).getMapId()){
+                    		frompointlist. add(p.get(c));
+                    	}
+                    	else{
+                    		frompointlist. add(p.get(c));
+                    		to = c+1;
+                    		break;
+                    	}
+                    }
+                    
+                    for(int t = to;t<p.size() ; t++){
+                    	if(p.get(t).getMapId()==destination0.getMapId())
+                    	{
+                    	Point topoint = p.get(t);
+                		topointlist.add(topoint);
+                    	}
+                    }
+                    
+                    fromFloorMap.removeAll();
+                    toFloorMap.removeAll();
+                    
+                    wpi.cs509.ui.util.UtilScreen3.drawPath(fromFloorMap, frompointlist);
+                    wpi.cs509.ui.util.UtilScreen3.drawPath(toFloorMap, topointlist);
+                    
+                    int i0 = sourceSelection.getSelectedIndex();
+                    x1 = fromlocations.get(i0).getX();
+					y1 = fromlocations.get(i0).getY();
+                    source1 =new StartPin(x1, y1);
+                    fromFloorMap.add(source1);
+                    fromFloorMap.repaint();
+                    
+                    int j0 = destinationSelection.getSelectedIndex();
+                    x2 = tolocations.get(j0).getX();
+					y2 = tolocations.get(j0).getY();
+                    destination1 = new EndPin(x2, y2);
+                    toFloorMap.add(destination1);
+                    toFloorMap.repaint();
+                    
+                }      
             }
         });
 

@@ -19,9 +19,10 @@ import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
+import wpi.cs509.ui.components.EndPin;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
-import wpi.cs509.ui.components.SolidPoint;
+import wpi.cs509.ui.components.StartPin;
 
 public class RouteScreen2 {
 
@@ -29,7 +30,8 @@ public class RouteScreen2 {
 	private JComboBox<String> buildingSelection,floorSelection,sourceSelection,destinationSelection;
 	private ArrayList<String> buildingList, floorList, floorSelected;
 	private ArrayList<Point> sourceList, destinationList,locations;
-	private SolidPoint source1,destination1;
+	private StartPin source1;
+	private EndPin destination1;
 	private ImagePanel sameFloorMap;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
@@ -241,7 +243,7 @@ public class RouteScreen2 {
 						ss = sourceSelection.getSelectedIndex()-1;
 						x1 = locations.get(ss).getX();
 						y1 = locations.get(ss).getY();
-						source1 =new SolidPoint(Color.decode("#000000"), x1, y1);
+						source1 =new StartPin(x1, y1);
 						sameFloorMap.removeAll();
 						if(destination1==null){
 							sameFloorMap.add(source1);
@@ -284,7 +286,7 @@ public class RouteScreen2 {
 						ds = destinationSelection.getSelectedIndex()-1;
 						x2 = locations.get(ds).getX();
 						y2 = locations.get(ds).getY();
-						destination1 =new SolidPoint(Color.decode("#009966"), x2,y2);
+						destination1 =new EndPin(x2, y2);
 						sameFloorMap.removeAll();
 						if(source1==null){
 							sameFloorMap.add(destination1);
@@ -341,15 +343,5 @@ public class RouteScreen2 {
 				System.out.println(source0+" "+destination0);
 			}
 		});
-		
-		
-		//map
-//		buildingselected = buildingSelection.getSelectedItem().toString();
-//		floorselected = floorSelection.getSelectedItem().toString();
-//		filename = DataManager.getMapPathByName(buildingselected+","+floorselected);
-//		sameFloorMap = new ImagePanel("maps//project center.png", 640, 480);
-//		sameFloorMap.setBounds(350, 180, 640, 480);
-//		sameFloorSearchPanel.add(sameFloorMap);
-//		sameFloorMap.setLayout(null);
 	}
 }
