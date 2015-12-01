@@ -20,9 +20,11 @@ import javax.swing.text.StyledEditorKit.ForegroundAction;
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
+import wpi.cs509.ui.components.EndPin;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
 import wpi.cs509.ui.components.SolidPoint;
+import wpi.cs509.ui.components.StartPin;
 import wpi.cs509.ui.components.Zoomingpanel;
 import wpi.cs509.ui.util.Util;
 
@@ -37,8 +39,8 @@ public class RouteScreen1 {
 	String destination;
 	Point Odestination=null;
 	Point Osource=null;
-	SolidPoint destinationofSolid;
-	SolidPoint sourceofSoLid;
+	EndPin destinationofSolid;
+	StartPin sourceofSoLid;
     Boolean Pflag = false;
 
 	/**
@@ -160,7 +162,7 @@ public class RouteScreen1 {
 			
 			
 		
-    		sourceofSoLid = new SolidPoint(Color.decode("#000000"), Osource.getX(), Osource.getY());  
+    		sourceofSoLid = new StartPin( Osource.getX(), Osource.getY());  
  //   		destinationofSolid = new SolidPoint(Color.red,Odestination.getX(), Odestination.getY());  
      		if(destinationofSolid!=null){imagePanelCmap.add(destinationofSolid);}
     		imagePanelCmap.add(sourceofSoLid);
@@ -214,7 +216,7 @@ public class RouteScreen1 {
 					if(c.getName().equals(destination))
 					Odestination=c;	
 				}
-				destinationofSolid = new SolidPoint(Color.decode("#009966"),Odestination.getX(), Odestination.getY());  
+				destinationofSolid = new EndPin(Odestination.getX(), Odestination.getY());  
 //				sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY()); 
 	    	
 	    	    imagePanelCmap.add(sourceofSoLid);
@@ -268,3 +270,4 @@ public class RouteScreen1 {
 	
 
 }
+
