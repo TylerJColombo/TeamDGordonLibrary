@@ -27,26 +27,10 @@ import wpi.cs509.ui.components.Zoomingpanel;
 import wpi.cs509.ui.util.Util;
 
 public class RouteScreen1 {
+	
+	
    
-//	private ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
-//	private ArrayList <String> bns;
-//	for(Point bn:buildingoncampus){
-//		bns.add(bn.getName());	
-//	}
 	private JFrame frame;
-	
-//	private ArrayList <String> bns;
-//	
-	private ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
-//	for(Point bn:buildingoncampus){
-//		bns.add(bn.getName());	
-//	}
-//	JComboBox comboBox_1 = new JComboBox(bns.toArray());
-//	JComboBox comboBox = new JComboBox(bns.toArray());
-	
-	JComboBox comboBox_1 = new JComboBox(buildingoncampus.toArray());
-	JComboBox comboBox = new JComboBox(buildingoncampus.toArray());
-	
 	ImagePanel  imagePanelCmap;
 	Zoomingpanel   zoomcmap;
 	String source;
@@ -56,7 +40,6 @@ public class RouteScreen1 {
 	SolidPoint destinationofSolid;
 	SolidPoint sourceofSoLid;
     Boolean Pflag = false;
-	
 
 	/**
 	 * Launch the application.
@@ -88,6 +71,19 @@ public class RouteScreen1 {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
+		ArrayList <String> bns = new ArrayList<String>();
+		String test = buildingoncampus.get(0).getName();
+		for(Point bn:buildingoncampus){
+			bns.add(bn.getName());	
+		}
+		
+		
+		JComboBox comboBox_1 = new JComboBox(bns.toArray());
+		JComboBox comboBox = new JComboBox(bns.toArray());
+		
+		
 
 		  
 		frame = new JFrame();
@@ -108,7 +104,7 @@ public class RouteScreen1 {
 
 //		imagePanelCmap = new ImagePanel("maps//Campus.png", 640, 480);
 		
-		imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "0"), 640, 480);
+		imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
 		imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
        		
 
@@ -134,7 +130,7 @@ public class RouteScreen1 {
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					if(Pflag==true){
 						frame.remove(zoomcmap.zPanel);
-						imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "0"), 640, 480);
+						imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
 						imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
 				       		
 
@@ -155,12 +151,12 @@ public class RouteScreen1 {
 							
 						}
 //				}
-//			source =comboBox.getSelectedItem().toString();
-//			for(Point b:buildingoncampus){
-//				if(b.getName().equals(source))
-//				Osource=b;	
-//			}
-		    Osource=(Point) comboBox.getSelectedItem();
+			source =comboBox.getSelectedItem().toString();
+			for(Point b:buildingoncampus){
+				if(b.getName().equals(source))
+				Osource=b;	
+			}
+//		    Osource=(Point) comboBox.getSelectedItem();
 			
 			
 		
@@ -212,11 +208,12 @@ public class RouteScreen1 {
 						imagePanelCmap.repaint();
 							
 						}
-				Odestination =(Point) comboBox_1.getSelectedItem();
-//				for(Point c:buildingoncampus){
-//					if(c.getName().equals(destination))
-//					Odestination=c;	
-//				}
+//				Odestination =(Point) comboBox_1.getSelectedItem();
+				destination =comboBox_1.getSelectedItem().toString();
+				for(Point c:buildingoncampus){
+					if(c.getName().equals(destination))
+					Odestination=c;	
+				}
 				destinationofSolid = new SolidPoint(Color.decode("#009966"),Odestination.getX(), Odestination.getY());  
 //				sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY()); 
 	    	

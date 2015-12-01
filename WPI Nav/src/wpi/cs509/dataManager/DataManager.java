@@ -612,7 +612,7 @@ public class DataManager {
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
 			ps1.setString(1, "Campus");
-			ps1.setString(1, "PassageWay");
+			ps1.setString(2, "PassageWay");
 			ResultSet rs = ps1.executeQuery();
 			while(rs.next())
 			{
@@ -1341,6 +1341,7 @@ public class DataManager {
 */
 		//System.out.println(graph2.getPoints().size());
 		//System.out.println(sqroot(testSq));
-		System.out.println(findClosestPoint(1,236, 74).getId());
+		System.out.println(getBuildingOnCampus().size());
+		//System.out.println(findClosestPoint(1,236, 74).getId());
 	}
 }

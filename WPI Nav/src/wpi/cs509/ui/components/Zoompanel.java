@@ -36,7 +36,7 @@ public class Zoompanel extends JPanel {
 	      BufferedImage ret = null;
 
 	      try {                
-	          bimg = ImageIO.read(new File(DataManager.getMapPathByName("Campus", "0")));
+	          bimg = ImageIO.read(new File(DataManager.getMapPathByName("Campus", "Basement")));
 	          bimg = this.resize(bimg, width, height);
 	       } catch (IOException ex) {
 	            // handle exception...
