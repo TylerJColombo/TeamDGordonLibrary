@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.Stroke;
 
 import javax.swing.JPanel;
@@ -39,7 +38,7 @@ public class RouteLine extends JPanel {
 	
 	@Override public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
-		Stroke stroke = new BasicStroke(3.0f);
+		Stroke stroke = new BasicStroke(2.0f);
 		g2d.setStroke(stroke);
 		g.setColor(this.color);
 		g.drawLine(x1, y1, x2, y2);
