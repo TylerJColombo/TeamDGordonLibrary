@@ -190,7 +190,7 @@ public class RouteScreen1 {
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					if(Pflag==true){
 						frame.remove(zoomcmap.zPanel);
-						imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "0"), 640, 480);
+						imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
 						imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
 				       		
 
