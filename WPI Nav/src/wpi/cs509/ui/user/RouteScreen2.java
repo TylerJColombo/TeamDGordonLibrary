@@ -9,6 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -35,7 +36,7 @@ public class RouteScreen2 {
 	private ImagePanel sameFloorMap;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
-	private String buildingselected,floorselected;
+	private String buildingselected,floorselected,newsource,newdestination;
 	private int ss,ds;
 	
 
@@ -270,7 +271,7 @@ public class RouteScreen2 {
 		//destinationLabel
 		JLabel destination = new JLabel("Destination");
 		sameFloorControl.add(destination);
-		destination.setBounds(25, 180, 300, 20);
+		destination.setBounds(25, 180, 150, 20);
 		
 		//destinationList
 		sameFloorControl.add(destinationSelection);
@@ -340,7 +341,30 @@ public class RouteScreen2 {
 				Point destination0 = locations.get(j);
 				ArrayList<Point> p = RouteFinder.computePaths(source0, rf, destination0);
 				wpi.cs509.ui.util.Util.drawPath(sameFloorMap, p);
+				sameFloorMap.setComponentZOrder(destination1, 0);
 				System.out.println(source0+" "+destination0);
+			}
+		});
+		
+		JButton reverse = new JButton(new ImageIcon("maps//reverse.png"));
+		reverse.setBounds(160, 175, 25, 25);
+		
+		sameFloorControl.add(reverse);
+		
+		reverse.setForeground(Color.decode("#F1F1F1"));
+		reverse.setBackground(Color.decode("#AB2A36"));
+		reverse.setOpaque(true);
+		reverse.setBorderPainted(false);
+		
+		reverse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				newdestination = sourceSelection.getSelectedItem().toString();
+				newsource = destinationSelection.getSelectedItem().toString();
+				sourceSelection.setSelectedItem(newsource);
+				destinationSelection.setSelectedItem(newdestination);				
 			}
 		});
 	}

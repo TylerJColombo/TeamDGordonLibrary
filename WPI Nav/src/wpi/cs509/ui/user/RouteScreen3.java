@@ -9,6 +9,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -34,7 +36,7 @@ public class RouteScreen3 {
 	private ImagePanel toFloorMap,fromFloorMap;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
-	private String buildingselected, fromfloorselected, fromfilename, tofloorselected, tofilename;
+	private String buildingselected, fromfloorselected, fromfilename, tofloorselected, tofilename, newfromfloor, newtofloor, newsource, newdestination;
 	private JButton frombutton, tobutton;
 	
 
@@ -112,6 +114,11 @@ public class RouteScreen3 {
 		buildingSelection.addItem(null);
 		for(int i=0;i<buildingList.size();i++){
 			buildingSelection.addItem(buildingList.get(i));
+			buildingSelection.setEnabled(false);
+			fromfloorSelection.setEnabled(false);
+			tofloorSelection.setEnabled(false);
+			sourceSelection.setEnabled(false);
+			destinationSelection.setEnabled(false);
 		}
 		
 //		floorList = DataManager.getFloorsMapsByBuildingName(buildingSelection.getItemAt(1).toString());
@@ -439,15 +446,19 @@ public class RouteScreen3 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				panel_4.removeAll();
-				panel_4.add(fromFloorMap);
-				panel_4.repaint();
-				frame.add(panel_4);
-				fromFloorMap.setLayout(null);
+				buildingSelection.setEnabled(true);
 				sourceSelection.setEnabled(true);
 				fromfloorSelection.setEnabled(true);
 				destinationSelection.setEnabled(false);
 				tofloorSelection.setEnabled(false);
+				
+				if(fromFloorMap != null){
+					panel_4.removeAll();
+					panel_4.add(fromFloorMap);
+					panel_4.repaint();
+					frame.add(panel_4);
+					fromFloorMap.setLayout(null);
+				}
 			}
 		});
 		
@@ -502,15 +513,19 @@ public class RouteScreen3 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				panel_4.removeAll();
-				panel_4.add(toFloorMap);
-				panel_4.repaint();
-				frame.add(panel_4);
-				toFloorMap.setLayout(null);
 				sourceSelection.setEnabled(false);
 				fromfloorSelection.setEnabled(false);
+				buildingSelection.setEnabled(true);
 				destinationSelection.setEnabled(true);
 				tofloorSelection.setEnabled(true);
+				
+				if(toFloorMap != null){
+					panel_4.removeAll();
+					panel_4.add(toFloorMap);
+					panel_4.repaint();
+					frame.add(panel_4);
+					toFloorMap.setLayout(null);
+				}
 			}
 		});
 		
@@ -580,6 +595,7 @@ public class RouteScreen3 {
 					y1 = fromlocations.get(i0).getY();
                     source1 =new StartPin(x1, y1);
                     fromFloorMap.add(source1);
+                    fromFloorMap.setComponentZOrder(source1, 0);
                     fromFloorMap.repaint();
                     
                     int j0 = destinationSelection.getSelectedIndex();
@@ -587,11 +603,82 @@ public class RouteScreen3 {
 					y2 = tolocations.get(j0).getY();
                     destination1 = new EndPin(x2, y2);
                     toFloorMap.add(destination1);
+                    toFloorMap.setComponentZOrder(destination1, 0);
                     toFloorMap.repaint();
                     
                 }      
             }
         });
 
+		JButton reverse = new JButton(new ImageIcon("maps//reverse.png"));
+		reverse.setBounds(160, 175, 25, 25);
+		difFloorControl.add(reverse);
+		
+		reverse.setForeground(Color.decode("#F1F1F1"));
+		reverse.setBackground(Color.decode("#AB2A36"));
+		reverse.setOpaque(true);
+		reverse.setBorderPainted(false);
+		
+		reverse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				newtofloor = fromfloorSelection.getSelectedItem().toString();
+				newdestination = sourceSelection.getSelectedItem().toString();
+				newfromfloor = tofloorSelection.getSelectedItem().toString();
+				newsource = destinationSelection.getSelectedItem().toString();
+				
+				fromfloorSelection.setSelectedItem(newfromfloor);
+				tofloorSelection.setSelectedItem(newtofloor);
+				sourceSelection.setSelectedItem(newsource);
+				destinationSelection.setSelectedItem(newdestination);
+				
+				if(frombutton.getBackground() == Color.gray){
+					sourceSelection.setEnabled(false);
+					fromfloorSelection.setEnabled(false);
+					buildingSelection.setEnabled(true);
+					destinationSelection.setEnabled(true);
+					tofloorSelection.setEnabled(true);
+					
+					tobutton.setBackground(Color.gray);
+					frombutton.setForeground(Color.decode("#F1F1F1"));
+					frombutton.setBackground(Color.decode("#AB2A36"));
+					frombutton.setOpaque(true);
+					frombutton.setBorderPainted(false);
+					
+					if(toFloorMap != null){
+						panel_4.removeAll();
+						panel_4.add(toFloorMap);
+						panel_4.repaint();
+						frame.add(panel_4);
+						toFloorMap.setLayout(null);
+					}
+				}
+				else if(tobutton.getBackground() == Color.gray){
+					destinationSelection.setEnabled(false);
+					tofloorSelection.setEnabled(false);	
+					sourceSelection.setEnabled(true);
+					fromfloorSelection.setEnabled(true);
+					buildingSelection.setEnabled(true);
+						
+					
+					frombutton.setBackground(Color.gray);
+					tobutton.setForeground(Color.decode("#F1F1F1"));
+					tobutton.setBackground(Color.decode("#AB2A36"));
+					tobutton.setOpaque(true);
+					tobutton.setBorderPainted(false);
+					
+					if(fromFloorMap != null){
+						panel_4.removeAll();
+						panel_4.add(fromFloorMap);
+						panel_4.repaint();
+						frame.add(panel_4);
+						fromFloorMap.setLayout(null);
+					}
+				}
+			}
+		});
+		
 	}
 }
