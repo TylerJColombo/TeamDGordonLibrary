@@ -608,7 +608,7 @@ public class DataManager {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
-			sql="select * from points p, map m where p.mapid = m.mapid and m.buildingName = ? and p.attribute<> ?";
+			sql="select * from points p, map m where p.mapid = m.mapid and m.buildingName = ? and p.attribute<> ? order by p.name";
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			
 			ps1.setString(1, "Campus");
