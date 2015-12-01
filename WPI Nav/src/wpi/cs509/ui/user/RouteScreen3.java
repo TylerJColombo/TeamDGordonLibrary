@@ -33,11 +33,12 @@ public class RouteScreen3 {
 	private ArrayList<Point> fromlocations,tolocations;
 	private StartPin source1;
 	private EndPin destination1;
-	private ImagePanel toFloorMap,fromFloorMap;
+	private ImagePanel toFloorMap,fromFloorMap, startlable, endlable;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
 	private String buildingselected, fromfloorselected, fromfilename, tofloorselected, tofilename, newfromfloor, newtofloor, newsource, newdestination;
 	private JButton frombutton, tobutton;
+	private JLabel starttext, endtext;
 	
 
 	/**
@@ -172,7 +173,7 @@ public class RouteScreen3 {
 		fromfloor.setBounds(25, 60, 300, 20);
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(350, 180, 640, 480);
+		panel_4.setBounds(350, 180, 640, 550);
 		panel_4.setLayout(null);
 		
 		//FromfloorList
@@ -201,6 +202,14 @@ public class RouteScreen3 {
 					fromFloorMap.repaint();
 					
 					panel_4.removeAll();
+					panel_4.add(startlable);
+					startlable.repaint();
+					panel_4.add(endlable);
+					endlable.repaint();
+					panel_4.add(starttext);
+					starttext.repaint();
+					panel_4.add(endtext);
+					endtext.repaint();
 					panel_4.add(fromFloorMap);
 					panel_4.repaint();
 					
@@ -243,6 +252,14 @@ public class RouteScreen3 {
 					toFloorMap = new ImagePanel(tofilename, 640, 480);
 					toFloorMap.setBounds(0,0, 640, 480);
 					panel_4.removeAll();
+					panel_4.add(startlable);
+					startlable.repaint();
+					panel_4.add(endlable);
+					endlable.repaint();
+					panel_4.add(starttext);
+					starttext.repaint();
+					panel_4.add(endtext);
+					endtext.repaint();
 					panel_4.add(toFloorMap);
 					panel_4.repaint();
 					frame.add(panel_4);
@@ -296,6 +313,14 @@ public class RouteScreen3 {
 						fromFloorMap.repaint();
 						
 						panel_4.removeAll();
+						panel_4.add(startlable);
+						startlable.repaint();
+						panel_4.add(endlable);
+						endlable.repaint();
+						panel_4.add(starttext);
+						starttext.repaint();
+						panel_4.add(endtext);
+						endtext.repaint();
 						panel_4.add(fromFloorMap);
 						panel_4.repaint();
 						frame.add(panel_4);
@@ -310,6 +335,14 @@ public class RouteScreen3 {
 						fromFloorMap.repaint();
 						
 						panel_4.removeAll();
+						panel_4.add(startlable);
+						startlable.repaint();
+						panel_4.add(endlable);
+						endlable.repaint();
+						panel_4.add(starttext);
+						starttext.repaint();
+						panel_4.add(endtext);
+						endtext.repaint();
 						panel_4.add(fromFloorMap);
 						panel_4.repaint();
 						frame.add(panel_4);
@@ -364,6 +397,14 @@ public class RouteScreen3 {
 						toFloorMap.repaint();
 						
 						panel_4.removeAll();
+						panel_4.add(startlable);
+						startlable.repaint();
+						panel_4.add(endlable);
+						endlable.repaint();
+						panel_4.add(starttext);
+						starttext.repaint();
+						panel_4.add(endtext);
+						endtext.repaint();
 						panel_4.add(toFloorMap);
 						panel_4.repaint();
 						frame.add(panel_4);
@@ -378,6 +419,14 @@ public class RouteScreen3 {
 						toFloorMap.repaint();
 						
 						panel_4.removeAll();
+						panel_4.add(startlable);
+						startlable.repaint();
+						panel_4.add(endlable);
+						endlable.repaint();
+						panel_4.add(starttext);
+						starttext.repaint();
+						panel_4.add(endtext);
+						endtext.repaint();
 						panel_4.add(toFloorMap);
 						panel_4.repaint();
 						frame.add(panel_4);
@@ -454,6 +503,14 @@ public class RouteScreen3 {
 				
 				if(fromFloorMap != null){
 					panel_4.removeAll();
+					panel_4.add(startlable);
+					startlable.repaint();
+					panel_4.add(endlable);
+					endlable.repaint();
+					panel_4.add(starttext);
+					starttext.repaint();
+					panel_4.add(endtext);
+					endtext.repaint();
 					panel_4.add(fromFloorMap);
 					panel_4.repaint();
 					frame.add(panel_4);
@@ -521,6 +578,14 @@ public class RouteScreen3 {
 				
 				if(toFloorMap != null){
 					panel_4.removeAll();
+					panel_4.add(startlable);
+					startlable.repaint();
+					panel_4.add(endlable);
+					endlable.repaint();
+					panel_4.add(starttext);
+					starttext.repaint();
+					panel_4.add(endtext);
+					endtext.repaint();
 					panel_4.add(toFloorMap);
 					panel_4.repaint();
 					frame.add(panel_4);
@@ -649,6 +714,14 @@ public class RouteScreen3 {
 					
 					if(toFloorMap != null){
 						panel_4.removeAll();
+						panel_4.add(startlable);
+						startlable.repaint();
+						panel_4.add(endlable);
+						endlable.repaint();
+						panel_4.add(starttext);
+						starttext.repaint();
+						panel_4.add(endtext);
+						endtext.repaint();
 						panel_4.add(toFloorMap);
 						panel_4.repaint();
 						frame.add(panel_4);
@@ -671,6 +744,14 @@ public class RouteScreen3 {
 					
 					if(fromFloorMap != null){
 						panel_4.removeAll();
+						panel_4.add(startlable);
+						startlable.repaint();
+						panel_4.add(endlable);
+						endlable.repaint();
+						panel_4.add(starttext);
+						starttext.repaint();
+						panel_4.add(endtext);
+						endtext.repaint();
 						panel_4.add(fromFloorMap);
 						panel_4.repaint();
 						frame.add(panel_4);
@@ -680,5 +761,14 @@ public class RouteScreen3 {
 			}
 		});
 		
+		startlable = new ImagePanel("maps//startpin.png", 20, 20);
+		starttext = new JLabel("Start");
+		starttext.setBounds(290, 480, 50, 20);
+		startlable.setBounds(250, 480, 40, 50);
+		
+		endlable = new ImagePanel("maps//endpin.png", 20, 20);
+		endtext = new JLabel("End");
+		endtext.setBounds(410, 480, 50, 20);
+		endlable.setBounds(370, 480, 40, 50);
 	}
 }
