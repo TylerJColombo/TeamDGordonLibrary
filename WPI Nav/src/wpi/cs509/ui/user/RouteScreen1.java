@@ -36,7 +36,8 @@ public class RouteScreen1 {
 	
    
 	private JFrame frame;
-	ImagePanel  imagePanelCmap;
+	private JLabel starttext, endtext;
+	ImagePanel  imagePanelCmap, startlable, endlable;
 	Zoomingpanel   zoomcmap;
 	String source;
 	String destination;
@@ -299,8 +300,19 @@ public class RouteScreen1 {
 			}
 		});
 		
-
-	
+		startlable = new ImagePanel("maps//startpin.png", 20, 20);
+		starttext = new JLabel("Start");
+		starttext.setBounds(280, 500, 50, 20);
+		startlable.setBounds(240, 500, 40, 50);
+		
+		endlable = new ImagePanel("maps//endpin.png", 20, 20);
+		endtext = new JLabel("End");
+		endtext.setBounds(280, 560, 50, 20);
+		endlable.setBounds(240, 560, 40, 50);
+		frame.add(endtext);
+		frame.add(endlable);
+		frame.add(startlable);
+		frame.add(starttext);
 	
 	}
 
