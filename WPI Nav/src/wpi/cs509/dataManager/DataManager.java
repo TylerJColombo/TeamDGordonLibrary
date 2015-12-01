@@ -340,7 +340,7 @@ public class DataManager {
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			System.out.println("successfully load the driver");
+			//System.out.println("successfully load the driver");
 			
 			
 			conn = DriverManager.getConnection(url);
@@ -399,7 +399,7 @@ public class DataManager {
 				else p.setMapEntrance(false);
 				String attribute = resultPoints.getString(6);
 				p.setName(resultPoints.getString(7));
-				System.out.println("the id is .."+resultPoints.getString(1));
+				//System.out.println("the id is .."+resultPoints.getString(1));
 				pointsArray.add(p);
 				
 				ps2.setInt(1, resultPoints.getInt(1));
@@ -412,7 +412,7 @@ public class DataManager {
 					edge.setsPointId(resultEdges.getInt(2));
 					edge.setePointId(resultEdges.getInt(3));
 					edge.setWeight(resultEdges.getFloat(4));
-					System.out.println(edge);
+					//System.out.println(edge);
 			/*		if(!(isEdgeIncludeEntrance(edge.getePointId())&&isEdgeIncludeEntrance(edge.getsPointId())))
 					{
 						edgesArray.add(edge);
@@ -460,7 +460,7 @@ public class DataManager {
 		int result = 0;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			System.out.println("successfully load the driver");
+			//System.out.println("successfully load the driver");
 			
 			conn = DriverManager.getConnection(url);
 			
@@ -503,7 +503,7 @@ public class DataManager {
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			System.out.println("successfully load the driver");
+//			System.out.println("successfully load the driver");
 			
 			conn = DriverManager.getConnection(url);
 			
@@ -634,7 +634,7 @@ public class DataManager {
 				
 				
 				p.setName(rs.getString(7));
-				System.out.println("the id is .."+rs.getString(1));
+				//System.out.println("the id is .."+rs.getString(1));
 				buildingsName.add(p);
 
 				
@@ -710,7 +710,7 @@ public class DataManager {
 				}
 				
 				p.setName(rs.getString(7));
-				System.out.println("the id is .."+rs.getString(1));
+				//System.out.println("the id is .."+rs.getString(1));
 				locations.add(p);
 				
 				
@@ -808,7 +808,7 @@ public class DataManager {
 			e.printStackTrace();
 		}
 		
-		System.out.println(mapList.size());
+		//System.out.println(mapList.size());
 		
 		return mapList;
 	}
@@ -845,7 +845,7 @@ public class DataManager {
 				else p.setMapEntrance(false);
 				String attribute = resultPoints.getString(6);
 				p.setName(resultPoints.getString(7));
-				System.out.println("the id is .."+resultPoints.getString(1));
+				//System.out.println("the id is .."+resultPoints.getString(1));
 				pointsArray.add(p);
 			}
 			resultPoints.close();
@@ -861,7 +861,7 @@ public class DataManager {
 			e.printStackTrace();
 		}
 		
-		System.out.println(pointsArray.size());
+		//System.out.println(pointsArray.size());
 		
 		return pointsArray;
 	}
@@ -887,7 +887,7 @@ public class DataManager {
 				edge.setsPointId(resultEdges.getInt(2));
 				edge.setePointId(resultEdges.getInt(3));
 				edge.setWeight(resultEdges.getFloat(4));
-				System.out.println(edge);
+				//System.out.println(edge);
 				edgesArray.add(edge);
 			}
 			 resultEdges.close();
@@ -903,7 +903,7 @@ public class DataManager {
 			e.printStackTrace();
 		}
 		
-		System.out.println(edgesArray.size());
+		//System.out.println(edgesArray.size());
 		
 		return edgesArray;
 		
@@ -950,7 +950,7 @@ public class DataManager {
 						p.setDestination(false);
 					}
 					p.setName(rs.getString(7));
-					System.out.println("the id is .."+rs.getString(1));
+					//System.out.println("the id is .."+rs.getString(1));
 					pointsArray.add(p);
 				}
 				rs.close();
@@ -1070,7 +1070,7 @@ public class DataManager {
 					}
 					
 					p.setName(rs.getString(7));
-					System.out.println("the id is .."+rs.getString(1));
+					//System.out.println("the id is .."+rs.getString(1));
 					building = p;
 				}
 				rs.close();
@@ -1280,7 +1280,7 @@ public class DataManager {
 				edge.setsPointId(resultEdges.getInt(2));
 				edge.setePointId(resultEdges.getInt(3));
 				edge.setWeight(resultEdges.getFloat(4));
-				System.out.println(edge);
+				//System.out.println(edge);
 				edgeList.add(edge);
 			}
 			 resultEdges.close();
