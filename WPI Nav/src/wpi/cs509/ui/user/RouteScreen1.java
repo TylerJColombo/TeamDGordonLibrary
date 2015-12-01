@@ -277,7 +277,7 @@ public class RouteScreen1 {
 		
 		//Button for reverse
 		JButton reverse = new JButton(new ImageIcon("maps//reverse.png"));
-		reverse.setBounds(293, 237, 25, 25);
+		reverse.setBounds(150, 237, 25, 25);
 		
 		frame.add(reverse);
 		

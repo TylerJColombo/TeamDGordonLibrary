@@ -33,11 +33,12 @@ public class RouteScreen2 {
 	private ArrayList<Point> sourceList, destinationList,locations;
 	private StartPin source1;
 	private EndPin destination1;
-	private ImagePanel sameFloorMap;
+	private ImagePanel sameFloorMap, startlable, endlable;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
 	private String buildingselected,floorselected,newsource,newdestination;
 	private int ss,ds;
+	private JLabel starttext, endtext;
 	
 
 	/**
@@ -158,8 +159,13 @@ public class RouteScreen2 {
 		sameFloorControl.add(floor);
 		floor.setBounds(25, 60, 300, 20);
 		
+<<<<<<< HEAD
 		final JPanel panel_4 = new JPanel();
 		panel_4.setBounds(350, 180, 640, 480);
+=======
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(350, 180, 640, 550);
+>>>>>>> master
 		panel_4.setLayout(null);
 		// add by Jiawei Sun
 		//floorList
@@ -187,6 +193,14 @@ public class RouteScreen2 {
 					sameFloorMap.setBackground(Color.decode("#F1F1F1"));
 				
 					panel_4.removeAll();
+					panel_4.add(startlable);
+					startlable.repaint();
+					panel_4.add(endlable);
+					endlable.repaint();
+					panel_4.add(starttext);
+					starttext.repaint();
+					panel_4.add(endtext);
+					endtext.repaint();
 					panel_4.add(sameFloorMap);
 					panel_4.repaint();
 					
@@ -367,5 +381,15 @@ public class RouteScreen2 {
 				destinationSelection.setSelectedItem(newdestination);				
 			}
 		});
+		
+		startlable = new ImagePanel("maps//startpin.png", 20, 20);
+		starttext = new JLabel("Start");
+		starttext.setBounds(290, 480, 50, 20);
+		startlable.setBounds(250, 480, 40, 50);
+		
+		endlable = new ImagePanel("maps//endpin.png", 20, 20);
+		endtext = new JLabel("End");
+		endtext.setBounds(410, 480, 50, 20);
+		endlable.setBounds(370, 480, 40, 50);
 	}
 }
