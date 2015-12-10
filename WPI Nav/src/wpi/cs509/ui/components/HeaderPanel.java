@@ -24,7 +24,7 @@ public class HeaderPanel extends JComponent{
 	 */
 	private static final long serialVersionUID = -4951272990505867350L;
 
-	public HeaderPanel(String title, Boolean isHome, JFrame frame) {
+	public HeaderPanel(String title, Boolean isHome, final JFrame frame) {
 		super();
 		
 		// Customize header

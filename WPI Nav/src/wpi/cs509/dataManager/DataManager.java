@@ -20,7 +20,7 @@ import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Map;
 import wpi.cs509.dataModel.Point;
 public class DataManager {
-	private static String  url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=root&useUnicode=true&characterEncoding=UTF8";
+	private static String  url = "jdbc:mysql://localhost:3306/wpinavi?"+"user=root&password=njh935790&useUnicode=true&characterEncoding=UTF8";
 	public static float sqroot(float m)
 	{
 	     float i=0;

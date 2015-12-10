@@ -36,7 +36,8 @@ public class RouteScreen1 {
 	
    
 	private JFrame frame;
-	ImagePanel  imagePanelCmap;
+	private JLabel starttext, endtext;
+	ImagePanel  imagePanelCmap, startlable, endlable;
 	Zoomingpanel   zoomcmap;
 	String source;
 	String destination;
@@ -78,7 +79,7 @@ public class RouteScreen1 {
 	 */
 	private void initialize() {
 		
-		ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
+		final ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
 		ArrayList <String> bns = new ArrayList<String>();
 		String test = buildingoncampus.get(0).getName();
 		for(Point bn:buildingoncampus){
@@ -86,8 +87,8 @@ public class RouteScreen1 {
 		}
 		
 		
-		JComboBox comboBox_1 = new JComboBox(bns.toArray());
-		JComboBox comboBox = new JComboBox(bns.toArray());
+		final JComboBox comboBox_1 = new JComboBox(bns.toArray());
+		final JComboBox comboBox = new JComboBox(bns.toArray());
 		
 		
 
@@ -277,7 +278,7 @@ public class RouteScreen1 {
 		
 		//Button for reverse
 		JButton reverse = new JButton(new ImageIcon("maps//reverse.png"));
-		reverse.setBounds(293, 237, 25, 25);
+		reverse.setBounds(150, 237, 25, 25);
 		
 		frame.add(reverse);
 		
@@ -299,8 +300,19 @@ public class RouteScreen1 {
 			}
 		});
 		
-
-	
+		startlable = new ImagePanel("maps//startpin.png", 20, 20);
+		starttext = new JLabel("Start");
+		starttext.setBounds(280, 500, 50, 20);
+		startlable.setBounds(240, 500, 40, 50);
+		
+		endlable = new ImagePanel("maps//endpin.png", 20, 20);
+		endtext = new JLabel("End");
+		endtext.setBounds(280, 560, 50, 20);
+		endlable.setBounds(240, 560, 40, 50);
+		frame.add(endtext);
+		frame.add(endlable);
+		frame.add(startlable);
+		frame.add(starttext);
 	
 	}
 
