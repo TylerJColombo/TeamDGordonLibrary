@@ -4,4 +4,5 @@ import wpi.cs509.dataModel.*;
 public class DirectorGraph {
 
 		public static Graph g = new Graph();
+		public static Map p = new Map();
 }

@@ -21,6 +21,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import wpi.cs509.dataManager.DataManager;
+import wpi.cs509.dataManager.DataManagerWithMem;
 import wpi.cs509.dataModel.Edge;
 import wpi.cs509.dataModel.Map;
 import wpi.cs509.dataModel.Point;
@@ -317,8 +318,9 @@ public class AdminScreen {
 					imagePanelMap = new ImagePanel(selectedMap.getFileLocation(), 640, 480);
 					imagePanelMap.setLayout(null);
 					imagePanelMap.setBounds(0, 0, 640, 480);
+//					DataManager.getEdgesByMapID(selectedMap.getId());
 					
-					for(Edge edge: DataManager.getEdgesByMapID(selectedMap.getId())){
+					for(Edge edge:DataManagerWithMem.getEdgesByMapID(selectedMap.getId()) ){
 						Point point1 = DataManager.getPointByID(edge.getsPointId());
 						Point point2 = DataManager.getPointByID(edge.getePointId());
 						

@@ -1330,8 +1330,14 @@ public class DataManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return password == tPassword ? "true":"false";
+		//System.out.println(tPassword);
+		//System.out.println(password+"2222222222");
+		if(password.compareTo(tPassword)==0)
+		{
+			return "true";
+		}
+	
+		else return "false";
 	}
 	public static void main(String[] args){
 		Graph graph1= new Graph();
@@ -1381,6 +1387,7 @@ public class DataManager {
 		//System.out.println(graph2.getPoints().size());
 		//System.out.println(sqroot(testSq));
 		System.out.println(getBuildingOnCampus().size());
+		System.out.println(AdminLogin("admin", "admin"));
 		//System.out.println(findClosestPoint(1,236, 74).getId());
 	}
 }
