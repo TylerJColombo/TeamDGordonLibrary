@@ -51,8 +51,10 @@ public class DataManagerWithMem {
 			{
 				Point p=DirectorGraph.g.getPoints().get(j);
 				if(p.getMapId()==mapID && p.isMapEntrance()!=true)
-				{
-					resultEdges.add(DirectorGraph.g.getEdges().get(i));
+				{	
+					if(DirectorGraph.g.getEdges().get(i).getePointId()==p.getId()||DirectorGraph.g.getEdges().get(i).getsPointId()==p.getId()){
+						resultEdges.add(DirectorGraph.g.getEdges().get(i));
+					}
 				}
 			}
 		}
