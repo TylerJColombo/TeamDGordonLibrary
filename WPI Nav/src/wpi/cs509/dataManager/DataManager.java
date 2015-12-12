@@ -402,11 +402,7 @@ public class DataManager {
 				p.setName(resultPoints.getString(7));
 				//System.out.println("the id is .."+resultPoints.getString(1));
 				pointsArray.add(p);
-				
-				
-
-				
-				
+								
 			}
 			while(resultEdges.next())
 			{
@@ -1259,16 +1255,19 @@ public class DataManager {
 		ArrayList<Edge> edgeList = new ArrayList<Edge>();
 		Connection conn = null;
 		String sql="";
+		String sql2="";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url);
 			
 			sql="select * from edge e, points p1,points p2 where e.point1id = p1.id and p1.mapid = ? and e.point2id= p2.id and p2.mapid=?";
-			PreparedStatement ps1 = conn.prepareStatement(sql);
-			ps1.setInt(1, mapID);
-			ps1.setInt(2, mapID);
-			ResultSet resultEdges = ps1.executeQuery();
+			
+			sql2 ="select * from edge e,points p1 where (e.point1id=p1.id or e.point2id = p1.id) and p1.mapid=? and p1.isEntrance <> ?";
+			PreparedStatement ps2 = conn.prepareStatement(sql2);
+			ps2.setInt(1, mapID);
+			ps2.setInt(2, 1);
+			ResultSet resultEdges = ps2.executeQuery();
 			while(resultEdges.next())
 			{
 				Edge edge = new Edge();
@@ -1280,7 +1279,7 @@ public class DataManager {
 				edgeList.add(edge);
 			}
 			 resultEdges.close();
-			ps1.close();
+			ps2.close();
 			conn.close();
 			
 		} 
@@ -1292,6 +1291,47 @@ public class DataManager {
 			e.printStackTrace();
 		}
 		return edgeList;
+	}
+	public static String AdminLogin(String username, String password)
+	{
+		if(username=="" || password=="")
+		{
+			return "username and password cannot be null.";
+		}
+		Connection conn=null;
+		String sql="";
+		String tUsername="";
+		String tPassword="";
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+			
+			sql="select * from admin where username = ?";
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			ps1.setString(1, username);
+			ResultSet resultLogin = ps1.executeQuery();
+			while(resultLogin.next())
+			{
+				 tUsername = resultLogin.getString(1);
+				 tPassword = resultLogin.getString(2);
+						
+			}
+		
+			resultLogin.close();
+			ps1.close();
+			conn.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return password == tPassword ? "true":"false";
 	}
 	public static void main(String[] args){
 		Graph graph1= new Graph();
