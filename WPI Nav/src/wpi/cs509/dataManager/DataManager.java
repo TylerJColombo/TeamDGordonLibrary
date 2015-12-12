@@ -377,12 +377,13 @@ public class DataManager {
 			}
 			*/
 			//ps1.setInt(2, floorNum);
-			sqlEdge = "select * from edge where point1id = ?";
+//			sqlEdge = "select * from edge where point1id = ?";
+			sqlEdge = "select * from edge ";
 			PreparedStatement ps2 = conn.prepareStatement(sqlEdge);
 			
 			
 			ResultSet resultPoints = ps1.executeQuery();
-			ResultSet resultEdges;
+			ResultSet resultEdges  = ps2.executeQuery();
 			while(resultPoints.next())
 			{
 				Point p = new Point();
@@ -404,27 +405,23 @@ public class DataManager {
 				
 				ps2.setInt(1, resultPoints.getInt(1));
 				
-				resultEdges = ps2.executeQuery();
-				while(resultEdges.next())
-				{
-					Edge edge = new Edge();
-					edge.setId(resultEdges.getInt(1));
-					edge.setsPointId(resultEdges.getInt(2));
-					edge.setePointId(resultEdges.getInt(3));
-					edge.setWeight(resultEdges.getFloat(4));
-					//System.out.println(edge);
-			/*		if(!(isEdgeIncludeEntrance(edge.getePointId())&&isEdgeIncludeEntrance(edge.getsPointId())))
-					{
-						edgesArray.add(edge);
-					}*/
-					edgesArray.add(edge);
-				}
-				 resultEdges.close();
+
+				
 				
 			}
+			while(resultEdges.next())
+			{
+				Edge edge = new Edge();
+				edge.setId(resultEdges.getInt(1));
+				edge.setsPointId(resultEdges.getInt(2));
+				edge.setePointId(resultEdges.getInt(3));
+				edge.setWeight(resultEdges.getFloat(4));
+				//System.out.println(edge);
+
+				edgesArray.add(edge);
+			}
 			
-			
-			
+			resultEdges.close();
 		    resultPoints.close(); 
 		   
 		    ps1.close();

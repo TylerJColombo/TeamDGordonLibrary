@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import wpi.cs509.dataManager.DataManager;
+import wpi.cs509.dataManager.DirectorGraph;
 import wpi.cs509.ui.components.HeaderPanel;
 
 public class MainScreen {
@@ -43,6 +45,7 @@ public class MainScreen {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		DirectorGraph.g = DataManager.getGraphByNameWithDB("123", "234");
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#F1F1F1"));
 		frame.setBounds(0, 0, 1024, 730);

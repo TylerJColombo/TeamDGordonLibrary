@@ -21,6 +21,7 @@ import javax.swing.text.StyledEditorKit.ForegroundAction;
 import com.sun.org.apache.xpath.internal.axes.ReverseAxesWalker;
 
 import wpi.cs509.dataManager.DataManager;
+import wpi.cs509.dataManager.DirectorGraph;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
 import wpi.cs509.ui.components.EndPin;
@@ -252,7 +253,7 @@ public class RouteScreen1 {
 			
 				
                // use string of source and destination to get the their pointsid than send it to the RoutFinder
-     		    ArrayList <Point> PointsofPath =RouteFinder.computePaths(Osource,DataManager.getGraphOfCampus(),Odestination);
+     		    ArrayList <Point> PointsofPath =RouteFinder.computePaths(Osource,DirectorGraph.g,Odestination);
      		    
 //	            Pflag=Util.drawPath(imagePanelCmap,PointsofPath);
 	            frame.remove(imagePanelCmap);	
