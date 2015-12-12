@@ -403,7 +403,6 @@ public class DataManager {
 				//System.out.println("the id is .."+resultPoints.getString(1));
 				pointsArray.add(p);
 				
-				ps2.setInt(1, resultPoints.getInt(1));
 				
 
 				
