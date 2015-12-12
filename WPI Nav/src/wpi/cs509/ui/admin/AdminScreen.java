@@ -62,7 +62,7 @@ public class AdminScreen {
 		////////////
 		// Header //
 		////////////
-		HeaderPanel headerPanel = new HeaderPanel("Adminstration", false, frame);
+		HeaderPanel headerPanel = new HeaderPanel("Administration", false, frame);
 		headerPanel.setBounds(0, 0, 1024, 730);
 		frame.getContentPane().add(headerPanel);
 		
@@ -248,7 +248,7 @@ public class AdminScreen {
 		panel.add(txtLocation1Name);
 		txtLocation1Name.setColumns(10);
 		
-		final JCheckBox chckbxIsEnterance1 = new JCheckBox("is enterance");
+		final JCheckBox chckbxIsEnterance1 = new JCheckBox("is entrance");
 		chckbxIsEnterance1.setBounds(20, 150, 120, 20);
 		panel.add(chckbxIsEnterance1);
 		
@@ -286,7 +286,7 @@ public class AdminScreen {
 		panel.add(txtLocation2Name);
 		txtLocation2Name.setColumns(10);
 		
-		final JCheckBox chckbxIsEnterance2 = new JCheckBox("is enterance");
+		final JCheckBox chckbxIsEnterance2 = new JCheckBox("is entrance");
 		chckbxIsEnterance2.setBounds(20, 280, 120, 20);
 		panel.add(chckbxIsEnterance2);
 
@@ -295,7 +295,7 @@ public class AdminScreen {
 		panel.add(chckbxIsLocation2);
 		
 		
-		JButton btnSavePoint = new JButton("Add Edge and its Points");
+		JButton btnSavePoint = new JButton("Add Edge and Points");
 		btnSavePoint.setBounds(20, 320, 280, 25);
 		btnSavePoint.setForeground(Color.decode("#F1F1F1"));
 		btnSavePoint.setBackground(Color.decode("#AB2A36"));
@@ -369,7 +369,7 @@ public class AdminScreen {
 			    					lblX2Value.setText(point2.getX() + "");
 					                lblY2Value.setText(point2.getY() + "");
 					                txtLocation2Name.setText(point2.getName());
-					                // TODO - fill is enterance/ is location
+					                // TODO - fill is entrance/ is location
 			    				}
 			                	
 			    				pointUI2 = new SolidPoint(Color.RED, Integer.parseInt(lblX2Value.getText()), Integer.parseInt(lblY2Value.getText()));
@@ -472,7 +472,7 @@ public class AdminScreen {
 		}
 		panel_3.add(comboMaps1stCon);
 		
-		JLabel lblNewLabel_10 = new JLabel("First Enterance:");
+		JLabel lblNewLabel_10 = new JLabel("First Entrance:");
 		lblNewLabel_10.setBounds(20, 90, 280, 20);
 		panel_3.add(lblNewLabel_10);
 				
@@ -497,7 +497,7 @@ public class AdminScreen {
 		}
 		panel_3.add(comboMaps2ndCon);
 		
-		final JLabel lblNewLabel_17 = new JLabel("Second Enterance:");
+		final JLabel lblNewLabel_17 = new JLabel("Second Entrance:");
 		lblNewLabel_17.setBounds(20, 230, 280, 20);
 		panel_3.add(lblNewLabel_17);
 		
