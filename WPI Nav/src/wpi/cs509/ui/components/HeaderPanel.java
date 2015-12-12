@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import wpi.cs509.ui.admin.AdminScreen;
+import wpi.cs509.ui.admin.LoginScreen;
 import wpi.cs509.ui.user.MainScreen;
 
 public class HeaderPanel extends JComponent{
@@ -67,8 +67,8 @@ public class HeaderPanel extends JComponent{
 			btnAdmin.setBorderPainted(false);
 			btnAdmin.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new AdminScreen();
-					frame.dispose();
+					new LoginScreen();
+					//frame.dispose();
 				}
 			});
 			panel_1.add(btnAdmin);
