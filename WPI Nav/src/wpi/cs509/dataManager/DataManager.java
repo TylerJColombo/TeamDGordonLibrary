@@ -210,7 +210,7 @@ public class DataManager {
 		
 
 	}
-	public static Graph getGraph(Graph g,String fileName){
+	/*public static Graph getGraph(Graph g,String fileName){
 
 		
 		FileReader fr = null;
@@ -281,10 +281,10 @@ public class DataManager {
 //				System.out.println("RoomName:"+resultsPoint[7]);
 			}
 			else System.out.println("data error");
-				/*for(int i=0;i<resultsPoint.length;i++)
+				for(int i=0;i<resultsPoint.length;i++)
 				{
 					System.out.println(resultsPoint[i]+"\n");
-				}*/
+				}
 			}
 			
 			while((valueString=br.readLine())!=null)
@@ -322,7 +322,7 @@ public class DataManager {
 		return g;
 		
 		
-	}
+	}*/
 	
 	public static Graph getGraphByNameWithDB(String buildingName , String floorName)
 	{
@@ -1300,11 +1300,14 @@ public class DataManager {
 	public static void main(String[] args){
 		Graph graph1= new Graph();
 		Graph graph2= new Graph();
-
+		DirectorGraph.g = getGraphByNameWithDB("GordonLibrary", "Basement");
+		System.out.println(isEdgeIncludeEntrance(7));
+		System.out.println(DataManagerWithMem.isEdgeIncludeEntrance(7));
+		System.out.println(DirectorGraph.g.getEdges().size());
 //		getGraph(graph,"src/HF1.txt");
 		
 		//graph1 =getGraphByNameWithDB("FullerLab","First Floor");
-		graph1 = getGraphByNameWithDB("GordonLibrary","Basement");
+	
 		//System.out.println(graph1.getEdges().size());
 		//graph2 =getGraphByNameWithDB("FullerLab","Second Floor");
 		//System.out.println(graph1.getPoints().size());
