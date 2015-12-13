@@ -46,6 +46,7 @@ public class MainScreen {
 	 */
 	private void initialize() {
 		DirectorGraph.g = DataManager.getGraphByNameWithDB("123", "234");
+		DirectorGraph.mapList = DataManager.getAllMaps();
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#F1F1F1"));
 		frame.setBounds(0, 0, 1024, 730);

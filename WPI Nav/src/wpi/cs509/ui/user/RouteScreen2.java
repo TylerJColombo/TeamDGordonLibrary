@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import wpi.cs509.dataManager.DataManager;
+import wpi.cs509.dataManager.DirectorGraph;
 import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
@@ -30,15 +31,17 @@ public class RouteScreen2 {
 	private JFrame frame;
 	private JComboBox<String> buildingSelection,floorSelection,sourceSelection,destinationSelection;
 	private ArrayList<String> buildingList, floorList, floorSelected;
-	private ArrayList<Point> sourceList, destinationList,locations;
+	private ArrayList<Point> sourceList, destinationList,locations,p;
 	private StartPin source1;
 	private EndPin destination1;
 	private ImagePanel sameFloorMap, startlable, endlable;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
 	private String buildingselected,floorselected,newsource,newdestination;
-	private int ss,ds;
+	private int ss,ds,intsource,intdestination;
 	private JLabel starttext, endtext;
+	private Point source0;
+	private Point destination0;
 	
 
 	/**
@@ -254,9 +257,9 @@ public class RouteScreen2 {
 					buildingselected = buildingSelection.getSelectedItem().toString();
 					floorselected = floorSelection.getSelectedItem().toString();
 					locations = DataManager.getLocationsByMapID(buildingselected, floorselected);	
-						ss = sourceSelection.getSelectedIndex()-1;
-						x1 = locations.get(ss).getX();
-						y1 = locations.get(ss).getY();
+						intsource = sourceSelection.getSelectedIndex()-1;
+						x1 = locations.get(intsource).getX();
+						y1 = locations.get(intsource).getY();
 						source1 =new StartPin(x1, y1);
 						sameFloorMap.removeAll();
 						if(destination1==null){
@@ -297,9 +300,9 @@ public class RouteScreen2 {
 					buildingselected = buildingSelection.getSelectedItem().toString();
 					floorselected = floorSelection.getSelectedItem().toString();
 					locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
-						ds = destinationSelection.getSelectedIndex()-1;
-						x2 = locations.get(ds).getX();
-						y2 = locations.get(ds).getY();
+						intdestination = destinationSelection.getSelectedIndex()-1;
+						x2 = locations.get(intdestination).getX();
+						y2 = locations.get(intdestination).getY();
 						destination1 =new EndPin(x2, y2);
 						sameFloorMap.removeAll();
 						if(source1==null){
@@ -347,12 +350,16 @@ public class RouteScreen2 {
 				buildingselected = buildingSelection.getSelectedItem().toString();
 				floorselected = floorSelection.getSelectedItem().toString();
 				locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
+//				Graph rf = DirectorGraph.g;
 				Graph rf = DataManager.getGraphByNameWithDB(buildingselected, floorselected);
-				int i = sourceSelection.getSelectedIndex()-1;
-				int j = destinationSelection.getSelectedIndex()-1;
-				Point source0 = locations.get(i);
-				Point destination0 = locations.get(j);
-				ArrayList<Point> p = RouteFinder.computePaths(source0, rf, destination0);
+				intsource= sourceSelection.getSelectedIndex()-1;
+				intdestination = destinationSelection.getSelectedIndex()-1;
+				source0 = locations.get(intsource);
+				System.out.println(source0+"bbbbbbbbbbbb");
+				destination0 = locations.get(intdestination);
+				System.out.println(destination0+"dddddddddddddd");
+				p = RouteFinder.computePaths(source0, rf, destination0);
+				System.out.println(p.size());
 				wpi.cs509.ui.util.Util.drawPath(sameFloorMap, p);
 				sameFloorMap.setComponentZOrder(destination1, 0);
 				System.out.println(source0+" "+destination0);
@@ -377,7 +384,15 @@ public class RouteScreen2 {
 				newdestination = sourceSelection.getSelectedItem().toString();
 				newsource = destinationSelection.getSelectedItem().toString();
 				sourceSelection.setSelectedItem(newsource);
-				destinationSelection.setSelectedItem(newdestination);				
+				destinationSelection.setSelectedItem(newdestination);
+				System.out.println(intsource+"9999");
+				if(p != null){
+//					Graph rf2 = DirectorGraph.g;
+					Graph rf2 = DataManager.getGraphByNameWithDB(buildingselected, floorselected);
+					p = RouteFinder.computePaths(source0, rf2, destination0);
+					System.out.println(p.size());
+					wpi.cs509.ui.util.Util.drawPath(sameFloorMap, p);
+				}
 			}
 		});
 		

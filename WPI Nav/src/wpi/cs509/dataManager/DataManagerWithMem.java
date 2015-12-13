@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 
 import wpi.cs509.dataModel.Edge;
+import wpi.cs509.dataModel.Map;
 import wpi.cs509.dataModel.Point;
 
 public class DataManagerWithMem {
@@ -40,7 +41,7 @@ public class DataManagerWithMem {
 		return false;
 		
 	}
-	public static ArrayList<Edge> getEdgesByMapID(int mapID)
+/*	public static ArrayList<Edge> getEdgesByMapID(int mapID)
 	{
 		ArrayList<Edge> resultEdges = new ArrayList<Edge>();
 		for(int i=0;i<DirectorGraph.g.getEdges().size();i++)
@@ -58,7 +59,26 @@ public class DataManagerWithMem {
 			}
 		}
 		return resultEdges;
-	}
+	}*/
+	public static ArrayList<Edge> getEdgesByMapID(int mapID)
+    {
+        ArrayList<Edge> resultEdges = new ArrayList<Edge>();
+        for(int i=0;i<DirectorGraph.g.getEdges().size();i++)
+        {
+            
+            for(int j=0;j<DirectorGraph.g.getPoints().size();j++)
+            {
+                Point p=DirectorGraph.g.getPoints().get(j);
+                if(p.getMapId()==mapID && p.isMapEntrance()!=true)
+                {    
+                    if(DirectorGraph.g.getEdges().get(i).getePointId()==p.getId()||DirectorGraph.g.getEdges().get(i).getsPointId()==p.getId()){
+                        resultEdges.add(DirectorGraph.g.getEdges().get(i));
+                    }
+                }
+            }
+        }
+        return resultEdges;
+    }
 	public static Point getPointByID(int pointID)
 	{
 		Point p = null;
@@ -77,6 +97,16 @@ public class DataManagerWithMem {
 		}
 		
 		return p;
+	}
+	public static ArrayList<Map> getAllMaps()
+	{
+		ArrayList<Map> resultMap = new ArrayList<Map>();
+		
+		for(int i=0;i<DirectorGraph.mapList.size();i++)
+		{
+			resultMap.add(DirectorGraph.mapList.get(i));
+		}
+		return resultMap;
 	}
 	
 }

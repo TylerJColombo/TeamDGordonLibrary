@@ -16,6 +16,7 @@ public class Point implements Comparable<Point> {
 	public Point previous;// Modified by Tyler
 	private boolean isMapEntrance;
 	private String name;
+	private String attribute;
 	public int getId() {
 		return id;
 	}
@@ -85,4 +86,11 @@ public class Point implements Comparable<Point> {
 	public String toString() {
 		return getName();
 	}
+	public String getAttribute() {
+		return attribute;
+	}
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
+	}
+	
 }

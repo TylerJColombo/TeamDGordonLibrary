@@ -399,7 +399,8 @@ public class DataManager {
 					p.setMapEntrance(true);
 				}
 				else p.setMapEntrance(false);
-				String attribute = resultPoints.getString(6);
+				p.setAttribute(resultPoints.getString(6));
+//				String attribute = resultPoints.getString(6);
 				p.setName(resultPoints.getString(7));
 				//System.out.println("the id is .."+resultPoints.getString(1));
 				pointsArray.add(p);
@@ -836,7 +837,8 @@ public class DataManager {
 					p.setMapEntrance(true);
 				}
 				else p.setMapEntrance(false);
-				String attribute = resultPoints.getString(6);
+				p.setAttribute(resultPoints.getString(6));
+//				String attribute = resultPoints.getString(6);
 				p.setName(resultPoints.getString(7));
 				//System.out.println("the id is .."+resultPoints.getString(1));
 				pointsArray.add(p);
@@ -936,7 +938,8 @@ public class DataManager {
 						p.setMapEntrance(true);
 					}
 					else p.setMapEntrance(false);
-					String attribute = rs.getString(6);
+					p.setAttribute(rs.getString(6));
+//					String attribute = rs.getString(6);
 					
 					if(attribute == "PassageWay")
 					{
@@ -1057,6 +1060,7 @@ public class DataManager {
 					}
 					else p.setMapEntrance(false);
 					String attribute = rs.getString(6);
+					p.setAttribute(attribute);
 					if(attribute!="PassageWay")
 					{
 						p.setDestination(true);
@@ -1106,6 +1110,7 @@ public class DataManager {
 				p.setMapId(rs.getInt(4));
 				p.setMapEntrance(rs.getInt(5)==1?true:false);
 				String attribute = rs.getString(6);
+				p.setAttribute(attribute);
 				p.setName(rs.getString(7));
 				
 				entrancesList.add(p);
@@ -1156,6 +1161,7 @@ public class DataManager {
 				p.setMapId(rs.getInt(4));
 				p.setMapEntrance(rs.getInt(5)==1?true:false);
 				String attribute = rs.getString(6);
+				p.setAttribute(attribute);
 				p.setName(rs.getString(7));
 				
 				resPoint.add(p);
@@ -1234,6 +1240,7 @@ public class DataManager {
 				p.setMapId(rs.getInt(4));
 				p.setMapEntrance(rs.getInt(5)==1?true:false);
 				String attribute = rs.getString(6);
+				p.setAttribute(attribute);
 				p.setName(rs.getString(7));
 			}
 				rs.close();
@@ -1264,11 +1271,11 @@ public class DataManager {
 			
 			sql="select * from edge e, points p1,points p2 where e.point1id = p1.id and p1.mapid = ? and e.point2id= p2.id and p2.mapid=?";
 			
-			sql2 ="select * from edge e,points p1 where (e.point1id=p1.id or e.point2id = p1.id) and p1.mapid=? and p1.isEntrance <> ?";
-			PreparedStatement ps2 = conn.prepareStatement(sql2);
-			ps2.setInt(1, mapID);
-			ps2.setInt(2, 1);
-			ResultSet resultEdges = ps2.executeQuery();
+		//	sql2 ="select * from edge e,points p1 where (e.point1id=p1.id or e.point2id = p1.id) and p1.mapid=? and p1.isEntrance <> ?";
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			ps1.setInt(1, mapID);
+			ps1.setInt(2, mapID);
+			ResultSet resultEdges = ps1.executeQuery();
 			while(resultEdges.next())
 			{
 				Edge edge = new Edge();
@@ -1280,7 +1287,7 @@ public class DataManager {
 				edgeList.add(edge);
 			}
 			 resultEdges.close();
-			ps2.close();
+			ps1.close();
 			conn.close();
 			
 		} 
