@@ -7,7 +7,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -39,6 +38,8 @@ public class AdminScreen {
 	private SolidPoint pointUI2;
 	private Line edgeLine;
 	private Map selectedMap;
+	private SolidPoint FirstPoint;
+	private SolidPoint SecondPoint;
 	
 	/**
 	 * Create the window.
@@ -248,7 +249,7 @@ public class AdminScreen {
 		panel.add(txtLocation1Name);
 		txtLocation1Name.setColumns(10);
 		
-		final JCheckBox chckbxIsEnterance1 = new JCheckBox("is enterance");
+		final JCheckBox chckbxIsEnterance1 = new JCheckBox("is entrance");
 		chckbxIsEnterance1.setBounds(20, 150, 120, 20);
 		panel.add(chckbxIsEnterance1);
 		
@@ -286,7 +287,7 @@ public class AdminScreen {
 		panel.add(txtLocation2Name);
 		txtLocation2Name.setColumns(10);
 		
-		final JCheckBox chckbxIsEnterance2 = new JCheckBox("is enterance");
+		final JCheckBox chckbxIsEnterance2 = new JCheckBox("is entrance");
 		chckbxIsEnterance2.setBounds(20, 280, 120, 20);
 		panel.add(chckbxIsEnterance2);
 
@@ -318,13 +319,14 @@ public class AdminScreen {
 					imagePanelMap = new ImagePanel(selectedMap.getFileLocation(), 640, 480);
 					imagePanelMap.setLayout(null);
 					imagePanelMap.setBounds(0, 0, 640, 480);
-//					DataManager.getEdgesByMapID(selectedMap.getId());
+
 					
 					for(Edge edge:DataManagerWithMem.getEdgesByMapID(selectedMap.getId()) ){
 //						Point point1 = DataManager.getPointByID(edge.getsPointId());
 						Point point1 = DataManagerWithMem.getPointByID(edge.getePointId());
 //						Point point2 = DataManager.getPointByID(edge.getePointId());
 						Point point2 = DataManagerWithMem.getPointByID(edge.getePointId());
+
 						
 						imagePanelMap.add(new SolidPoint(Color.GREEN, point1.getX(), point1.getY()));
 		            	imagePanelMap.add(new SolidPoint(Color.GREEN, point2.getX(), point2.getY()));
@@ -460,6 +462,28 @@ public class AdminScreen {
 		panel_3.setLayout(null);
 		addEdgeTab.add(panel_3);
 		
+		//Add Edge rightimage
+		JPanel panel_6=new JPanel();
+		panel_6.setBounds(310, 10, 640, 480);
+		panel_6.setLayout(null);
+		addEdgeTab.add(panel_6);
+		
+		//panels for two small image on the right
+		
+		 JPanel panel_7=new JPanel();
+	     panel_7.setBounds(0 ,0, 320, 240);
+	     panel_7.setLayout(null);
+	     panel_6.add(panel_7);
+	     
+	     JPanel panel_8=new JPanel();
+	     panel_8.setBounds(320, 200, 320, 240);
+	     panel_8.setLayout(null);
+	     panel_6.add(panel_8);
+		
+	     
+		
+        		
+		
 		JLabel lblNewLabel_9 = new JLabel("First Map:");
 		lblNewLabel_9.setBounds(20, 20, 280, 20);
 		panel_3.add(lblNewLabel_9);
@@ -473,8 +497,9 @@ public class AdminScreen {
 			comboMaps1stCon.addItem(map);
 		}
 		panel_3.add(comboMaps1stCon);
+		comboMaps1stCon.setSelectedIndex(-1);
 		
-		JLabel lblNewLabel_10 = new JLabel("First Enterance:");
+		JLabel lblNewLabel_10 = new JLabel("First Entrance:");
 		lblNewLabel_10.setBounds(20, 90, 280, 20);
 		panel_3.add(lblNewLabel_10);
 				
@@ -499,7 +524,7 @@ public class AdminScreen {
 		}
 		panel_3.add(comboMaps2ndCon);
 		
-		final JLabel lblNewLabel_17 = new JLabel("Second Enterance:");
+		final JLabel lblNewLabel_17 = new JLabel("Second Entrance:");
 		lblNewLabel_17.setBounds(20, 230, 280, 20);
 		panel_3.add(lblNewLabel_17);
 		
@@ -519,13 +544,22 @@ public class AdminScreen {
 		panel_3.add(btnSaveEdge);
 		
 		// Add connection edges Action Listeners
+	
 		comboMaps1stCon.addItemListener(new ItemListener() {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// Update point
+				
 				Map selectedMap = (Map)comboMaps1stCon.getSelectedItem();
 				if(selectedMap != null){
+					ImagePanel imagePanelMap1st = new ImagePanel(selectedMap.getFileLocation(), 320, 240);
+					imagePanelMap1st.setLayout(null);
+					imagePanelMap1st.setBounds(0, 0, 320, 240);
+					imagePanelMap1st.repaint();
+					panel_7.removeAll();
+					panel_7.add(imagePanelMap1st);
+					panel_7.repaint();
 					if(comboFirstPoint.getItemCount() > 0){
 						comboFirstPoint.removeAllItems();
 					}
@@ -533,8 +567,42 @@ public class AdminScreen {
 						comboFirstPoint.addItem(p);
 					}
 				}
+			
+				
+				
+				
+				
+				
 			}
 		});
+		
+		comboFirstPoint.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// Update point
+				
+				Point selectedFirstPoint = (Point)comboFirstPoint.getSelectedItem();
+				if(selectedFirstPoint != null){
+					if(FirstPoint!=null){
+						panel_7.remove(FirstPoint);
+					}
+					FirstPoint = new SolidPoint(Color.decode("#D55E00"), selectedFirstPoint.getX()/2, selectedFirstPoint.getY()/2); 			
+					panel_7.add(FirstPoint);
+					panel_7.setComponentZOrder(FirstPoint, 0);
+					panel_7.repaint();
+					
+				}
+			
+				
+				
+				
+				
+				
+			}
+		});
+		
+
 		
 		comboMaps2ndCon.addItemListener(new ItemListener() {
 			
@@ -543,6 +611,13 @@ public class AdminScreen {
 				// Update point
 				Map selectedMap = (Map)comboMaps2ndCon.getSelectedItem();
 				if(selectedMap != null){
+					ImagePanel imagePanelMap1st = new ImagePanel(selectedMap.getFileLocation(), 320, 240);
+					imagePanelMap1st.setLayout(null);
+					imagePanelMap1st.setBounds(0, 0, 320, 240);
+					imagePanelMap1st.repaint();
+					panel_8.removeAll();
+					panel_8.add(imagePanelMap1st);
+					panel_8.repaint();
 					if(comboSecondPoint.getItemCount() > 0){
 						comboSecondPoint.removeAllItems();
 					}
@@ -553,12 +628,43 @@ public class AdminScreen {
 			}
 		});
 		
+		comboSecondPoint.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// Update point
+				
+				Point selectedSecondPoint = (Point)comboSecondPoint.getSelectedItem();
+				if(selectedSecondPoint != null){
+					if(SecondPoint!=null){
+						panel_8.remove(SecondPoint);
+					}
+					SecondPoint = new SolidPoint(Color.decode("#D55E00"), selectedSecondPoint.getX()/2, selectedSecondPoint.getY()/2); 			
+					panel_8.add(SecondPoint);
+					panel_8.setComponentZOrder(SecondPoint, 0);
+					panel_8.repaint();
+					
+				}
+			
+				
+				
+				
+				
+				
+			}
+		});
+		
 		btnSaveEdge.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DataManager.addEdge(((Point)comboFirstPoint.getSelectedItem()).getId(), ((Point)comboSecondPoint.getSelectedItem()).getId());
 				//Float.parseFloat(txtEdgeWeight.getText()
+//				Line connection = new Line(Color.decode("#D55E00"), ((Point)comboFirstPoint.getSelectedItem()).getX(), ((Point)comboFirstPoint.getSelectedItem()).getY(), ((Point)comboSecondPoint.getSelectedItem()).getX(), ((Point)comboSecondPoint.getSelectedItem()).getY());
+//				panel_6.add(connection);
+//				panel_6.setComponentZOrder(connection, 0);
+//				panel_6.repaint();
+		
 			}
 		});
 		

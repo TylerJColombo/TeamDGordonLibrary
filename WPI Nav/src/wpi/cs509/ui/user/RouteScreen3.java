@@ -224,7 +224,7 @@ public class RouteScreen3 {
 				});
 		
 		//TofloorLabel
-		JLabel tofloor = new JLabel("ToFloor");
+		JLabel tofloor = new JLabel("To Floor");
 		difFloorControl.add(tofloor);
 		tofloor.setBounds(25, 180, 300, 20);
 
