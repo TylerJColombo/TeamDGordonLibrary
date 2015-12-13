@@ -321,8 +321,10 @@ public class AdminScreen {
 //					DataManager.getEdgesByMapID(selectedMap.getId());
 					
 					for(Edge edge:DataManagerWithMem.getEdgesByMapID(selectedMap.getId()) ){
-						Point point1 = DataManager.getPointByID(edge.getsPointId());
-						Point point2 = DataManager.getPointByID(edge.getePointId());
+//						Point point1 = DataManager.getPointByID(edge.getsPointId());
+						Point point1 = DataManagerWithMem.getPointByID(edge.getePointId());
+//						Point point2 = DataManager.getPointByID(edge.getePointId());
+						Point point2 = DataManagerWithMem.getPointByID(edge.getePointId());
 						
 						imagePanelMap.add(new SolidPoint(Color.GREEN, point1.getX(), point1.getY()));
 		            	imagePanelMap.add(new SolidPoint(Color.GREEN, point2.getX(), point2.getY()));
