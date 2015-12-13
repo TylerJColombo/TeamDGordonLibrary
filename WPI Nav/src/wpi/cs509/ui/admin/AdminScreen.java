@@ -251,7 +251,7 @@ public class AdminScreen {
 		panel.add(txtLocation1Name);
 		txtLocation1Name.setColumns(10);
 		
-		final JCheckBox chckbxIsEnterance1 = new JCheckBox("is enterance");
+		final JCheckBox chckbxIsEnterance1 = new JCheckBox("is entrance");
 		chckbxIsEnterance1.setBounds(20, 150, 120, 20);
 		panel.add(chckbxIsEnterance1);
 		
@@ -289,7 +289,7 @@ public class AdminScreen {
 		panel.add(txtLocation2Name);
 		txtLocation2Name.setColumns(10);
 		
-		final JCheckBox chckbxIsEnterance2 = new JCheckBox("is enterance");
+		final JCheckBox chckbxIsEnterance2 = new JCheckBox("is entrance");
 		chckbxIsEnterance2.setBounds(20, 280, 120, 20);
 		panel.add(chckbxIsEnterance2);
 
@@ -497,7 +497,7 @@ public class AdminScreen {
 		panel_3.add(comboMaps1stCon);
 		comboMaps1stCon.setSelectedIndex(-1);
 		
-		JLabel lblNewLabel_10 = new JLabel("First Enterance:");
+		JLabel lblNewLabel_10 = new JLabel("First Entrance:");
 		lblNewLabel_10.setBounds(20, 90, 280, 20);
 		panel_3.add(lblNewLabel_10);
 				
@@ -522,7 +522,7 @@ public class AdminScreen {
 		}
 		panel_3.add(comboMaps2ndCon);
 		
-		final JLabel lblNewLabel_17 = new JLabel("Second Enterance:");
+		final JLabel lblNewLabel_17 = new JLabel("Second Entrance:");
 		lblNewLabel_17.setBounds(20, 230, 280, 20);
 		panel_3.add(lblNewLabel_17);
 		
