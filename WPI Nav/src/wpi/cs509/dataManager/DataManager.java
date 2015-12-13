@@ -939,7 +939,7 @@ public class DataManager {
 					}
 					else p.setMapEntrance(false);
 					p.setAttribute(rs.getString(6));
-//					String attribute = rs.getString(6);
+					String attribute = rs.getString(6);
 					
 					if(attribute == "PassageWay")
 					{
