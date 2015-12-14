@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -205,24 +206,30 @@ public class AdminScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DataManager.saveMap(txtMapName.getText(), Integer.parseInt(txtFloorNum.getText()), txtMapPath.getText(), Float.parseFloat(txtMapScale.getText()));
+					try {
+						DataManager.saveMap(txtMapName.getText(), Integer.parseInt(txtFloorNum.getText()), txtMapPath.getText(), Float.parseFloat(txtMapScale.getText()));
 			
-				// Clean add map form
-				txtMapName.setText("");
-				txtFloorNum.setText("");
-				txtMapPath.setText("");
-				txtMapScale.setText("");
-				
-				// Refresh delete maps combo box
-				if(comboMapsDelete.getItemCount() > 0){
-					comboMapsDelete.removeAllItems();
+						// Clean add map form
+						txtMapName.setText("");
+						txtFloorNum.setText("");
+						txtMapPath.setText("");
+						txtMapScale.setText("");
+						
+						// Refresh delete maps combo box
+						if(comboMapsDelete.getItemCount() > 0){
+							comboMapsDelete.removeAllItems();
+						}
+						for(Map map: DataManager.getAllMaps()){
+							comboMapsDelete.addItem(map);
+						}
+						File file = new File(selectedMap.getFileLocation());
+						copyfile.copyFile(new File(file.getParentFile().getAbsolutePath()+"/"+fc.getSelectedFile().getName()), fc.getSelectedFile());
+						comboMapsDelete.setSelectedIndex(comboMapsDelete.getItemCount()-1);
+					}
+					catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Please input the FloorNumber and MapScale with numbers only.");
 				}
-				for(Map map: DataManager.getAllMaps()){
-					comboMapsDelete.addItem(map);
-				}
-				File file = new File(selectedMap.getFileLocation());
-				copyfile.copyFile(new File(file.getParentFile().getAbsolutePath()+"/"+fc.getSelectedFile().getName()), fc.getSelectedFile());
-				comboMapsDelete.setSelectedIndex(comboMapsDelete.getItemCount()-1);
 			}
 		});
 		
