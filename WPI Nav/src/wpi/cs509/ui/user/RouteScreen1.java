@@ -124,14 +124,17 @@ public class RouteScreen1 {
 //imagepanel for map	
 
 //		imagePanelCmap = new ImagePanel("maps//Campus.png", 640, 480);
+		JPanel panelnozoom=new JPanel();
+		panelnozoom.setBounds(330, 180, 640, 480);
+		panelnozoom.setLayout(null);
 		
 		imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
 		imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
-       		
-
 		imagePanelCmap.setLayout(null);
-		imagePanelCmap.setBounds(330, 180, 640, 480);
-		frame.getContentPane().add(imagePanelCmap);
+		imagePanelCmap.setBounds(0, 0, 640, 480);
+		
+		panelnozoom.add(imagePanelCmap);	
+		frame.getContentPane().add(panelnozoom);
       
 		
 //label for source		
@@ -151,15 +154,20 @@ public class RouteScreen1 {
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					if(Pflag==true){
 						frame.remove(zoomcmap.zPanel);
+						
+						
 						imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
 						imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
 				       		
 
 						imagePanelCmap.setLayout(null);
-						imagePanelCmap.setBounds(330, 180, 640, 480);
-						frame.getContentPane().add(imagePanelCmap);
+						imagePanelCmap.setBounds(0, 0, 640, 480);
+					    panelnozoom.removeAll();
+					    panelnozoom.add(imagePanelCmap);
+					    panelnozoom.repaint();
+						frame.getContentPane().add(panelnozoom);
 						
-//						imagePanelCmap.removeAll();
+
 						imagePanelCmap.repaint();
 						frame.repaint();
 						Pflag=false;
@@ -213,13 +221,18 @@ public class RouteScreen1 {
 						frame.remove(zoomcmap.zPanel);
 						imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
 						imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
-				       		
-
+				       	
+						
+					    
 						imagePanelCmap.setLayout(null);
-						imagePanelCmap.setBounds(330, 180, 640, 480);
-						frame.getContentPane().add(imagePanelCmap);
-//						imagePanelCmap.removeAll();
+						imagePanelCmap.setBounds(0, 0, 640, 480);
 						imagePanelCmap.repaint();
+					    panelnozoom.removeAll();
+						panelnozoom.add(imagePanelCmap);
+						panelnozoom.repaint();
+						frame.getContentPane().add(panelnozoom);
+						
+						
 						Pflag=false;
 						frame.repaint();
 						System.out.println("remove1111");}
@@ -263,7 +276,7 @@ public class RouteScreen1 {
 				Graph rf=DirectorGraph.g;
      		    ArrayList <Point> PointsofPath =RouteFinder.computePaths(Osource,rf,Odestination);
                
-     		    frame.remove(imagePanelCmap);	
+     		    frame.remove(panelnozoom);	
 	            zoomcmap=new Zoomingpanel(PointsofPath);
 	    		
 	    		zoomcmap.zPanel.setBounds(327, 173, 660, 575);         
@@ -313,7 +326,7 @@ public class RouteScreen1 {
 		
 		//Button for reverse
 				JButton Buidingonmap = new JButton("ShowBuidings");
-				Buidingonmap.setBounds(150, 537, 70, 25);
+				Buidingonmap.setBounds(100, 525, 137, 25);
 				
 				frame.add(Buidingonmap);
 				
@@ -325,26 +338,45 @@ public class RouteScreen1 {
 				int y=1;	
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						if(Pflag=true){
+							frame.remove(zoomcmap.zPanel);
+							imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
+							imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
+					       	
+							
+						    
+							imagePanelCmap.setLayout(null);
+							imagePanelCmap.setBounds(0, 0, 640, 480);
+							imagePanelCmap.repaint();
+						    panelnozoom.removeAll();
+							panelnozoom.add(imagePanelCmap);
+							panelnozoom.repaint();
+							frame.getContentPane().add(panelnozoom);
+							frame.repaint();
+						   
+						}
 					
 					  if(y==1){
+						  
 						for(Point Buiding:buildingoncampus){
 							
 							SolidPoint P= new SolidPoint(Color.decode("#D55E00"),Buiding.getX(), Buiding.getY());  
 				    	    imagePanelCmap.add(P);
 				            imagePanelCmap.repaint();
+				            Buidingonmap.setText("Hidebuildings");
 				            y=2;	
 						}}else{
-						   
-						    frame.remove(imagePanelCmap);
+							Buidingonmap.setText("Showbuildings");
+						    panelnozoom.remove(imagePanelCmap);
 						    imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
 							imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
 					       		
 
 							imagePanelCmap.setLayout(null);
-							imagePanelCmap.setBounds(330, 180, 640, 480);
-							frame.getContentPane().add(imagePanelCmap);
-							frame.repaint();
-//							frame.setVisible(true);
+							imagePanelCmap.setBounds(0, 0, 640, 480);
+							panelnozoom.add(imagePanelCmap);
+							panelnozoom.repaint();
+
 							y=1;
 					
 				      }
@@ -354,7 +386,7 @@ public class RouteScreen1 {
 				});
 				
 			
-				imagePanelCmap.addMouseListener(new MouseListener() {
+				panelnozoom.addMouseListener(new MouseListener() {
 					JLabel buidlinglabel;
 					JPanel panellabel;
 					@Override
@@ -427,3 +459,4 @@ public class RouteScreen1 {
 	
 
 }
+
