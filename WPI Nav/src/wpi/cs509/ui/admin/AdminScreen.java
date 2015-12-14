@@ -7,10 +7,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,6 +42,8 @@ public class AdminScreen {
 	private Map selectedMap;
 	private SolidPoint FirstPoint;
 	private SolidPoint SecondPoint;
+	private JFileChooser fc;
+	private ImagePanel ipdelete;
 	
 	/**
 	 * Create the window.
@@ -84,44 +88,48 @@ public class AdminScreen {
 		
 		// Add Map left box
 		final JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 10, 300, 500);
+		panel_1.setBounds(10, 10, 270, 500);
 		panel_1.setLayout(null);
 		addMapTab.add(panel_1);
 		
 		final JLabel lblNewLabel_6 = new JLabel("Building Name:");
-		lblNewLabel_6.setBounds(20, 20, 280, 20);
+		lblNewLabel_6.setBounds(20, 20, 250, 20);
 		panel_1.add(lblNewLabel_6);
 				
 		final JTextField txtMapName = new JTextField();
-		txtMapName.setBounds(20, 50, 280, 20);
+		txtMapName.setBounds(20, 50, 250, 20);
 		panel_1.add(txtMapName);
 				
 		JLabel lblNewLabel_12 = new JLabel("Floor Number:");
-		lblNewLabel_12.setBounds(20, 90, 280, 20);
+		lblNewLabel_12.setBounds(20, 90, 250, 20);
 		panel_1.add(lblNewLabel_12);
 				
 		final JTextField txtFloorNum = new JTextField();
-		txtFloorNum.setBounds(20, 120, 280, 20);
+		txtFloorNum.setBounds(20, 120, 250, 20);
 		panel_1.add(txtFloorNum);
 				
 		JLabel lblNewLabel_7 = new JLabel("Map File Location:");
-		lblNewLabel_7.setBounds(20, 160, 280, 20);
+		lblNewLabel_7.setBounds(20, 160, 120, 20);
 		panel_1.add(lblNewLabel_7);
-				
+		
 		final JTextField txtMapPath = new JTextField();
-		txtMapPath.setBounds(20, 190, 280, 20);
+		txtMapPath.setBounds(20, 190, 250, 20);
 		panel_1.add(txtMapPath);
+		
+		JButton btncf = new JButton("Choose");
+		btncf.setBounds(140, 160, 60, 20);
+		panel_1.add(btncf);
 				
 		JLabel lblNewLabel_8 = new JLabel("Map Scale:");
-		lblNewLabel_8.setBounds(20, 230, 280, 20);
+		lblNewLabel_8.setBounds(20, 230, 250, 20);
 		panel_1.add(lblNewLabel_8);
 				
 		final JTextField txtMapScale = new JTextField();
-		txtMapScale.setBounds(20, 260, 280, 20);
+		txtMapScale.setBounds(20, 260, 250, 20);
 		panel_1.add(txtMapScale);
 				
 		JButton btnSaveMap = new JButton("Add Map");
-		btnSaveMap.setBounds(20, 300, 280, 25);
+		btnSaveMap.setBounds(20, 300, 250, 25);
 		btnSaveMap.setForeground(Color.decode("#F1F1F1"));
 		btnSaveMap.setBackground(Color.decode("#AB2A36"));
 		btnSaveMap.setOpaque(true);
@@ -130,16 +138,34 @@ public class AdminScreen {
 		
 		// Delete Map fields
 		JPanel panel_5 = new JPanel();
-		panel_5.setBounds(400, 10, 300, 500);
+		panel_5.setBounds(300, 10, 700, 500);
 		panel_5.setLayout(null);
 		addMapTab.add(panel_5);
 		
 		JLabel lblNewLabel_15 = new JLabel("Map:");
-		lblNewLabel_15.setBounds(20, 20, 280, 20);
+		lblNewLabel_15.setBounds(370, 20, 250, 20);
 		panel_5.add(lblNewLabel_15);
 		
 		final JComboBox<Map> comboMapsDelete = new JComboBox<Map>();
-		comboMapsDelete.setBounds(20, 50, 280, 20);
+		comboMapsDelete.setBounds(370, 50, 250, 20);
+		//Show Selected Map
+		comboMapsDelete.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getStateChange()==ItemEvent.SELECTED){
+					if(ipdelete != null){
+						panel_5.remove(ipdelete);
+					}
+					selectedMap = (Map)comboMapsDelete.getSelectedItem();
+					ipdelete = new ImagePanel(selectedMap.getFileLocation(), 350, 300);
+					ipdelete.setBounds(0, 40, 350, 300);
+					ipdelete.setLayout(null);
+					panel_5.add(ipdelete);
+					panel_5.repaint();
+				}
+			}
+		});
 		if(comboMapsDelete.getItemCount() > 0){
 			comboMapsDelete.removeAllItems();
 		}
@@ -149,12 +175,30 @@ public class AdminScreen {
 		panel_5.add(comboMapsDelete);
 		
 		JButton btnDeleteMap = new JButton("Delete Map");
-		btnDeleteMap.setBounds(20, 90, 280, 25);
+		btnDeleteMap.setBounds(370, 90, 250, 25);
 		btnDeleteMap.setForeground(Color.decode("#F1F1F1"));
 		btnDeleteMap.setBackground(Color.decode("#AB2A36"));
 		btnDeleteMap.setOpaque(true);
 		btnDeleteMap.setBorderPainted(false);
 		panel_5.add(btnDeleteMap);
+		
+		//Choose File Action Listener
+		btncf.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getSource() == btncf){
+					fc = new JFileChooser();
+					fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES ); 
+				    int intRetVal = fc.showSaveDialog(frame); 
+				    if( intRetVal == JFileChooser.APPROVE_OPTION){ 
+				    	File file = new File(selectedMap.getFileLocation());
+				    	txtMapPath.setText(file.getParentFile().getAbsolutePath()+"/"+fc.getSelectedFile().getName());
+				    	}
+				    }
+				}
+			});
 		
 		// Add Map Action Listeners
 		btnSaveMap.addActionListener(new ActionListener() {
@@ -162,7 +206,7 @@ public class AdminScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DataManager.saveMap(txtMapName.getText(), Integer.parseInt(txtFloorNum.getText()), txtMapPath.getText(), Float.parseFloat(txtMapScale.getText()));
-				
+			
 				// Clean add map form
 				txtMapName.setText("");
 				txtFloorNum.setText("");
@@ -176,7 +220,9 @@ public class AdminScreen {
 				for(Map map: DataManager.getAllMaps()){
 					comboMapsDelete.addItem(map);
 				}
-				
+				File file = new File(selectedMap.getFileLocation());
+				copyfile.copyFile(new File(file.getParentFile().getAbsolutePath()+"/"+fc.getSelectedFile().getName()), fc.getSelectedFile());
+				comboMapsDelete.setSelectedIndex(comboMapsDelete.getItemCount()-1);
 			}
 		});
 		
@@ -187,6 +233,10 @@ public class AdminScreen {
 			public void actionPerformed(ActionEvent e) {
 			    selectedMap = (Map)comboMapsDelete.getSelectedItem();
 				DataManager.removeMap(selectedMap.getId());
+				panel_5.remove(ipdelete);
+				panel_5.repaint();
+				File file = new File(selectedMap.getFileLocation());
+				file.delete();
 
 				// Refresh delete maps combo box
 				if(comboMapsDelete.getItemCount() > 0){
