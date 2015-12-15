@@ -406,6 +406,7 @@ public class RouteScreen1 {
 					@Override
 					public void mousePressed(MouseEvent e) {
 						// Not used
+					try{
 						Point specialbuidling  =DataManager.findClosestPoint(6, e.getX(), e.getY()) ; 
 						panellabel =new JPanel();
 						panellabel.setBounds(e.getX(), e.getY(), 100, 70);
@@ -414,16 +415,20 @@ public class RouteScreen1 {
 						buildingpic.setBounds(0, 0, 100, 55);
 						panellabel.add(buildingpic);
 						
-				        buidlinglabel= new JLabel(specialbuidling.getName());
-				        buidlinglabel.setBounds(0,55 , 100, 15);
-				        buidlinglabel.setLayout(null);
-//				        buidlinglabel.setBackground(Color.decode("#F1F1F1"));
-				        panellabel.add(buidlinglabel);
-				        panellabel.setComponentZOrder(buidlinglabel, 0);
+				                buidlinglabel= new JLabel(specialbuidling.getName());
+				                buidlinglabel.setBounds(0,55 , 100, 15);
+				                buidlinglabel.setLayout(null);
+//				                buidlinglabel.setBackground(Color.decode("#F1F1F1"));
+				                panellabel.add(buidlinglabel);
+				                panellabel.setComponentZOrder(buidlinglabel, 0);
 				        
-				        imagePanelCmap.add(panellabel);
-				        imagePanelCmap.setComponentZOrder(panellabel, 0);			 
-				        imagePanelCmap.repaint();
+				                imagePanelCmap.add(panellabel);
+				                imagePanelCmap.setComponentZOrder(panellabel, 0);			 
+				                imagePanelCmap.repaint();}
+					catch(NullPointerException exp){
+						JOptionPane.showMessageDialog(null, "the point you clicked has no building");
+							
+						}
 					}
 					@Override
 					public void mouseReleased(MouseEvent arg0) {
