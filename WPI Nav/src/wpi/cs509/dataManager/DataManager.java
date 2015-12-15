@@ -143,7 +143,7 @@ public class DataManager {
 			{
 				if(point1.isMapEntrance()&&point2.isMapEntrance())
 				{
-					EdgeweightS = 1.0f;
+					EdgeweightS = 50.0f;
 				
 				sql="insert into edge (point1id,point2id,weight)values(?,?,?)";
 				PreparedStatement ps1 = conn.prepareStatement(sql);
