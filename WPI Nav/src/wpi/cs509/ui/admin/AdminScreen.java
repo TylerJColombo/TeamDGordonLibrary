@@ -202,7 +202,7 @@ public class AdminScreen {
 				    int intRetVal = fc.showSaveDialog(frame); 
 				    if( intRetVal == JFileChooser.APPROVE_OPTION){ 
 				    	File file = new File(selectedMap.getFileLocation());
-				    	txtMapPath.setText(file.getParentFile().getAbsolutePath()+"/"+fc.getSelectedFile().getName());
+				    	txtMapPath.setText(file.getParentFile().getPath()+"/"+fc.getSelectedFile().getName());
 				    	}
 				    }
 				}
@@ -230,7 +230,7 @@ public class AdminScreen {
 							comboMapsDelete.addItem(map);
 						}
 						File file = new File(selectedMap.getFileLocation());
-						copyfile.copyFile(new File(file.getParentFile().getAbsolutePath()+"/"+fc.getSelectedFile().getName()), fc.getSelectedFile());
+						copyfile.copyFile(new File(file.getParentFile().getPath()+"/"+fc.getSelectedFile().getName()), fc.getSelectedFile());
 						comboMapsDelete.setSelectedIndex(comboMapsDelete.getItemCount()-1);
 					}
 					catch (NumberFormatException e1) {

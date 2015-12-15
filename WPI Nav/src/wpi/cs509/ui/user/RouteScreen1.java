@@ -86,7 +86,7 @@ public class RouteScreen1 {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
+		DirectorGraph.getInstance();
 		final ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
 		
 //		ArrayList <String> bns = new ArrayList<String>();
@@ -272,9 +272,12 @@ public class RouteScreen1 {
 			public void actionPerformed(ActionEvent e) {
 			
 				
-               // use string of source and destination to get the their pointsid than send it to the RoutFinder
-				Graph rf=DirectorGraph.g;
+				DirectorGraph.getInstance();
+				// use string of source and destination to get the their pointsid than send it to the RoutFinder
+				Graph rf=DirectorGraph.getInstance().getGraph();
+//				Graph rf = DataManager.getGraphByNameWithDB("test", "test");
      		    ArrayList <Point> PointsofPath =RouteFinder.computePaths(Osource,rf,Odestination);
+     		    DirectorGraph.getInstance().clearGraph();
                
      		    frame.remove(panelnozoom);	
 	            zoomcmap=new Zoomingpanel(PointsofPath);

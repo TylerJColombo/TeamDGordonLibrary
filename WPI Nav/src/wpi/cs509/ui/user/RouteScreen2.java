@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import sun.security.jca.GetInstance;
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataManager.DirectorGraph;
 import wpi.cs509.dataModel.Graph;
@@ -350,8 +351,8 @@ public class RouteScreen2 {
 				buildingselected = buildingSelection.getSelectedItem().toString();
 				floorselected = floorSelection.getSelectedItem().toString();
 				locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
-//				Graph rf = DirectorGraph.g;
-				Graph rf = DataManager.getGraphByNameWithDB(buildingselected, floorselected);
+				Graph rf = DirectorGraph.getInstance().getGraph();
+//				Graph rf = DataManager.getGraphByNameWithDB(buildingselected, floorselected);
 				intsource= sourceSelection.getSelectedIndex()-1;
 				intdestination = destinationSelection.getSelectedIndex()-1;
 				source0 = locations.get(intsource);
@@ -359,6 +360,7 @@ public class RouteScreen2 {
 				destination0 = locations.get(intdestination);
 				System.out.println(destination0+"dddddddddddddd");
 				p = RouteFinder.computePaths(source0, rf, destination0);
+				DirectorGraph.getInstance().clearGraph();
 				System.out.println(p.size());
 				wpi.cs509.ui.util.Util.drawPath(sameFloorMap, p);
 				sameFloorMap.setComponentZOrder(destination1, 0);
@@ -387,9 +389,10 @@ public class RouteScreen2 {
 				destinationSelection.setSelectedItem(newdestination);
 				System.out.println(intsource+"9999");
 				if(p != null){
-//					Graph rf2 = DirectorGraph.g;
-					Graph rf2 = DataManager.getGraphByNameWithDB(buildingselected, floorselected);
+					Graph rf2 = DirectorGraph.getInstance().getGraph();
+//					Graph rf2 = DataManager.getGraphByNameWithDB(buildingselected, floorselected);
 					p = RouteFinder.computePaths(source0, rf2, destination0);
+					DirectorGraph.getInstance().clearGraph();
 					System.out.println(p.size());
 					wpi.cs509.ui.util.Util.drawPath(sameFloorMap, p);
 				}

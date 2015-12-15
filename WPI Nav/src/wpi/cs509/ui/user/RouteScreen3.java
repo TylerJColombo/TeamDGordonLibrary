@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import wpi.cs509.dataManager.DataManager;
+import wpi.cs509.dataManager.DirectorGraph;
 import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
@@ -620,7 +621,8 @@ public class RouteScreen3 {
                 	ArrayList<Point> fromlocation = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
                     ArrayList<Point> tolocation = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
                     
-                    Graph tograph = DataManager.getGraphByNameWithDB(buildingselected, tofloorselected);
+                    Graph toGraph = DirectorGraph.getInstance().getGraph();
+//                    Graph tograph = DataManager.getGraphByNameWithDB(buildingselected, tofloorselected);
                
                     int i = sourceSelection.getSelectedIndex();
                     int j = destinationSelection.getSelectedIndex();
@@ -628,8 +630,8 @@ public class RouteScreen3 {
                     Point source0 = fromlocation.get(i);
                     Point destination0 = tolocation.get(j);
                     
-                    ArrayList<Point> p = RouteFinder.computePaths(source0, tograph, destination0);
-                    
+                    ArrayList<Point> p = RouteFinder.computePaths(source0, toGraph, destination0);
+                    DirectorGraph.getInstance().clearGraph();
                     int to = 0;
                     ArrayList<Point> frompointlist = new ArrayList<>();
                     ArrayList<Point> topointlist = new ArrayList<>();

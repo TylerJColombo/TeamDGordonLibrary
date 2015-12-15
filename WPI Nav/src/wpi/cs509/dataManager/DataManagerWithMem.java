@@ -11,7 +11,8 @@ import wpi.cs509.dataModel.Point;
 public class DataManagerWithMem {
 	public static boolean isGraphEmpty()
 	{
-		if(DirectorGraph.g.getPoints().size()==0)
+		DirectorGraph.getInstance();
+		if(DirectorGraph.getGraph().getPoints().size()==0)
 		{
 			return true;
 		}
@@ -22,9 +23,11 @@ public class DataManagerWithMem {
 		if(!isGraphEmpty())
 		{
 			
-			for(int i=0;i<DirectorGraph.g.getPoints().size();i++)
+			DirectorGraph.getInstance();
+			for(int i=0;i<DirectorGraph.getGraph().getPoints().size();i++)
 			{
-				Point p = DirectorGraph.g.getPoints().get(i);
+				DirectorGraph.getInstance();
+				Point p = DirectorGraph.getGraph().getPoints().get(i);
 				if(p.getId() == point2id)
 				{
 					if(p.isMapEntrance() == true)
@@ -63,16 +66,22 @@ public class DataManagerWithMem {
 	public static ArrayList<Edge> getEdgesByMapID(int mapID)
     {
         ArrayList<Edge> resultEdges = new ArrayList<Edge>();
-        for(int i=0;i<DirectorGraph.g.getEdges().size();i++)
+        DirectorGraph.getInstance();
+		for(int i=0;i<DirectorGraph.getGraph().getEdges().size();i++)
         {
             
-            for(int j=0;j<DirectorGraph.g.getPoints().size();j++)
+            DirectorGraph.getInstance();
+			for(int j=0;j<DirectorGraph.getGraph().getPoints().size();j++)
             {
-                Point p=DirectorGraph.g.getPoints().get(j);
+                DirectorGraph.getInstance();
+				Point p=DirectorGraph.getGraph().getPoints().get(j);
                 if(p.getMapId()==mapID && p.isMapEntrance()!=true)
                 {    
-                    if(DirectorGraph.g.getEdges().get(i).getePointId()==p.getId()||DirectorGraph.g.getEdges().get(i).getsPointId()==p.getId()){
-                        resultEdges.add(DirectorGraph.g.getEdges().get(i));
+                    DirectorGraph.getInstance();
+					DirectorGraph.getInstance();
+					if(DirectorGraph.getGraph().getEdges().get(i).getePointId()==p.getId()||DirectorGraph.getGraph().getEdges().get(i).getsPointId()==p.getId()){
+                        DirectorGraph.getInstance();
+						resultEdges.add(DirectorGraph.getGraph().getEdges().get(i));
                     }
                 }
             }
@@ -83,9 +92,11 @@ public class DataManagerWithMem {
 	{
 		Point p = null;
 		System.out.println("the point id is "+pointID);
-		for(int i=0;i<DirectorGraph.g.getPoints().size();i++)
+		DirectorGraph.getInstance();
+		for(int i=0;i<DirectorGraph.getGraph().getPoints().size();i++)
 		{
-			Point tp=DirectorGraph.g.getPoints().get(i);
+			DirectorGraph.getInstance();
+			Point tp=DirectorGraph.getGraph().getPoints().get(i);
 			//System.out.println(tp.getId());
 			if(tp.getId() == pointID)
 			{
@@ -102,9 +113,11 @@ public class DataManagerWithMem {
 	{
 		ArrayList<Map> resultMap = new ArrayList<Map>();
 		
-		for(int i=0;i<DirectorGraph.mapList.size();i++)
+		DirectorGraph.getInstance();
+		for(int i=0;i<DirectorGraph.getInstance().getMaps().size();i++)
 		{
-			resultMap.add(DirectorGraph.mapList.get(i));
+			DirectorGraph.getInstance();
+			resultMap.add(DirectorGraph.getInstance().getMaps().get(i));
 		}
 		return resultMap;
 	}

@@ -92,5 +92,17 @@ public class Point implements Comparable<Point> {
 	public void setAttribute(String attribute) {
 		this.attribute = attribute;
 	}
+	public double getMinDistance() {
+		return minDistance;
+	}
+	public void setMinDistance(double minDistance) {
+		this.minDistance = minDistance;
+	}
+	public Point getPrevious() {
+		return previous;
+	}
+	public void setPrevious(Point previous) {
+		this.previous = previous;
+	}
 	
 }

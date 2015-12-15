@@ -143,7 +143,7 @@ public class DataManager {
 			{
 				if(point1.isMapEntrance()&&point2.isMapEntrance())
 				{
-					EdgeweightS = 50.0f;
+					EdgeweightS = 50.0f;    // set the default value of the elevator and stair
 				
 				sql="insert into edge (point1id,point2id,weight)values(?,?,?)";
 				PreparedStatement ps1 = conn.prepareStatement(sql);
@@ -1415,10 +1415,11 @@ public class DataManager {
 	public static void main(String[] args){
 		Graph graph1= new Graph();
 		Graph graph2= new Graph();
-		DirectorGraph.g = getGraphByNameWithDB("GordonLibrary", "Basement");
+//		DirectorGraph.getInstance().getGraph();
+//		DirectorGraph.g = getGraphByNameWithDB("GordonLibrary", "Basement");
 		System.out.println(isEdgeIncludeEntrance(7));
 		System.out.println(DataManagerWithMem.isEdgeIncludeEntrance(7));
-		System.out.println(DirectorGraph.g.getEdges().size());
+
 //		getGraph(graph,"src/HF1.txt");
 		
 		//graph1 =getGraphByNameWithDB("FullerLab","First Floor");

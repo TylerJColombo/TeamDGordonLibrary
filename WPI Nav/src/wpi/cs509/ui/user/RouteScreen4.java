@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import wpi.cs509.dataManager.DataManager;
+import wpi.cs509.dataManager.DirectorGraph;
 import wpi.cs509.dataModel.Graph;
 import wpi.cs509.dataModel.Map;
 import wpi.cs509.dataModel.Point;
@@ -402,11 +403,13 @@ public class RouteScreen4 {
                 	tofloorselected = tofloorSelection.getSelectedItem().toString();
                 }
                 
-                Graph graph = DataManager.getGraphByNameWithDB(buildingselected, tofloorselected);
+                Graph graph = DirectorGraph.getInstance().getGraph();
+                //Graph graph = DataManager.getGraphByNameWithDB(buildingselected, tofloorselected);
                 Point source = (Point)sourceSelection.getSelectedItem();
                 Point destination = (Point)destinationSelection.getSelectedItem();
                     
                 route = RouteFinder.computePaths(source, graph, destination);
+                DirectorGraph.getInstance().clearGraph();
                 mapToDisplayIndex = 0;
                 
                 // call drawing function
