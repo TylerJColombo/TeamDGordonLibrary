@@ -125,7 +125,7 @@ public class AdminScreen {
 		panel_1.add(txtMapPath);
 		
 		JButton btncf = new JButton("Choose");
-		btncf.setBounds(140, 160, 60, 20);
+		btncf.setBounds(140, 160, 89, 20);
 		panel_1.add(btncf);
 				
 		JLabel lblNewLabel_8 = new JLabel("Map Scale:");
