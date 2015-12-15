@@ -32,14 +32,18 @@ public class RouteScreen2 {
 	private JFrame frame;
 	private JComboBox<String> buildingSelection,floorSelection,sourceSelection,destinationSelection;
 	private ArrayList<String> buildingList, floorList, floorSelected;
-	private ArrayList<Point> sourceList, destinationList,locations,p;
+	private ArrayList<Point> sourceList, destinationList,locations,p,restroomlist,vendinglist,droplist,printerlist;
 	private StartPin source1;
 	private EndPin destination1;
 	private ImagePanel sameFloorMap, startlable, endlable;
+	private Restroom restroom1;	
+	private Vending vending1;
+	private Drop drop1;	
+	private Printer printer1;
 	private int x1,x2,y1,y2;
 	private ItemListener sListener,dListener;
 	private String buildingselected,floorselected,newsource,newdestination;
-	private int ss,ds,intsource,intdestination;
+	private int ss,ds,intsource,intdestination,flag=0;
 	private JLabel starttext, endtext;
 	private Point source0;
 	private Point destination0;
@@ -398,6 +402,174 @@ public class RouteScreen2 {
 				}
 			}
 		});
+// restroom button		
+		JButton restroom = new JButton(new ImageIcon("maps//restroom.png"));
+		restroom.setBounds(300, 300, 30, 30);
+		sameFloorControl.add(restroom);
+		restroom.setForeground(Color.decode("#F1F1F1"));
+		restroom.setBackground(Color.decode("#AB2A36"));
+		restroom.setOpaque(true);
+		restroom.setBorderPainted(false);
+		
+		restroom.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				buildingselected = buildingSelection.getSelectedItem().toString();
+				floorselected = floorSelection.getSelectedItem().toString();
+				locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
+				restroomlist = new ArrayList<Point>();
+				
+
+
+
+
+				for( Point tp:locations){
+					if ("RestRoom".equals(tp.getAttribute())){
+                       restroomlist.add(tp);
+					}
+				}
+				
+				if(restroomlist!=null && restroomlist.size() >0){
+					if (flag == 1){
+						for(int i=0; i<restroomlist.size(); i++){
+							restroom1 =new Restroom(restroomlist.get(i).getX(), restroomlist.get(i).getY());
+		         			sameFloorMap.remove(restroom1);
+
+						};
+						sameFloorMap.repaint();
+						flag = flag - 1;
+					}
+					else if(flag == 0){
+					for(int i=0; i<restroomlist.size(); i++){
+						restroom1 =new Restroom(restroomlist.get(i).getX(), restroomlist.get(i).getY());
+	         			sameFloorMap.add(restroom1);
+
+					}
+					flag = flag + 1;
+					sameFloorMap.repaint();
+					}
+
+				}
+         			//sameFloorMap.add(restroom1);
+					//sameFloorMap.repaint();
+					//SolidPoint restroompoint = new SolidPoint(Color.red, restroomlist.get(0).getX(), restroomlist.get(0).getY());
+					//sameFloorMap.add(restroompoint);
+					//sameFloorMap.repaint();
+				
+				}
+
+			
+		});		
+		// vending machine button		
+				JButton vending = new JButton(new ImageIcon("maps//vending mechine.png"));
+				vending.setBounds(300, 340, 30, 30);
+				sameFloorControl.add(vending);
+				vending.setForeground(Color.decode("#F1F1F1"));
+				vending.setBackground(Color.decode("#AB2A36"));
+				vending.setOpaque(true);
+				vending.setBorderPainted(false);
+				
+				vending.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						buildingselected = buildingSelection.getSelectedItem().toString();
+						floorselected = floorSelection.getSelectedItem().toString();
+						locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
+						vendinglist = new ArrayList<Point>();
+						for( Point tp:locations){
+							if ("VendingMachine".equals(tp.getAttribute())){
+		                       vendinglist.add(tp);
+							}
+						}
+						if(vendinglist!=null && vendinglist.size() >0){
+
+							for(int i=0; i<vendinglist.size(); i++){
+								vending1 =new Vending(vendinglist.get(i).getX(), vendinglist.get(i).getY());
+			         			sameFloorMap.add(vending1);
+								sameFloorMap.repaint();
+							}
+							}
+
+						}
+
+					
+				});	
+				
+// water fountain button		
+				JButton drop = new JButton(new ImageIcon("maps//drop.png"));
+				drop.setBounds(300, 420, 30, 30);
+				sameFloorControl.add(drop);
+				drop.setForeground(Color.decode("#F1F1F1"));
+				drop.setBackground(Color.decode("#AB2A36"));
+				drop.setOpaque(true);
+				drop.setBorderPainted(false);
+				
+				drop.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						buildingselected = buildingSelection.getSelectedItem().toString();
+						floorselected = floorSelection.getSelectedItem().toString();
+						locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
+						droplist = new ArrayList<Point>();
+						for( Point tp:locations){
+							if ("Drop".equals(tp.getAttribute())){
+								droplist.add(tp);
+							}
+						}
+						if(droplist!=null && droplist.size() >0){
+
+							for(int i=0; i<droplist.size(); i++){
+								drop1 =new Drop(droplist.get(i).getX(), droplist.get(i).getY());
+			         			sameFloorMap.add(drop1);
+								sameFloorMap.repaint();
+							}
+							}
+						}
+
+					
+				});	
+// printer button		
+				JButton printer = new JButton(new ImageIcon("maps//printer.png"));
+				printer.setBounds(300, 380, 30, 30);
+				sameFloorControl.add(printer);
+				printer.setForeground(Color.decode("#F1F1F1"));
+				printer.setBackground(Color.decode("#AB2A36"));
+				printer.setOpaque(true);
+				printer.setBorderPainted(false);
+				
+				printer.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						buildingselected = buildingSelection.getSelectedItem().toString();
+						floorselected = floorSelection.getSelectedItem().toString();
+						locations = DataManager.getLocationsByMapID(buildingselected, floorselected);
+						printerlist = new ArrayList<Point>();
+						for( Point tp:locations){
+							if ("Printer".equals(tp.getAttribute())){
+								printerlist.add(tp);
+							}
+						}
+						if(printerlist!=null && printerlist.size() >0){
+
+							for(int i=0; i<printerlist.size(); i++){
+								printer1 =new Printer(printerlist.get(i).getX(), printerlist.get(i).getY());
+			         			sameFloorMap.add(printer1);
+								sameFloorMap.repaint();
+							}
+							}
+						}
+
+					
+				});			
 		
 		startlable = new ImagePanel("maps//startpin.png", 20, 20);
 		starttext = new JLabel("Start");
