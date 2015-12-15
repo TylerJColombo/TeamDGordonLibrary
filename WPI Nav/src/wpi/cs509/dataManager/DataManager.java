@@ -1384,6 +1384,11 @@ public class DataManager {
 			PreparedStatement ps1 = conn.prepareStatement(sql);
 			ps1.setString(1, username);
 			ResultSet resultLogin = ps1.executeQuery();
+			if(resultLogin.next()==false)
+			{
+				return "false";
+			}
+			resultLogin = ps1.executeQuery();
 			while(resultLogin.next())
 			{
 				 tUsername = resultLogin.getString(1);
@@ -1405,6 +1410,7 @@ public class DataManager {
 		}
 		//System.out.println(tPassword);
 		//System.out.println(password+"2222222222");
+	
 		if(password.compareTo(tPassword)==0)
 		{
 			return "true";
