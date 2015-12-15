@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -19,14 +21,18 @@ import javax.swing.JPanel;
 import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import com.sun.org.apache.xpath.internal.axes.ReverseAxesWalker;
+import com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm;
 
 import wpi.cs509.dataManager.DataManager;
 import wpi.cs509.dataManager.DirectorGraph;
+import wpi.cs509.dataModel.Graph;
+import wpi.cs509.dataModel.Map;
 import wpi.cs509.dataModel.Point;
 import wpi.cs509.routeFinder.RouteFinder;
 import wpi.cs509.ui.components.EndPin;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
+import wpi.cs509.ui.components.Line;
 import wpi.cs509.ui.components.SolidPoint;
 import wpi.cs509.ui.components.StartPin;
 import wpi.cs509.ui.components.Zoomingpanel;
@@ -48,6 +54,7 @@ public class RouteScreen1 {
 	StartPin sourceofSoLid;
     Boolean Pflag = false;
     JButton reverse = new JButton(new ImageIcon("maps//reverse.png"));
+ 
 
 	/**
 	 * Launch the application.
@@ -81,16 +88,22 @@ public class RouteScreen1 {
 	private void initialize() {
 		
 		final ArrayList <Point> buildingoncampus =DataManager.getBuildingOnCampus();
-		ArrayList <String> bns = new ArrayList<String>();
-		String test = buildingoncampus.get(0).getName();
-		for(Point bn:buildingoncampus){
-			bns.add(bn.getName());	
+		
+//		ArrayList <String> bns = new ArrayList<String>();
+//		String test = buildingoncampus.get(0).getName();
+//		for(Point bn:buildingoncampus){
+//			bns.add(bn.getName());	
+//		}
+		
+		
+		final JComboBox<Point> comboBox_1 = new JComboBox();
+		for(Point P: buildingoncampus){
+			comboBox_1.addItem(P);
 		}
-		
-		
-		final JComboBox comboBox_1 = new JComboBox(bns.toArray());
-		final JComboBox comboBox = new JComboBox(bns.toArray());
-		
+		final JComboBox <Point>comboBox = new JComboBox();
+		for(Point P: buildingoncampus){
+			comboBox.addItem(P);
+		}
 		
 
 		  
@@ -111,14 +124,17 @@ public class RouteScreen1 {
 //imagepanel for map	
 
 //		imagePanelCmap = new ImagePanel("maps//Campus.png", 640, 480);
+		JPanel panelnozoom=new JPanel();
+		panelnozoom.setBounds(330, 180, 640, 480);
+		panelnozoom.setLayout(null);
 		
 		imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
 		imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
-       		
-
 		imagePanelCmap.setLayout(null);
-		imagePanelCmap.setBounds(330, 180, 640, 480);
-		frame.getContentPane().add(imagePanelCmap);
+		imagePanelCmap.setBounds(0, 0, 640, 480);
+		
+		panelnozoom.add(imagePanelCmap);	
+		frame.getContentPane().add(panelnozoom);
       
 		
 //label for source		
@@ -138,15 +154,20 @@ public class RouteScreen1 {
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					if(Pflag==true){
 						frame.remove(zoomcmap.zPanel);
+						
+						
 						imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
 						imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
 				       		
 
 						imagePanelCmap.setLayout(null);
-						imagePanelCmap.setBounds(330, 180, 640, 480);
-						frame.getContentPane().add(imagePanelCmap);
+						imagePanelCmap.setBounds(0, 0, 640, 480);
+					    panelnozoom.removeAll();
+					    panelnozoom.add(imagePanelCmap);
+					    panelnozoom.repaint();
+						frame.getContentPane().add(panelnozoom);
 						
-//						imagePanelCmap.removeAll();
+
 						imagePanelCmap.repaint();
 						frame.repaint();
 						Pflag=false;
@@ -159,12 +180,9 @@ public class RouteScreen1 {
 							
 						}
 //				}
-			source =comboBox.getSelectedItem().toString();
-			for(Point b:buildingoncampus){
-				if(b.getName().equals(source))
-				Osource=b;	
-			}
-//		    Osource=(Point) comboBox.getSelectedItem();
+			Osource =(Point)comboBox.getSelectedItem();
+			System.out.println(Osource.toString()+"source");
+
 			
 			
 		
@@ -203,13 +221,18 @@ public class RouteScreen1 {
 						frame.remove(zoomcmap.zPanel);
 						imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
 						imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
-				       		
-
+				       	
+						
+					    
 						imagePanelCmap.setLayout(null);
-						imagePanelCmap.setBounds(330, 180, 640, 480);
-						frame.getContentPane().add(imagePanelCmap);
-//						imagePanelCmap.removeAll();
+						imagePanelCmap.setBounds(0, 0, 640, 480);
 						imagePanelCmap.repaint();
+					    panelnozoom.removeAll();
+						panelnozoom.add(imagePanelCmap);
+						panelnozoom.repaint();
+						frame.getContentPane().add(panelnozoom);
+						
+						
 						Pflag=false;
 						frame.repaint();
 						System.out.println("remove1111");}
@@ -219,14 +242,11 @@ public class RouteScreen1 {
 						imagePanelCmap.repaint();
 							
 						}
-//				Odestination =(Point) comboBox_1.getSelectedItem();
-				destination =comboBox_1.getSelectedItem().toString();
-				for(Point c:buildingoncampus){
-					if(c.getName().equals(destination))
-					Odestination=c;	
-				}
+				
+				Odestination =(Point)comboBox_1.getSelectedItem();
+				
 				destinationofSolid = new EndPin(Odestination.getX(), Odestination.getY());  
-//				sourceofSoLid = new SolidPoint(Color.red, Osource.getX(), Osource.getY()); 
+                System.out.println(Odestination.toString()+"destination");
 	    	
 	    	    imagePanelCmap.add(sourceofSoLid);
 				imagePanelCmap.add(destinationofSolid);
@@ -253,17 +273,15 @@ public class RouteScreen1 {
 			
 				
                // use string of source and destination to get the their pointsid than send it to the RoutFinder
-     		    ArrayList <Point> PointsofPath =RouteFinder.computePaths(Osource,DirectorGraph.g,Odestination);
-     		    
-//	            Pflag=Util.drawPath(imagePanelCmap,PointsofPath);
-	            frame.remove(imagePanelCmap);	
+				Graph rf=DirectorGraph.g;
+     		    ArrayList <Point> PointsofPath =RouteFinder.computePaths(Osource,rf,Odestination);
+               
+     		    frame.remove(panelnozoom);	
 	            zoomcmap=new Zoomingpanel(PointsofPath);
 	    		
-	    		zoomcmap.zPanel.setBounds(327, 173, 660, 575);
-//	    	    zoomcmap.earthPanel.setBounds(330, 180, 640, 480);
-                
+	    		zoomcmap.zPanel.setBounds(327, 173, 660, 575);         
 	    	    frame.getContentPane().add(zoomcmap.zPanel);
-//              frame.repaint();
+
                 frame.setVisible(true);
 	          
 	            Pflag=true;
@@ -294,12 +312,127 @@ public class RouteScreen1 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				destination = comboBox.getSelectedItem().toString();
-				source = comboBox_1.getSelectedItem().toString();
-				comboBox.setSelectedItem(source);
-				comboBox_1.setSelectedItem(destination);				
+				Odestination = (Point)comboBox.getSelectedItem();
+				Osource = (Point)comboBox_1.getSelectedItem();
+				comboBox.setSelectedItem(Osource);
+				comboBox_1.setSelectedItem(Odestination);
+				btnFindingRoute.doClick();
+				
+				
+				
+
 			}
 		});
+		
+		//Button for reverse
+				JButton Buidingonmap = new JButton("ShowBuidings");
+				Buidingonmap.setBounds(100, 525, 137, 25);
+				
+				frame.add(Buidingonmap);
+				
+                Buidingonmap.setForeground(Color.decode("#F1F1F1"));
+				Buidingonmap.setBackground(Color.decode("#AB2A36"));
+				Buidingonmap.setOpaque(true);
+				Buidingonmap.setBorderPainted(false);
+				Buidingonmap.addActionListener(new ActionListener() {
+				int y=1;	
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(Pflag=true){
+							frame.remove(zoomcmap.zPanel);
+							imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
+							imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
+					       	
+							
+						    
+							imagePanelCmap.setLayout(null);
+							imagePanelCmap.setBounds(0, 0, 640, 480);
+							imagePanelCmap.repaint();
+						    panelnozoom.removeAll();
+							panelnozoom.add(imagePanelCmap);
+							panelnozoom.repaint();
+							frame.getContentPane().add(panelnozoom);
+							frame.repaint();
+						   
+						}
+					
+					  if(y==1){
+						  
+						for(Point Buiding:buildingoncampus){
+							
+							SolidPoint P= new SolidPoint(Color.decode("#D55E00"),Buiding.getX(), Buiding.getY());  
+				    	    imagePanelCmap.add(P);
+				            imagePanelCmap.repaint();
+				            Buidingonmap.setText("Hidebuildings");
+				            y=2;	
+						}}else{
+							Buidingonmap.setText("Showbuildings");
+						    panelnozoom.remove(imagePanelCmap);
+						    imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
+							imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
+					       		
+
+							imagePanelCmap.setLayout(null);
+							imagePanelCmap.setBounds(0, 0, 640, 480);
+							panelnozoom.add(imagePanelCmap);
+							panelnozoom.repaint();
+
+							y=1;
+					
+				      }
+					
+						
+					}
+				});
+				
+			
+				panelnozoom.addMouseListener(new MouseListener() {
+					JLabel buidlinglabel;
+					JPanel panellabel;
+					@Override
+			        public void mouseClicked(MouseEvent arg0) {
+		//	            System.out.println(":MOUSE_CLICK_EVENT:" + e.getX() + "," + e.getY());
+			        
+			            
+			        }
+					@Override
+					public void mouseEntered(MouseEvent arg0) {
+						// Not used
+					}
+					@Override
+					public void mouseExited(MouseEvent arg0) {
+						// Not used
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// Not used
+						Point specialbuidling  =DataManager.findClosestPoint(6, e.getX(), e.getY()) ; 
+						panellabel =new JPanel();
+						panellabel.setBounds(e.getX(), e.getY(), 100, 70);
+						panellabel.setLayout(null);
+						ImagePanel buildingpic = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 100, 55);
+						buildingpic.setBounds(0, 0, 100, 55);
+						panellabel.add(buildingpic);
+						
+				        buidlinglabel= new JLabel(specialbuidling.getName());
+				        buidlinglabel.setBounds(0,55 , 100, 15);
+				        buidlinglabel.setLayout(null);
+//				        buidlinglabel.setBackground(Color.decode("#F1F1F1"));
+				        panellabel.add(buidlinglabel);
+				        panellabel.setComponentZOrder(buidlinglabel, 0);
+				        
+				        imagePanelCmap.add(panellabel);
+				        imagePanelCmap.setComponentZOrder(panellabel, 0);			 
+				        imagePanelCmap.repaint();
+					}
+					@Override
+					public void mouseReleased(MouseEvent arg0) {
+						imagePanelCmap.remove(panellabel);
+						imagePanelCmap.repaint();
+						
+					}
+			    });
+			
 		
 		startlable = new ImagePanel("maps//startpin.png", 20, 20);
 		starttext = new JLabel("Start");
@@ -314,8 +447,13 @@ public class RouteScreen1 {
 		frame.add(endlable);
 		frame.add(startlable);
 		frame.add(starttext);
+		
+		
 	
 	}
+
+	
+
 
  
 	

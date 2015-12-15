@@ -1,19 +1,11 @@
 package wpi.cs509.dataManager;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-import com.sun.org.apache.regexp.internal.recompile;
-import com.sun.xml.internal.ws.policy.EffectiveAlternativeSelector;
 
 import wpi.cs509.dataModel.Edge;
 import wpi.cs509.dataModel.Graph;
@@ -1024,6 +1016,79 @@ public class DataManager {
 			e.printStackTrace();
 		}
 		return path;
+	}
+	
+	public static String getMapPathById(int id)
+	{
+		String path="";
+		Connection conn = null;
+		String sql="";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+		
+			sql="select * from map where mapid = ?";
+				
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			
+			ps1.setInt(1, id);
+			ResultSet rs = ps1.executeQuery();
+				
+			while(rs.next()){
+				path = rs.getString(4);
+			}
+			rs.close();
+			ps1.close();
+			conn.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return path;
+	}
+	
+	public static Map getMapById(int id)
+	{
+		Map map = null;
+		Connection conn = null;
+		String sql="";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url);
+		
+			sql="select * from map where mapid = ?";
+				
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			
+			ps1.setInt(1, id);
+			ResultSet rs = ps1.executeQuery();
+				
+			while(rs.next()){
+				map = new Map();
+				map.setId(rs.getInt(1));
+				map.setScale(rs.getFloat(2));
+				map.setFileLocation(rs.getString(4));
+				map.setBuildingName(rs.getString(5));
+				map.setFloorNum(rs.getInt(6));
+			}
+			rs.close();
+			ps1.close();
+			conn.close();
+			
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return map;
 	}
 	
 	public static Point getPointByBuildingName(String BuildingName)

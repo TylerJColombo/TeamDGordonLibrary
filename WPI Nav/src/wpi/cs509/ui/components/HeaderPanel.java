@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import wpi.cs509.ui.admin.LoginScreen;
+import wpi.cs509.ui.user.HelpScreen;
 import wpi.cs509.ui.user.MainScreen;
 
 public class HeaderPanel extends JComponent{
@@ -57,6 +58,10 @@ public class HeaderPanel extends JComponent{
 		panel_1.setBounds(884, 40, 100, 42);
 		this.add(panel_1);
 		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(774, 40, 100, 42);
+		this.add(panel_3);
+		
 		if(isHome){
 			// Admin Button
 			JButton btnAdmin = new JButton("Admin");
@@ -72,6 +77,23 @@ public class HeaderPanel extends JComponent{
 				}
 			});
 			panel_1.add(btnAdmin);
+			
+			
+			JButton btnHelp = new JButton("Help");
+			btnHelp.setPreferredSize(new Dimension(100, 36));
+			btnHelp.setForeground(Color.decode("#F1F1F1"));
+			btnHelp.setBackground(Color.decode("#AB2A36"));
+			btnHelp.setOpaque(true);
+			btnHelp.setBorderPainted(false);
+			panel_3.add(btnHelp);
+			btnHelp.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					new HelpScreen();
+				}
+			});
 		} else {
 			// Home Button
 			JButton btnAdmin = new JButton("Home");
@@ -87,6 +109,23 @@ public class HeaderPanel extends JComponent{
 				}
 			});
 			panel_1.add(btnAdmin);
+			
+			
+			JButton btnHelp = new JButton("Help");
+			btnHelp.setPreferredSize(new Dimension(100, 36));
+			btnHelp.setForeground(Color.decode("#F1F1F1"));
+			btnHelp.setBackground(Color.decode("#AB2A36"));
+			btnHelp.setOpaque(true);
+			btnHelp.setBorderPainted(false);
+			panel_3.add(btnHelp);
+			btnHelp.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					new HelpScreen();
+				}
+			});
 		}
 		
 		Line separator = new Line(Color.decode("#929292"), 0, 160, 1024, 160);
