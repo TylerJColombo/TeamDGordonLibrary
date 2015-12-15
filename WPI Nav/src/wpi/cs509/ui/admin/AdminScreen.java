@@ -1,6 +1,8 @@
 package wpi.cs509.ui.admin;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -45,6 +47,11 @@ public class AdminScreen {
 	private SolidPoint SecondPoint;
 	private JFileChooser fc;
 	private ImagePanel ipdelete;
+	
+	private Map s1Map;
+	private Point s1Point;
+	private Map s2Map;
+	private Point s2Point;
 	
 	/**
 	 * Create the window.
@@ -378,11 +385,11 @@ public class AdminScreen {
 					imagePanelMap.setBounds(0, 0, 640, 480);
 
 					
-					for(Edge edge:DataManager.getEdgesByMapID(selectedMap.getId()) ){
-						Point point1 = DataManager.getPointByID(edge.getsPointId());
-//						Point point1 = DataManagerWithMem.getPointByID(edge.getePointId());
-						Point point2 = DataManager.getPointByID(edge.getePointId());
-//						Point point2 = DataManagerWithMem.getPointByID(edge.getePointId());
+					for(Edge edge:DataManagerWithMem.getEdgesByMapID(selectedMap.getId()) ){
+//						Point point1 = DataManager.getPointByID(edge.getsPointId());
+						Point point1 = DataManagerWithMem.getPointByID(edge.getePointId());
+//						Point point2 = DataManager.getPointByID(edge.getePointId());
+						Point point2 = DataManagerWithMem.getPointByID(edge.getePointId());
 
 						
 						imagePanelMap.add(new SolidPoint(Color.GREEN, point1.getX(), point1.getY()));
@@ -509,6 +516,9 @@ public class AdminScreen {
 		//////////////////
 		// Add Edge Tab //
 		//////////////////
+		
+		
+		
 		JPanel addEdgeTab = new JPanel();
 		addEdgeTab.setLayout(null);
 		tabbedPane.addTab("Add Connection Edges", null, addEdgeTab, null);
@@ -537,6 +547,9 @@ public class AdminScreen {
 	     panel_8.setLayout(null);
 	     panel_6.add(panel_8);
 		
+	     JPanel panel_9=new JPanel();
+	     panel_9.setBounds(0, 0, 640, 480);
+	     panel_9.setLayout(null);
 	     
 		
         		
@@ -609,6 +622,7 @@ public class AdminScreen {
 				// Update point
 				
 				Map selectedMap = (Map)comboMaps1stCon.getSelectedItem();
+				s1Map=selectedMap;
 				if(selectedMap != null){
 					ImagePanel imagePanelMap1st = new ImagePanel(selectedMap.getFileLocation(), 320, 240);
 					imagePanelMap1st.setLayout(null);
@@ -639,7 +653,8 @@ public class AdminScreen {
 			public void itemStateChanged(ItemEvent e) {
 				// Update point
 				
-				Point selectedFirstPoint = (Point)comboFirstPoint.getSelectedItem();
+			 Point	selectedFirstPoint = (Point)comboFirstPoint.getSelectedItem();
+			 s1Point=selectedFirstPoint;
 				if(selectedFirstPoint != null){
 					if(FirstPoint!=null){
 						panel_7.remove(FirstPoint);
@@ -659,6 +674,54 @@ public class AdminScreen {
 			}
 		});
 		
+		panel_7.addMouseListener(new MouseListener() {
+			
+			@Override
+	        public void mouseClicked(MouseEvent arg0) {
+				    JFrame f = new JFrame(); //creates jframe f
+				    f.setDefaultCloseOperation(f.DISPOSE_ON_CLOSE);
+				    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //this is your screen size
+
+//				    f.setUndecorated(true); //removes the surrounding border
+  
+					ImagePanel c = new ImagePanel(s1Map.getFileLocation(), 640, 480);
+					c.setLayout(null);
+					c.setBounds(0, 0, 640, 480);
+					c.repaint();
+					SolidPoint s = new SolidPoint(Color.decode("#D55E00"), s1Point.getX(), s1Point.getY());
+					c.add(s);
+					c.repaint();
+  			        f.getContentPane().add(c); //puts label inside the jframe
+ 
+				    f.setSize(640,480); //gets h and w of image and sets jframe to the size
+
+				    int x = (screenSize.width - f.getSize().width)/2; //These two lines are the dimensions
+				    int y = (screenSize.height - f.getSize().height)/2;//of the center of the screen
+
+				    f.setLocation(x, y); //sets the location of the jframe
+				    f.setVisible(true); //makes the jframe visible
+	        
+	            
+	        }
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// Not used
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// Not used
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// Not used
+				
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				
+			}
+	    });
+		
 
 		
 		comboMaps2ndCon.addItemListener(new ItemListener() {
@@ -667,6 +730,7 @@ public class AdminScreen {
 			public void itemStateChanged(ItemEvent e) {
 				// Update point
 				Map selectedMap = (Map)comboMaps2ndCon.getSelectedItem();
+				s2Map=selectedMap;
 				if(selectedMap != null){
 					ImagePanel imagePanelMap1st = new ImagePanel(selectedMap.getFileLocation(), 320, 240);
 					imagePanelMap1st.setLayout(null);
@@ -692,6 +756,7 @@ public class AdminScreen {
 				// Update point
 				
 				Point selectedSecondPoint = (Point)comboSecondPoint.getSelectedItem();
+				s2Point=selectedSecondPoint;
 				if(selectedSecondPoint != null){
 					if(SecondPoint!=null){
 						panel_8.remove(SecondPoint);
@@ -710,6 +775,55 @@ public class AdminScreen {
 				
 			}
 		});
+		
+        panel_8.addMouseListener(new MouseListener() {
+			
+			@Override
+	        public void mouseClicked(MouseEvent arg0) {
+				    JFrame f = new JFrame(); //creates jframe f
+				    f.setDefaultCloseOperation(f.DISPOSE_ON_CLOSE);
+				   
+				    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //this is your screen size
+
+//				    f.setUndecorated(true); //removes the surrounding border
+  
+					ImagePanel c = new ImagePanel(s2Map.getFileLocation(), 640, 480);
+					c.setLayout(null);
+					c.setBounds(0, 0, 640, 480);
+					c.repaint();
+					SolidPoint s = new SolidPoint(Color.decode("#D55E00"), s2Point.getX(), s2Point.getY());
+					c.add(s);
+					c.repaint();
+  			        f.getContentPane().add(c); //puts label inside the jframe
+ 
+				    f.setSize(640,480); //gets h and w of image and sets jframe to the size
+
+				    int x = (screenSize.width - f.getSize().width)/2; //These two lines are the dimensions
+				    int y = (screenSize.height - f.getSize().height)/2;//of the center of the screen
+
+				    f.setLocation(x, y); //sets the location of the jframe
+				    f.setVisible(true); //makes the jframe visible
+	        
+	            
+	        }
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// Not used
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// Not used
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// Not used
+				
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				
+			}
+	    });
 		
 		btnSaveEdge.addActionListener(new ActionListener() {
 			
@@ -759,3 +873,4 @@ public class AdminScreen {
 		});
 	}
 }
+
