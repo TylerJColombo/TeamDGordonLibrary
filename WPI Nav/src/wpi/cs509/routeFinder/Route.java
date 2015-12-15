@@ -10,11 +10,11 @@ import java.util.Collections;
 import java.util.PriorityQueue;
 
 public interface Route {
-	   public ArrayList<Point> getPath(Point source, Graph g, Point destination);
+	   public ArrayList<Point> getPath();
 	}
 
 	public DikstraRoute implements Route {
-	   public dikstraRoute() {
+	   public DikstraRoute(Point start, Graph g, Point destination) {
 	   		if(source.getId()==destination.getId()){
 				ArrayList<Point> point=new ArrayList<Point>();
 				point.add(source);
@@ -53,7 +53,8 @@ public interface Route {
     		}
 	   }
 
-	   public ArrayList<Point> getPath(Point source, Graph g, Point destination) {
+	   @Override
+	   public ArrayList<Point> getPath() {
 	        ArrayList<Point> path = new ArrayList<Point>();
     		for (Point vertex = destination; vertex != null; vertex = vertex.previous){
     			path.add(vertex);
@@ -65,7 +66,7 @@ public interface Route {
 	}
 
 	public PrimsRoute implements Route {
-	    public PrimsRoute() {
+		   public PrimsRoute(Point start, Graph g, Point destination) {
 	    	if(source.getId()==destination.getId()){
 				ArrayList<Point> point=new ArrayList<Point>();
 				point.add(source);
@@ -80,8 +81,8 @@ public interface Route {
 	        }
 	   }
 
-	   @Override
-	   public ArrayList<Point> getPath(Point start, Graph g, Point destination) {
+	    @Override
+	    public ArrayList<Point> getPath() {
 	        ArrayList<Point> path = new ArrayList<Point>();
     		for (Point vertex = destination; vertex != null; vertex = vertex.previous){
     			path.add(vertex);
