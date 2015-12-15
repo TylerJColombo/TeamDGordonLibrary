@@ -110,6 +110,20 @@ public class MainScreen {
 		});
 		panel.add(btnNewButton_2);
 		
+		JButton btnNewButton_3 = new JButton("General Route");
+		btnNewButton_3.setPreferredSize(new Dimension(500, 36));
+		btnNewButton_3.setForeground(Color.decode("#F1F1F1"));
+		btnNewButton_3.setBackground(Color.decode("#AB2A36"));
+		btnNewButton_3.setOpaque(true);
+		btnNewButton_3.setBorderPainted(false);
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new RouteScreen4();
+				frame.dispose();
+			}
+		});
+		panel.add(btnNewButton_3);
+		
 		///////////////////////////////////////////////////
 		
 		
