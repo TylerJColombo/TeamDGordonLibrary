@@ -702,7 +702,7 @@ public class DataManager {
 				{
 					p.setDestination(true);
 				}
-				
+				p.setAttribute(attribute);
 				p.setName(rs.getString(7));
 				//System.out.println("the id is .."+rs.getString(1));
 				locations.add(p);
