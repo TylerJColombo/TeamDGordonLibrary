@@ -66,22 +66,21 @@ public class DataManagerWithMem {
 	public static ArrayList<Edge> getEdgesByMapID(int mapID)
     {
         ArrayList<Edge> resultEdges = new ArrayList<Edge>();
-        DirectorGraph.getInstance();
-		for(int i=0;i<DirectorGraph.getGraph().getEdges().size();i++)
+       
+		for(int i=0;i<DirectorGraph.getInstance().getGraph().getEdges().size();i++)
         {
             
-            DirectorGraph.getInstance();
-			for(int j=0;j<DirectorGraph.getGraph().getPoints().size();j++)
+          
+			for(int j=0;j<DirectorGraph.getInstance().getGraph().getPoints().size();j++)
             {
-                DirectorGraph.getInstance();
-				Point p=DirectorGraph.getGraph().getPoints().get(j);
+                
+				Point p=DirectorGraph.getInstance().getGraph().getPoints().get(j);
                 if(p.getMapId()==mapID && p.isMapEntrance()!=true)
                 {    
-                    DirectorGraph.getInstance();
-					DirectorGraph.getInstance();
-					if(DirectorGraph.getGraph().getEdges().get(i).getePointId()==p.getId()||DirectorGraph.getGraph().getEdges().get(i).getsPointId()==p.getId()){
-                        DirectorGraph.getInstance();
-						resultEdges.add(DirectorGraph.getGraph().getEdges().get(i));
+
+					if(DirectorGraph.getGraph().getEdges().get(i).getePointId()==p.getId()||DirectorGraph.getInstance().getGraph().getEdges().get(i).getsPointId()==p.getId()){
+                        
+						resultEdges.add(DirectorGraph.getInstance().getGraph().getEdges().get(i));
                     }
                 }
             }
@@ -93,10 +92,10 @@ public class DataManagerWithMem {
 		Point p = null;
 		System.out.println("the point id is "+pointID);
 		DirectorGraph.getInstance();
-		for(int i=0;i<DirectorGraph.getGraph().getPoints().size();i++)
+		for(int i=0;i<DirectorGraph.getInstance().getGraph().getPoints().size();i++)
 		{
 			DirectorGraph.getInstance();
-			Point tp=DirectorGraph.getGraph().getPoints().get(i);
+			Point tp=DirectorGraph.getInstance().getGraph().getPoints().get(i);
 			//System.out.println(tp.getId());
 			if(tp.getId() == pointID)
 			{

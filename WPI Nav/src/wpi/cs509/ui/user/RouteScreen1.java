@@ -414,7 +414,7 @@ public class RouteScreen1 {
 						panellabel =new JPanel();
 						panellabel.setBounds(e.getX(), e.getY(), 100, 70);
 						panellabel.setLayout(null);
-						ImagePanel buildingpic = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 100, 55);
+						ImagePanel buildingpic = new ImagePanel("maps/defaultIMG.png", 100, 55);
 						buildingpic.setBounds(0, 0, 100, 55);
 						panellabel.add(buildingpic);
 						
