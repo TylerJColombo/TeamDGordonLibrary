@@ -198,8 +198,11 @@ public class AdminScreen {
 				// TODO Auto-generated method stub
 				if(e.getSource() == btncf){
 					fc = new JFileChooser();
+					ImagePreview preview = new ImagePreview(fc);
+			        fc.addPropertyChangeListener(preview);
+			        fc.setAccessory(preview);
 					fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES ); 
-				    int intRetVal = fc.showSaveDialog(frame); 
+				    int intRetVal = fc.showOpenDialog(frame); 
 				    if( intRetVal == JFileChooser.APPROVE_OPTION){ 
 				    	File file = new File(selectedMap.getFileLocation());
 				    	txtMapPath.setText(file.getParentFile().getPath()+"/"+fc.getSelectedFile().getName());
