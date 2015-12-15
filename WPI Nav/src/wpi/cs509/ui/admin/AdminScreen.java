@@ -268,7 +268,7 @@ public class AdminScreen {
 		panel.setLayout(null);
 		addPointTab.add(panel);
 		
-		JLabel lblNewLabel = new JLabel("1) Selec map: ");
+		JLabel lblNewLabel = new JLabel("1) Select map: ");
 		lblNewLabel.setBounds(20, 20, 100, 20);
 		panel.add(lblNewLabel);
 		
