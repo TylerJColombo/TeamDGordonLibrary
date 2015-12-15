@@ -338,7 +338,7 @@ public class RouteScreen1 {
 				int y=1;	
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if(Pflag=true){
+						if(Pflag==true){
 							frame.remove(zoomcmap.zPanel);
 							imagePanelCmap = new ImagePanel(DataManager.getMapPathByName("Campus", "Basement"), 640, 480);
 							imagePanelCmap.setBackground(Color.decode("#F1F1F1"));
