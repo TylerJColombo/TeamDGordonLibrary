@@ -131,7 +131,7 @@ public class RouteScreen4 {
 		difFloorControl.setLayout(null);
 		
 		// is from campus checkbox
-		JCheckBox chckbxIsFromCampus = new JCheckBox("Rout from campus.");
+		JCheckBox chckbxIsFromCampus = new JCheckBox("Route from campus.");
 		chckbxIsFromCampus.setBounds(20, 0, 300, 20);
 		chckbxIsFromCampus.addActionListener(new ActionListener() {
 			@Override
@@ -253,7 +253,7 @@ public class RouteScreen4 {
 		/////////////////////
 		
 		// is to campus checkbox
-		JCheckBox chckbxIsToCampus = new JCheckBox("Rout to campus.");
+		JCheckBox chckbxIsToCampus = new JCheckBox("Route to campus.");
 		chckbxIsToCampus.setBounds(20, 210, 300, 20);
 		chckbxIsToCampus.addActionListener(new ActionListener() {
 			@Override
