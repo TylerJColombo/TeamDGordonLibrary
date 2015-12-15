@@ -68,7 +68,7 @@ public class AdminScreen {
 		////////////
 		// Header //
 		////////////
-		HeaderPanel headerPanel = new HeaderPanel("Adminstration", false, frame);
+		HeaderPanel headerPanel = new HeaderPanel("Administration", false, frame);
 		headerPanel.setBounds(0, 0, 1024, 730);
 		frame.getContentPane().add(headerPanel);
 		
