@@ -13,7 +13,7 @@ import wpi.cs509.ui.components.SolidPoint;
 
 public class Util {
 	public static void drawPath( ImagePanel a, ArrayList <Point> P){
-		if(P.size()!=1){
+//		if(P.size()!=1){
 			for(Point path:P){
 				SolidPoint pathofSolid = new SolidPoint(Color.decode("#D55E00"), path.getX(), path.getY()); 
 				a.add(pathofSolid);
@@ -27,12 +27,12 @@ public class Util {
 				a.add(path, new Integer(1), 0);
 				a.repaint();
 			}
-		}
-		else {
-			SolidPoint ssolid = new SolidPoint(Color.red, P.get(0).getX(), P.get(0).getY());
+//		}
+//		else {
+			/*SolidPoint ssolid = new SolidPoint(Color.red, P.get(0).getX(), P.get(0).getY());
 			a.add(ssolid);
 			a.repaint();
-			JOptionPane.showMessageDialog(null, "source point and destination point shouldnt be same");
+			JOptionPane.showMessageDialog(null, "source point and destination point shouldnt be same");*/
 		}
 	}
-}
+//}
