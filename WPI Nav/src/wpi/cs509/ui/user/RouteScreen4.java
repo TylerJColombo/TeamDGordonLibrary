@@ -11,9 +11,11 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import wpi.cs509.dataManager.DataManager;
@@ -128,14 +130,45 @@ public class RouteScreen4 {
 		difFloorControl.setBounds(0, 0, 350, 480);
 		difFloorControl.setLayout(null);
 		
+		// is from campus checkbox
+		JCheckBox chckbxIsFromCampus = new JCheckBox("Rout from campus.");
+		chckbxIsFromCampus.setBounds(20, 0, 300, 20);
+		chckbxIsFromCampus.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(chckbxIsFromCampus.isSelected()){
+					fromBuildingSelection.setEnabled(false);
+					fromfloorSelection.setEnabled(false);
+					
+					buildingselected = "Campus";
+					fromfloorselected = "Basement";
+					fromlocations = DataManager.getLocationsByMapID(buildingselected, fromfloorselected);
+					fromfilename = DataManager.getMapPathByName(buildingselected, fromfloorselected);
+					
+					sourceSelection.removeAllItems();
+					for(int i = 0;i<fromlocations.size();i++){
+						sourceSelection.addItem(fromlocations.get(i));
+					}
+					
+				} else {
+					fromBuildingSelection.setEnabled(true);
+					fromfloorSelection.setEnabled(true);
+					panel_4.removeAll();
+					panel_4.repaint();
+					sourceSelection.removeAllItems();
+				}
+			}
+		});
+		difFloorControl.add(chckbxIsFromCampus);
+		
 		// From building Label
 		JLabel building = new JLabel("From Building");
 		difFloorControl.add(building);
-		building.setBounds(25, 0, 300, 20);
+		building.setBounds(25, 30, 300, 20);
 		
 		// From building List
 		difFloorControl.add(fromBuildingSelection);
-		fromBuildingSelection.setBounds(20, 30, 300, 20);
+		fromBuildingSelection.setBounds(20, 60, 300, 20);
 		buildingList = DataManager.getBuildings();
 		fromBuildingSelection.addItem(null);
 		for(int i=0;i<buildingList.size();i++){
@@ -162,11 +195,11 @@ public class RouteScreen4 {
 		// From floor Label
 		JLabel fromfloor = new JLabel("From Floor");
 		difFloorControl.add(fromfloor);
-		fromfloor.setBounds(25, 60, 300, 20);
+		fromfloor.setBounds(25, 90, 300, 20);
 
 		// From floor List
 		difFloorControl.add(fromfloorSelection);
-		fromfloorSelection.setBounds(20, 90, 300, 20);
+		fromfloorSelection.setBounds(20, 120, 300, 20);
 		fromfloorSelection.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -189,11 +222,11 @@ public class RouteScreen4 {
 		// From Location Label
 		JLabel source = new JLabel("From Location");
 		difFloorControl.add(source);
-		source.setBounds(25, 120, 300, 20);
+		source.setBounds(25, 150, 300, 20);
 		
 		// From Location List
 		difFloorControl.add(sourceSelection);
-		sourceSelection.setBounds(20, 150, 300, 20);
+		sourceSelection.setBounds(20, 180, 300, 20);
 		
 		// Source listener
 		sourceSelection.addItemListener(new ItemListener() {
@@ -219,14 +252,44 @@ public class RouteScreen4 {
 		// To fields group //
 		/////////////////////
 		
+		// is to campus checkbox
+		JCheckBox chckbxIsToCampus = new JCheckBox("Rout to campus.");
+		chckbxIsToCampus.setBounds(20, 210, 300, 20);
+		chckbxIsToCampus.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(chckbxIsToCampus.isSelected()){
+					toBuildingSelection.setEnabled(false);
+					tofloorSelection.setEnabled(false);
+					
+					buildingselected = "Campus";
+					tofloorselected = "Basement";
+					tolocations = DataManager.getLocationsByMapID(buildingselected, tofloorselected);
+					tofilename = DataManager.getMapPathByName(buildingselected, tofloorselected);
+					
+					destinationSelection.removeAllItems();
+					for(int i = 0;i<tolocations.size();i++){
+						destinationSelection.addItem(tolocations.get(i));
+					}
+				} else {
+					toBuildingSelection.setEnabled(true);
+					tofloorSelection.setEnabled(true);
+					panel_4.removeAll();
+					panel_4.repaint();
+					destinationSelection.removeAllItems();
+				}
+			}
+		});
+		difFloorControl.add(chckbxIsToCampus);
+		
 		// To building Label
 		JLabel lblToBuilding = new JLabel("To Building");
 		difFloorControl.add(lblToBuilding);
-		lblToBuilding.setBounds(25, 180, 300, 20);
+		lblToBuilding.setBounds(25, 240, 300, 20);
 				
 		// To building List
 		difFloorControl.add(toBuildingSelection);
-		toBuildingSelection.setBounds(20, 210, 300, 20);
+		toBuildingSelection.setBounds(20, 270, 300, 20);
 		buildingList = DataManager.getBuildings();
 		toBuildingSelection.addItem(null);
 		for(int i=0;i<buildingList.size();i++){
@@ -253,11 +316,11 @@ public class RouteScreen4 {
 		// To floor Label
 		JLabel tofloor = new JLabel("To Floor");
 		difFloorControl.add(tofloor);
-		tofloor.setBounds(25, 240, 300, 20);
+		tofloor.setBounds(25, 300, 300, 20);
 				
 		// To floor List
 		difFloorControl.add(tofloorSelection);
-		tofloorSelection.setBounds(20, 270, 300, 20);
+		tofloorSelection.setBounds(20, 330, 300, 20);
 		tofloorSelection.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -280,11 +343,11 @@ public class RouteScreen4 {
 		// To Location Label
 		JLabel destination = new JLabel("To Location");
 		difFloorControl.add(destination);
-		destination.setBounds(25, 300, 300, 20);
+		destination.setBounds(25, 360, 300, 20);
 		
 		// To Location List
 		difFloorControl.add(destinationSelection);
-		destinationSelection.setBounds(20, 330, 300, 20);
+		destinationSelection.setBounds(20, 390, 300, 20);
 		
 		destinationSelection.addItemListener(new ItemListener() {
 			
@@ -313,7 +376,7 @@ public class RouteScreen4 {
 		//buttonPanel
 		JPanel buttonPanel = new JPanel();
 		difFloorControl.add(buttonPanel);
-		buttonPanel.setBounds(20, 360, 300, 40);
+		buttonPanel.setBounds(20, 420, 300, 40);
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
 		//Find route button
@@ -326,10 +389,19 @@ public class RouteScreen4 {
 		findRoute.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buildingselected = fromBuildingSelection.getSelectedItem().toString();
-                fromfloorselected = fromfloorSelection.getSelectedItem().toString();
-                tofloorselected = tofloorSelection.getSelectedItem().toString();
-                    
+                if(chckbxIsFromCampus.isSelected()){
+                	buildingselected = "Campus";
+                    fromfloorselected = "Basement";
+                } else {
+                	buildingselected = fromBuildingSelection.getSelectedItem().toString();
+                    fromfloorselected = fromfloorSelection.getSelectedItem().toString();
+                }
+                if(chckbxIsToCampus.isSelected()){
+                	tofloorselected = "Basement";
+                } else {
+                	tofloorselected = tofloorSelection.getSelectedItem().toString();
+                }
+                
                 Graph graph = DataManager.getGraphByNameWithDB(buildingselected, tofloorselected);
                 Point source = (Point)sourceSelection.getSelectedItem();
                 Point destination = (Point)destinationSelection.getSelectedItem();
