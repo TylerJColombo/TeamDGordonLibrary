@@ -26,7 +26,7 @@ import wpi.cs509.ui.components.EndPin;
 import wpi.cs509.ui.components.HeaderPanel;
 import wpi.cs509.ui.components.ImagePanel;
 import wpi.cs509.ui.components.StartPin;
-
+import wpi.cs509.ui.components.*;
 public class RouteScreen2 {
 
 	private JFrame frame;
